@@ -1,0 +1,79 @@
+{
+    "Should split reads by cluster assignments": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        [
+                            "cluster_0.fastq:md5,d29a992d6be80b2773bfd38f2928bceb",
+                            "cluster_1.fastq:md5,dee06018f97afb81ebee010416977fa4"
+                        ]
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "unclustered.fastq:md5,f6e3ce676659838dda8e216f50ef595a"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "cluster_stats.json:md5,be1bdc5bcae49bf2164f370f9c69f036"
+                    ]
+                ],
+                "3": [
+                    "versions.yml:md5,e83cb33f3e7042c474444ecd33b52310"
+                ],
+                "clustered_reads": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        [
+                            "cluster_0.fastq:md5,d29a992d6be80b2773bfd38f2928bceb",
+                            "cluster_1.fastq:md5,dee06018f97afb81ebee010416977fa4"
+                        ]
+                    ]
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "cluster_stats.json:md5,be1bdc5bcae49bf2164f370f9c69f036"
+                    ]
+                ],
+                "unclustered": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "unclustered.fastq:md5,f6e3ce676659838dda8e216f50ef595a"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,e83cb33f3e7042c474444ecd33b52310"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T16:41:49.287246"
+    }
+}

@@ -1,0 +1,110 @@
+nextflow_process {
+
+    name "Test SPLITCLUSTERS"
+    script "../main.nf"
+    process "SPLITCLUSTERS"
+
+    tag "modules"
+    tag "modules_local"
+    tag "splitclusters"
+
+    test("Should split reads by cluster assignments") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['cluster_fastq'], checkIfExists: true),
+                    file(params.test_data['nanopore']['analysis']['clusters_tsv'], checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("Should produce cluster files and statistics") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_output', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['cluster_fastq'], checkIfExists: true),
+                    file(params.test_data['nanopore']['analysis']['clusters_tsv'], checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.clustered_reads.size() == 1 },
+                { assert process.out.stats.size() == 1 },
+                { assert process.out.versions.size() == 1 },
+                { assert process.out.stats[0][1].toString().endsWith('.json') }
+            )
+        }
+
+    }
+
+    test("Should handle multiple clusters") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_multi', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['cluster_fastq'], checkIfExists: true),
+                    file(params.test_data['nanopore']['analysis']['clusters_tsv'], checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.clustered_reads.size() == 1 },
+                { assert process.out.stats.size() == 1 }
+            )
+        }
+
+    }
+
+    test("Should run stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_stub', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['cluster_fastq'], checkIfExists: true),
+                    file(params.test_data['nanopore']['analysis']['clusters_tsv'], checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.clustered_reads.size() == 1 },
+                { assert process.out.stats.size() == 1 }
+            )
+        }
+
+    }
+
+}

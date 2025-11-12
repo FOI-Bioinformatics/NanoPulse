@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/FOI-Bioinformatics/NanoPulse/master/nextflow_schema.json",
+  "title": "FOI-Bioinformatics/NanoPulse pipeline parameters",
+  "description": "De novo clustering and consensus building for ONT 16S sequencing data",
+  "type": "object",
+  "$defs": {
+    "input_output_options": {
+      "title": "Input/output options",
+      "type": "object",
+      "fa_icon": "fas fa-terminal",
+      "description": "Define where the pipeline should find input data and save output data.",
+      "required": ["input", "outdir"],
+      "properties": {
+        "input": {
+          "type": "string",
+          "format": "file-path",
+          "exists": true,
+          "schema": "assets/schema_input.json",
+          "mimetype": "text/csv",
+          "pattern": "^\\S+\\.csv$",
+          "description": "Path to comma-separated file containing information about the samples in the experiment.",
+          "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row.",
+          "fa_icon": "fas fa-file-csv"
+        },
+        "outdir": {
+          "type": "string",
+          "format": "directory-path",
+          "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
+          "fa_icon": "fas fa-folder-open",
+          "default": "./results"
+        }
+      }
+    },
+    "generic_options": {
+      "title": "Generic options",
+      "type": "object",
+      "fa_icon": "fas fa-file-import",
+      "description": "Less common options for the pipeline, typically set in a config file.",
+      "help_text": "These options are common to all nf-core pipelines and allow you to customise some of the core preferences for how the pipeline runs.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
+      "properties": {
+        "version": {
+          "type": "boolean",
+          "description": "Display version and exit.",
+          "fa_icon": "fas fa-question-circle",
+          "hidden": true
+        },
+        "validate_params": {
+          "type": "boolean",
+          "description": "Boolean whether to validate parameters against the schema at runtime",
+          "default": true,
+          "fa_icon": "fas fa-check-square",
+          "hidden": true
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "#/$defs/input_output_options"
+    },
+    {
+      "$ref": "#/$defs/generic_options"
+    }
+  ],
+  "properties": {
+    "demultiplex": {
+      "type": "boolean"
+    },
+    "demultiplex_porechop": {
+      "type": "boolean"
+    },
+    "multiqc": {
+      "type": "boolean"
+    },
+    "kit": {
+      "type": "string",
+      "default": "RAB204"
+    },
+    "enable_kraken2": {
+      "type": "boolean"
+    },
+    "enable_blast": {
+      "type": "boolean",
+      "default": true
+    },
+    "enable_fastani": {
+      "type": "boolean",
+      "default": true
+    },
+    "umap_set_size": {
+      "type": "integer",
+      "default": 100000
+    },
+    "cluster_sel_epsilon": {
+      "type": "number",
+      "default": 0.5
+    },
+    "min_cluster_size": {
+      "type": "integer",
+      "default": 50
+    },
+    "polishing_reads": {
+      "type": "integer",
+      "default": 100
+    },
+    "min_read_length": {
+      "type": "integer",
+      "default": 1400
+    },
+    "max_read_length": {
+      "type": "integer",
+      "default": 1700
+    },
+    "avg_amplicon_size": {
+      "type": "string",
+      "default": "1.5k"
+    },
+    "db": {
+      "type": "boolean"
+    },
+    "tax": {
+      "type": "boolean"
+    },
+    "name": {
+      "type": "boolean"
+    },
+    "multiqc_config": {
+      "type": "string",
+      "default": "/Users/andreassjodin/Code/NanoPulse/assets/multiqc_config.yaml"
+    },
+    "email": {
+      "type": "boolean"
+    },
+    "email_on_fail": {
+      "type": "boolean"
+    },
+    "maxMultiqcEmailFileSize": {
+      "type": "string",
+      "default": "25 MB"
+    },
+    "plaintext_email": {
+      "type": "boolean"
+    },
+    "monochrome_logs": {
+      "type": "boolean"
+    },
+    "tracedir": {
+      "type": "string",
+      "default": "./results/pipeline_info"
+    },
+    "custom_config_version": {
+      "type": "string",
+      "default": "master"
+    },
+    "custom_config_base": {
+      "type": "string",
+      "default": "https://raw.githubusercontent.com/nf-core/configs/master"
+    },
+    "hostnames": {
+      "type": "boolean"
+    },
+    "config_profile_description": {
+      "type": "boolean"
+    },
+    "config_profile_contact": {
+      "type": "boolean"
+    },
+    "config_profile_url": {
+      "type": "boolean"
+    },
+    "max_memory": {
+      "type": "string",
+      "default": "128 GB"
+    },
+    "max_cpus": {
+      "type": "integer",
+      "default": 16
+    },
+    "max_time": {
+      "type": "string",
+      "default": "10d"
+    },
+    "igenomes_base": {
+      "type": "string",
+      "default": "s3://ngi-igenomes/igenomes/"
+    }
+  }
+}

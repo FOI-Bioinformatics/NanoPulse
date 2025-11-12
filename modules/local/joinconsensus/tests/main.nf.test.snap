@@ -1,0 +1,73 @@
+{
+    "Should join consensus sequences with classifications": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_all_consensus.fasta:md5,59e7b69a54fc2c0522f6bd7c55546d63"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_consensus_annotations.tsv:md5,518d1070ede838f1446b219226a643b6"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_consensus_summary.json:md5,8a3451a589d61faaafd166da0acc1665"
+                    ]
+                ],
+                "3": [
+                    "versions.yml:md5,14474f677f81d781a92ee2b750e661a6"
+                ],
+                "annotations": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_consensus_annotations.tsv:md5,518d1070ede838f1446b219226a643b6"
+                    ]
+                ],
+                "fasta": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_all_consensus.fasta:md5,59e7b69a54fc2c0522f6bd7c55546d63"
+                    ]
+                ],
+                "summary": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_consensus_summary.json:md5,8a3451a589d61faaafd166da0acc1665"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,14474f677f81d781a92ee2b750e661a6"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T16:52:25.154258"
+    }
+}

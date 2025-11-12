@@ -1,0 +1,2 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+1	22/8ef16c	56384	GETABUNDANCES (test)	COMPLETED	0	2025-11-12 13:45:02.148	898ms	842ms	-	-	-	-	-

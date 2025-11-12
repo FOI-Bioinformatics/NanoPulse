@@ -1,0 +1,63 @@
+name: hdbscan
+description: Hierarchical density-based clustering of UMAP-reduced data
+keywords:
+  - clustering
+  - hdbscan
+  - machine learning
+  - density-based
+  - nanopore
+tools:
+  - hdbscan:
+      description: Hierarchical Density-Based Spatial Clustering of Applications with Noise
+      homepage: https://hdbscan.readthedocs.io/
+      documentation: https://hdbscan.readthedocs.io/
+      tool_dev_url: https://github.com/scikit-learn-contrib/hdbscan
+      doi: "10.21105/joss.00205"
+      licence: ["BSD-3-Clause"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:true ]
+  - umap_coords:
+      type: file
+      description: UMAP coordinates from UMAP process
+      pattern: "*.umap_coords.tsv"
+  - min_cluster_size:
+      type: integer
+      description: Minimum number of reads to form a cluster (default 100)
+  - min_samples:
+      type: integer
+      description: Minimum samples parameter (default same as min_cluster_size)
+  - cluster_selection_epsilon:
+      type: float
+      description: Distance threshold for cluster merging (default 0.0)
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+  - clusters:
+      type: file
+      description: Cluster assignments for each read
+      pattern: "*.clusters.tsv"
+  - cluster_info:
+      type: file
+      description: Cluster statistics (JSON format)
+      pattern: "*.cluster_info.json"
+  - plot:
+      type: file
+      description: Visualization of clusters
+      pattern: "*.clusters_plot.png"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@nanoclust-developers"
+maintainers:
+  - "@nanoclust-developers"

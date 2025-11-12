@@ -1,0 +1,81 @@
+nextflow_process {
+
+    name "Test DRAFT_SELECTION"
+    script "../main.nf"
+    process "DRAFT_SELECTION"
+
+    tag "modules"
+    tag "modules_local"
+    tag "draft_selection"
+
+    test("DRAFT_SELECTION - corrected reads - multiple reads") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'0', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['corrected_fasta'], checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("DRAFT_SELECTION - stub run") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'0', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['corrected_fasta'], checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("DRAFT_SELECTION - parameter variations") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'5', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['corrected_fasta'], checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.versions
+                ).match() }
+            )
+        }
+
+    }
+
+}

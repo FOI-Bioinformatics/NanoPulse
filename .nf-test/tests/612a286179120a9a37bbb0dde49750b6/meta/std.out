@@ -1,0 +1,149 @@
+ERROR ~ Error executing process > 'RACON_ITERATIVE (test)'
+
+Caused by:
+  Process `RACON_ITERATIVE (test)` terminated with an error exit status (127)
+
+
+Command executed:
+
+  #!/bin/bash
+     set -e
+  
+     # Track polishing statistics
+     declare -a round_status
+     declare -a round_sizes
+     total_success=0
+     total_failed=0
+  
+     # Start with the draft read
+     current_draft=$(realpath draft.fasta)
+     echo "Starting iterative polishing with 4 rounds" >&2
+     echo "Initial draft: ${current_draft}" >&2
+  
+     # Iterative polishing loop
+     for round in $(seq 1 4); do
+         echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" >&2
+         echo "Round ${round}/4" >&2
+         echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" >&2
+  
+         # Alignment with minimap2
+         echo "  [1/2] Running minimap2 alignment..." >&2
+         minimap2 \
+             -ax map-ont \
+             --no-long-join \
+             -r100 \
+             -t 2 \
+             ${current_draft} \
+             corrected.fasta \
+             > round_${round}.sam 2> round_${round}_minimap2.log
+  
+         # Count alignments
+         n_alignments=$(samtools view -c -F 4 round_${round}.sam || echo "0")
+         echo "  Alignments: ${n_alignments}" >&2
+  
+         # Polishing with racon
+         echo "  [2/2] Running racon polishing..." >&2
+         set +e
+         racon \
+             --quality-threshold 9 \
+             -w 250 \
+             -t 2 \
+             -m 8 -x -6 -g -8 -w 500 \
+             corrected.fasta \
+             round_${round}.sam \
+             ${current_draft} \
+             > round_${round}_polished.fasta 2> round_${round}_racon.log
+         racon_exit=$?
+         set -e
+  
+         # Check if racon succeeded
+         if [ $racon_exit -eq 0 ] && [ -s round_${round}_polished.fasta ]; then
+             echo "  ✓ Racon polishing succeeded" >&2
+             current_draft=$(realpath round_${round}_polished.fasta)
+             round_status[${round}]="success"
+             total_success=$((total_success + 1))
+  
+             # Get sequence length
+             seq_len=$(awk '/^>/ {next} {total += length($0)} END {print total}' round_${round}_polished.fasta)
+             round_sizes[${round}]=${seq_len}
+             echo "  Polished sequence length: ${seq_len} bp" >&2
+         else
+             echo "  ✗ Racon polishing failed (exit code: $racon_exit)" >&2
+             echo "  Using previous draft for this round" >&2
+             cp ${current_draft} round_${round}_polished.fasta
+             round_status[${round}]="failed"
+             total_failed=$((total_failed + 1))
+  
+             # Get sequence length from previous draft
+             seq_len=$(awk '/^>/ {next} {total += length($0)} END {print total}' round_${round}_polished.fasta)
+             round_sizes[${round}]=${seq_len}
+         fi
+  
+         # Clean up SAM file to save space
+         rm -f round_${round}.sam
+     done
+  
+     # Final polished consensus
+     cp ${current_draft} test_cluster0_polished.fasta
+     final_length=$(awk '/^>/ {next} {total += length($0)} END {print total}' test_cluster0_polished.fasta)
+  
+     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" >&2
+     echo "Polishing complete!" >&2
+     echo "  Successful rounds: ${total_success}/4" >&2
+     echo "  Failed rounds: ${total_failed}/4" >&2
+     echo "  Final length: ${final_length} bp" >&2
+     echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" >&2
+  
+     # Generate statistics JSON
+     cat <<-EOF > test_cluster0.stats.json
+  {
+    "cluster_id": "0",
+    "rounds": 4,
+    "successful_rounds": ${total_success},
+    "failed_rounds": ${total_failed},
+    "final_length": ${final_length},
+    "round_status": [
+     EOF
+  
+     # Add round status array
+     for round in $(seq 1 4); do
+         if [ ${round} -lt 4 ]; then
+             echo "	    {"round": ${round}, "status": "${round_status[${round}]}", "length": ${round_sizes[${round}]}}," >> test_cluster0.stats.json
+         else
+             echo "	    {"round": ${round}, "status": "${round_status[${round}]}", "length": ${round_sizes[${round}]}}" >> test_cluster0.stats.json
+         fi
+     done
+  
+     cat <<-EOF >> test_cluster0.stats.json
+    ]
+  }
+  EOF
+  
+     # Version tracking
+     cat <<-END_VERSIONS > versions.yml
+     "RACON_ITERATIVE":
+         racon: $(racon --version 2>&1 | grep -oP '(?<=v)\S+' || echo "1.5.0")
+         minimap2: $(minimap2 --version 2>&1 || echo "2.24")
+         samtools: $(samtools --version 2>&1 | grep samtools | sed 's/samtools //g')
+     END_VERSIONS
+
+Command exit status:
+  127
+
+Command output:
+  (empty)
+
+Command error:
+  Starting iterative polishing with 4 rounds
+  Initial draft: /Users/andreassjodin/Code/NanoPulse/tests/testdata/nanopore/reads/draft.fasta
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Round 1/4
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    [1/2] Running minimap2 alignment...
+
+Work dir:
+  /Users/andreassjodin/Code/NanoPulse/.nf-test/tests/612a286179120a9a37bbb0dde49750b6/work/47/ce76a2e8e38528ca1c434ea05941b9
+
+Tip: you can try to figure out what's wrong by changing to the process work dir and showing the script file named `.command.sh`
+
+ -- Check '/Users/andreassjodin/Code/NanoPulse/.nf-test/tests/612a286179120a9a37bbb0dde49750b6/meta/nextflow.log' file for details

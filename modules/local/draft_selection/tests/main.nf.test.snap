@@ -1,0 +1,126 @@
+{
+    "DRAFT_SELECTION - stub run": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0_draft.fasta:md5,c71c1e848f0d97cfa331b5b7650d3bda"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.ani.tsv:md5,9bdccf96a830ece065438952425f1e45"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.selection.json:md5,3cc681f4edf7cda2e1bd515eede4ff1f"
+                    ]
+                ],
+                "3": [
+                    "versions.yml:md5,94b7ef017457b05234de8480aa849c67"
+                ],
+                "ani_results": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.ani.tsv:md5,9bdccf96a830ece065438952425f1e45"
+                    ]
+                ],
+                "draft": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0_draft.fasta:md5,c71c1e848f0d97cfa331b5b7650d3bda"
+                    ]
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.selection.json:md5,3cc681f4edf7cda2e1bd515eede4ff1f"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,94b7ef017457b05234de8480aa849c67"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T10:50:06.857975"
+    },
+    "DRAFT_SELECTION - corrected reads - multiple reads": {
+        "content": [
+            {
+                "0": [
+                    
+                ],
+                "1": [
+                    
+                ],
+                "2": [
+                    
+                ],
+                "3": [
+                    
+                ],
+                "ani_results": [
+                    
+                ],
+                "draft": [
+                    
+                ],
+                "stats": [
+                    
+                ],
+                "versions": [
+                    
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T10:49:53.723258"
+    },
+    "DRAFT_SELECTION - parameter variations": {
+        "content": [
+            [
+                
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T10:50:19.20846"
+    }
+}

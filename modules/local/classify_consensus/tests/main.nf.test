@@ -1,0 +1,87 @@
+nextflow_process {
+
+    name "Test CLASSIFY_CONSENSUS"
+    script "../main.nf"
+    process "CLASSIFY_CONSENSUS"
+
+    tag "modules"
+    tag "modules_local"
+    tag "classify_consensus"
+
+    test("CLASSIFY_CONSENSUS - combine multiple classifiers") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'0' ],
+                    ['kraken2', 'blast', 'fastani'],
+                    [
+                        file(params.test_data['classification']['kraken2_report'], checkIfExists: true),
+                        file(params.test_data['classification']['blast_results'], checkIfExists: true),
+                        file(params.test_data['classification']['fastani_results'], checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("CLASSIFY_CONSENSUS - single classifier - BLAST only") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'0' ],
+                    ['blast'],
+                    [file(params.test_data['classification']['blast_results'], checkIfExists: true)]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.classification[0][1].exists() },
+                { assert process.out.json[0][1].exists() }
+            )
+        }
+
+    }
+
+    test("CLASSIFY_CONSENSUS - stub run") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'0' ],
+                    ['blast'],
+                    [file('blast.csv')]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+}

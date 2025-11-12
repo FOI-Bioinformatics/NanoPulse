@@ -1,0 +1,10 @@
+name: kmerfreq
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python>=3.11
+  - biopython>=1.83
+  - pandas>=2.0
+  - tqdm>=4.66

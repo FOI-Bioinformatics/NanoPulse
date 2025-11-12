@@ -1,0 +1,55 @@
+{
+    "Should reduce k-mer frequencies to UMAP coordinates": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.umap_coords.tsv:md5,10030ff697dfb94be1392cff10bbc4ca"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.umap_plot.png:md5,e0194180c60d762624268387d3da3076"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,1ba588710bbf8a9a55f373f1a7c3041c"
+                ],
+                "coords": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.umap_coords.tsv:md5,10030ff697dfb94be1392cff10bbc4ca"
+                    ]
+                ],
+                "plot": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.umap_plot.png:md5,e0194180c60d762624268387d3da3076"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,1ba588710bbf8a9a55f373f1a7c3041c"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T17:46:47.428948"
+    }
+}

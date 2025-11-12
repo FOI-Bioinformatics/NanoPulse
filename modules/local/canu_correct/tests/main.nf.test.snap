@@ -1,0 +1,114 @@
+{
+    "CANU_CORRECT - stub run": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.correctedReads.fasta:md5,5bdf696418cd46b4724abfc61a5f5b75"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,2e6ea3725baa306f3795b571171eae8e"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,9eca31aea8400317e5b04dcd24e3b7b1"
+                ],
+                "corrected": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.correctedReads.fasta:md5,5bdf696418cd46b4724abfc61a5f5b75"
+                    ]
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,2e6ea3725baa306f3795b571171eae8e"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,9eca31aea8400317e5b04dcd24e3b7b1"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T10:48:50.120071"
+    },
+    "CANU_CORRECT - nanopore reads - successful correction": {
+        "content": [
+            {
+                "0": [
+                    
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,e056c6dfc70f9efd336b482a9622aa3a"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,9eca31aea8400317e5b04dcd24e3b7b1"
+                ],
+                "corrected": [
+                    
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,e056c6dfc70f9efd336b482a9622aa3a"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,9eca31aea8400317e5b04dcd24e3b7b1"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T10:48:37.304983"
+    },
+    "CANU_CORRECT - parameter variations": {
+        "content": [
+            [
+                "versions.yml:md5,9eca31aea8400317e5b04dcd24e3b7b1"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T10:49:01.859787"
+    }
+}

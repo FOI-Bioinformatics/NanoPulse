@@ -1,0 +1,2 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+1	4f/93c01a	58902	KMERFREQ (test)	COMPLETED	0	2025-11-12 13:46:01.269	2.4s	2.4s	-	-	-	-	-

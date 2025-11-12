@@ -1,0 +1,5 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+1	dc/9e5fe1	68639	PER_CLUSTER_ASSEMBLY:CANU_CORRECT (sample1)	COMPLETED	0	2025-11-12 13:50:02.351	62ms	16ms	-	-	-	-	-
+2	7a/2f2084	68666	PER_CLUSTER_ASSEMBLY:DRAFT_SELECTION (sample1)	COMPLETED	0	2025-11-12 13:50:02.438	68ms	24ms	-	-	-	-	-
+3	a8/9ee9f1	68694	PER_CLUSTER_ASSEMBLY:RACON_ITERATIVE (sample1)	COMPLETED	0	2025-11-12 13:50:02.525	55ms	15ms	-	-	-	-	-
+4	3c/d13eb5	68723	PER_CLUSTER_ASSEMBLY:MEDAKA (sample1)	COMPLETED	0	2025-11-12 13:50:02.595	52ms	15ms	-	-	-	-	-

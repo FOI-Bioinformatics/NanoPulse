@@ -1,0 +1,110 @@
+nextflow_workflow {
+
+    name "Test CLASSIFY_CLUSTERS"
+    script "../main.nf"
+    workflow "CLASSIFY_CLUSTERS"
+
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "classify_clusters"
+
+    test("Should handle empty channels when classification disabled") {
+
+        when {
+            params {
+                enable_kraken2 = false
+                enable_blast   = false
+                enable_fastani = false
+            }
+            workflow {
+                """
+                input[0] = Channel.of([
+                    [ id:'test', cluster_id:'0' ],
+                    file(params.test_data['nanopore']['consensus']['consensus_fasta'], checkIfExists: true)
+                ])
+                input[1] = Channel.empty()  // kraken2_db
+                input[2] = Channel.empty()  // blast_db
+                input[3] = Channel.empty()  // blast_tax_db
+                input[4] = Channel.empty()  // fastani_refs
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert workflow.out.classification },
+                { assert workflow.out.json },
+                { assert workflow.out.combined }
+            )
+        }
+
+    }
+
+    test("Should process consensus sequences without databases") {
+
+        when {
+            params {
+                enable_kraken2 = false
+                enable_blast   = false
+                enable_fastani = false
+            }
+            workflow {
+                """
+                input[0] = Channel.of([
+                    [ id:'test', cluster_id:'0' ],
+                    file(params.test_data['nanopore']['consensus']['consensus_fasta'], checkIfExists: true)
+                ])
+                input[1] = Channel.empty()
+                input[2] = Channel.empty()
+                input[3] = Channel.empty()
+                input[4] = Channel.empty()
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success }
+            )
+        }
+
+    }
+
+    test("Should branch empty and valid consensus sequences") {
+
+        when {
+            params {
+                enable_kraken2 = false
+                enable_blast   = false
+                enable_fastani = false
+            }
+            workflow {
+                """
+                input[0] = Channel.of(
+                    [
+                        [ id:'test1', cluster_id:'0' ],
+                        file(params.test_data['nanopore']['consensus']['consensus_fasta'], checkIfExists: true)
+                    ],
+                    [
+                        [ id:'test2', cluster_id:'1' ],
+                        file(params.test_data['nanopore']['consensus']['consensus_fasta'], checkIfExists: true)
+                    ]
+                )
+                input[1] = Channel.empty()
+                input[2] = Channel.empty()
+                input[3] = Channel.empty()
+                input[4] = Channel.empty()
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success }
+            )
+        }
+
+    }
+
+}

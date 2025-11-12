@@ -1,0 +1,84 @@
+nextflow_process {
+
+    name "Test FASTANI_CLASSIFY"
+    script "../main.nf"
+    process "FASTANI_CLASSIFY"
+
+    tag "modules"
+    tag "modules_local"
+    tag "fastani_classify"
+
+    test("FASTANI_CLASSIFY - consensus vs reference genomes") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'0', single_end:true ],
+                    file(params.test_data['nanopore']['consensus']['consensus_fasta'], checkIfExists: true)
+                ]
+                input[1] = file(params.test_data['reference']['genomes_dir'], checkIfExists: true)
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("FASTANI_CLASSIFY - stub run") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'0', single_end:true ],
+                    file(params.test_data['nanopore']['consensus']['consensus_fasta'], checkIfExists: true)
+                ]
+                input[1] = file(params.test_data['reference']['genomes_dir'], checkIfExists: true)
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("FASTANI_CLASSIFY - parameter variations") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'5', single_end:true ],
+                    file(params.test_data['nanopore']['consensus']['consensus_fasta'], checkIfExists: true)
+                ]
+                input[1] = file(params.test_data['reference']['genomes_dir'], checkIfExists: true)
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.versions
+                ).match() }
+            )
+        }
+
+    }
+
+}

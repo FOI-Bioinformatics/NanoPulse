@@ -1,0 +1,7 @@
+name: draft_selection
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - fastani=1.33

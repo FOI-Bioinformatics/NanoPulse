@@ -1,0 +1,2 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+1	19/770bda	60284	PLOTRESULTS (test)	COMPLETED	0	2025-11-12 13:46:32.842	2.7s	2.7s	-	-	-	-	-

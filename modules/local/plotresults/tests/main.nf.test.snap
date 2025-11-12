@@ -1,0 +1,81 @@
+{
+    "Should generate plots and report from analysis results": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        [
+                            "test_abundance_distribution.png:md5,3c52f8eae0d51611f35e5cc0a65b1a5a",
+                            "test_taxonomy_composition.png:md5,b6bb1dae2978f1f233cf1a5f981a3a39",
+                            "test_umap_clustering.png:md5,ad0233b8ca5519fcf7e5fc2c20bc5d11"
+                        ]
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_plots_report.html:md5,f260676e7399b44749103b65fdbe283b"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_plot_summary.json:md5,31985706c94e03af39e329713123d91d"
+                    ]
+                ],
+                "3": [
+                    "versions.yml:md5,f83306fa9c2b5adf229ef24cddcc0971"
+                ],
+                "html": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_plots_report.html:md5,f260676e7399b44749103b65fdbe283b"
+                    ]
+                ],
+                "plots": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        [
+                            "test_abundance_distribution.png:md5,3c52f8eae0d51611f35e5cc0a65b1a5a",
+                            "test_taxonomy_composition.png:md5,b6bb1dae2978f1f233cf1a5f981a3a39",
+                            "test_umap_clustering.png:md5,ad0233b8ca5519fcf7e5fc2c20bc5d11"
+                        ]
+                    ]
+                ],
+                "summary": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_plot_summary.json:md5,31985706c94e03af39e329713123d91d"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,f83306fa9c2b5adf229ef24cddcc0971"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T20:12:11.522237"
+    }
+}

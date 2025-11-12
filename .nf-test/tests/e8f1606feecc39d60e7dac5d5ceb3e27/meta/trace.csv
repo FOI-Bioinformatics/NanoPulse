@@ -1,0 +1,2 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+1	08/8329da	55716	DRAFT_SELECTION (test)	FAILED	127	2025-11-12 13:44:45.808	88ms	17ms	-	-	-	-	-

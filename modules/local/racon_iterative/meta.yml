@@ -1,0 +1,70 @@
+name: racon_iterative
+description: Iterative consensus polishing using Racon (multiple rounds)
+keywords:
+  - polishing
+  - consensus
+  - racon
+  - nanopore
+  - iterative
+tools:
+  - racon:
+      description: Ultrafast consensus module for raw de novo genome assembly of long uncorrected reads
+      homepage: https://github.com/isovic/racon
+      documentation: https://github.com/isovic/racon/blob/master/README.md
+      tool_dev_url: https://github.com/isovic/racon
+      doi: "10.1101/gr.214270.116"
+      licence: ["MIT"]
+  - minimap2:
+      description: A versatile pairwise aligner for genomic and spliced nucleotide sequences
+      homepage: https://github.com/lh3/minimap2
+      documentation: https://github.com/lh3/minimap2/blob/master/README.md
+      tool_dev_url: https://github.com/lh3/minimap2
+      doi: "10.1093/bioinformatics/bty191"
+      licence: ["MIT"]
+  - samtools:
+      description: Tools for manipulating next-generation sequencing data
+      homepage: http://www.htslib.org/
+      documentation: http://www.htslib.org/doc/samtools.html
+      doi: "10.1093/bioinformatics/btp352"
+      licence: ["MIT"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'sample_001', cluster_id:'5', single_end:true ]
+  - draft:
+      type: file
+      description: Draft consensus sequence to be polished
+      pattern: "*.{fasta,fa}"
+  - corrected_reads:
+      type: file
+      description: Corrected reads for polishing
+      pattern: "*.{fasta,fa,fasta.gz,fa.gz}"
+  - rounds:
+      type: integer
+      description: Number of polishing rounds to perform (default 4)
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+  - polished:
+      type: file
+      description: Polished consensus sequence after all rounds
+      pattern: "*_polished.fasta"
+  - stats:
+      type: file
+      description: Statistics about polishing rounds (JSON format)
+      pattern: "*.stats.json"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@nanoclust-developers"
+maintainers:
+  - "@nanoclust-developers"

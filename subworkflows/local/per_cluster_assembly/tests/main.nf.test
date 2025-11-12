@@ -1,0 +1,110 @@
+nextflow_workflow {
+
+    name "Test PER_CLUSTER_ASSEMBLY"
+    script "../main.nf"
+    workflow "PER_CLUSTER_ASSEMBLY"
+
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "per_cluster_assembly"
+
+    test("PER_CLUSTER_ASSEMBLY - nanopore clustered reads") {
+
+        when {
+            workflow {
+                """
+                // Create channel of clustered reads
+                ch_cluster_reads = Channel.of(
+                    [
+                        [ id:'sample1', cluster_id:'0', single_end:true ],
+                        file(params.test_data['nanopore']['reads']['cluster_0_fastq'], checkIfExists: true)
+                    ],
+                    [
+                        [ id:'sample1', cluster_id:'1', single_end:true ],
+                        file(params.test_data['nanopore']['reads']['cluster_1_fastq'], checkIfExists: true)
+                    ]
+                )
+
+                input[0] = ch_cluster_reads
+                input[1] = "1.5k"                  // genome_size
+                input[2] = 100                     // polishing_reads
+                input[3] = 4                       // racon_rounds
+                input[4] = "r941_min_high_g303"    // medaka_model
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(workflow.out).match() }
+            )
+        }
+
+    }
+
+    test("PER_CLUSTER_ASSEMBLY - stub run") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                ch_cluster_reads = Channel.of(
+                    [
+                        [ id:'sample1', cluster_id:'0', single_end:true ],
+                        file(params.test_data['nanopore']['reads']['cluster_0_fastq'], checkIfExists: true)
+                    ]
+                )
+
+                input[0] = ch_cluster_reads
+                input[1] = "1.5k"
+                input[2] = 100
+                input[3] = 4
+                input[4] = "r941_min_high_g303"
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(workflow.out).match() }
+            )
+        }
+
+    }
+
+    test("PER_CLUSTER_ASSEMBLY - parameter variations") {
+
+        when {
+            workflow {
+                """
+                ch_cluster_reads = Channel.of(
+                    [
+                        [ id:'sample1', cluster_id:'5', single_end:true ],
+                        file(params.test_data['nanopore']['reads']['cluster_fastq'], checkIfExists: true)
+                    ]
+                )
+
+                input[0] = ch_cluster_reads
+                input[1] = "1.8k"                  // Different genome size
+                input[2] = 50                      // Fewer polishing reads
+                input[3] = 2                       // Fewer racon rounds
+                input[4] = "r941_min_sup_g507"     // Different medaka model
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    workflow.out.versions
+                ).match() }
+            )
+        }
+
+    }
+
+}

@@ -1,0 +1,73 @@
+{
+    "Should calculate cluster abundances from stats and classifications": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_abundances.csv:md5,b1972227f96f33dd1636b3b3185ab591"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_diversity_metrics.txt:md5,4c9f9467188022b9f13e4d0ed75672ea"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_abundance_summary.json:md5,60d3297c1c1044ed120d6e73a030b6f6"
+                    ]
+                ],
+                "3": [
+                    "versions.yml:md5,5e0e2476aa6ba7e43b9e0663f086039f"
+                ],
+                "abundances": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_abundances.csv:md5,b1972227f96f33dd1636b3b3185ab591"
+                    ]
+                ],
+                "diversity": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_diversity_metrics.txt:md5,4c9f9467188022b9f13e4d0ed75672ea"
+                    ]
+                ],
+                "summary": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test_abundance_summary.json:md5,60d3297c1c1044ed120d6e73a030b6f6"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,5e0e2476aa6ba7e43b9e0663f086039f"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T16:47:11.491314"
+    }
+}

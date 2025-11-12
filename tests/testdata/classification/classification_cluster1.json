@@ -1,0 +1,19 @@
+{
+  "consensus_taxon": "Streptococcus pneumoniae",
+  "consensus_rank": "species",
+  "confidence": 0.95,
+  "classification_methods": ["blast", "kraken2"],
+  "results": {
+    "blast": {
+      "taxon": "Streptococcus pneumoniae",
+      "taxid": 1313,
+      "identity": 98.5,
+      "evalue": "1e-150"
+    },
+    "kraken2": {
+      "taxon": "Streptococcus pneumoniae",
+      "taxid": 1313,
+      "confidence": 0.95
+    }
+  }
+}

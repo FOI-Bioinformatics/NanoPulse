@@ -1,0 +1,87 @@
+nextflow_process {
+
+    name "Test RACON_ITERATIVE"
+    script "../main.nf"
+    process "RACON_ITERATIVE"
+
+    tag "modules"
+    tag "modules_local"
+    tag "racon_iterative"
+
+    test("RACON_ITERATIVE - draft + corrected reads - 4 rounds") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'0', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['draft_fasta'], checkIfExists: true),
+                    file(params.test_data['nanopore']['reads']['corrected_fasta'], checkIfExists: true)
+                ]
+                input[1] = 4  // rounds
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("RACON_ITERATIVE - stub run") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'0', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['draft_fasta'], checkIfExists: true),
+                    file(params.test_data['nanopore']['reads']['corrected_fasta'], checkIfExists: true)
+                ]
+                input[1] = 4
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("RACON_ITERATIVE - parameter variations - 2 rounds") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'5', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['draft_fasta'], checkIfExists: true),
+                    file(params.test_data['nanopore']['reads']['corrected_fasta'], checkIfExists: true)
+                ]
+                input[1] = 2  // Fewer rounds
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.versions
+                ).match() }
+            )
+        }
+
+    }
+
+}

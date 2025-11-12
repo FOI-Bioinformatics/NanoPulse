@@ -1,0 +1,100 @@
+{
+    "RACON_ITERATIVE - parameter variations - 2 rounds": {
+        "content": [
+            [
+                
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T11:32:15.514524"
+    },
+    "RACON_ITERATIVE - stub run": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0_polished.fasta:md5,6ea225404b521c94d80eb3653b812123"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,ba650eda2ca55476567c55c2d43173d1"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,36cb0a3040c98cbcad24b6acd8704ea0"
+                ],
+                "polished": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0_polished.fasta:md5,6ea225404b521c94d80eb3653b812123"
+                    ]
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,ba650eda2ca55476567c55c2d43173d1"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,36cb0a3040c98cbcad24b6acd8704ea0"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T11:32:02.485579"
+    },
+    "RACON_ITERATIVE - draft + corrected reads - 4 rounds": {
+        "content": [
+            {
+                "0": [
+                    
+                ],
+                "1": [
+                    
+                ],
+                "2": [
+                    
+                ],
+                "polished": [
+                    
+                ],
+                "stats": [
+                    
+                ],
+                "versions": [
+                    
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T11:31:49.18054"
+    }
+}

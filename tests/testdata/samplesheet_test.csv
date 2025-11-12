@@ -1,0 +1,2 @@
+sample,fastq
+test_sample,tests/testdata/nanopore/reads/mock_5000.fastq.gz

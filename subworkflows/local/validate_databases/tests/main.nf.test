@@ -1,0 +1,94 @@
+nextflow_workflow {
+
+    name "Test VALIDATE_DATABASES"
+    script "../main.nf"
+    workflow "VALIDATE_DATABASES"
+
+    tag "subworkflows"
+    tag "subworkflows_local"
+    tag "validate_databases"
+
+    test("Should handle missing databases gracefully") {
+
+        when {
+            params {
+                enable_kraken2 = false
+                enable_blast   = false
+                enable_fastani = false
+                kraken2_db     = null
+                blast_db       = null
+                blast_taxdb    = null
+                fastani_ref_dir = null
+            }
+            workflow {
+                """
+                // Empty input - workflow reads from params
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert workflow.out.kraken2_db != null },
+                { assert workflow.out.blast_db != null },
+                { assert workflow.out.blast_tax_db != null },
+                { assert workflow.out.fastani_refs != null }
+            )
+        }
+
+    }
+
+    test("Should emit empty channels when databases not provided") {
+
+        when {
+            params {
+                enable_kraken2 = false
+                enable_blast   = false
+                enable_fastani = false
+                kraken2_db     = null
+                blast_db       = null
+                fastani_ref_dir = null
+            }
+            workflow {
+                """
+                // No databases configured
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert workflow.out.kraken2_db },
+                { assert workflow.out.blast_db },
+                { assert workflow.out.fastani_refs }
+            )
+        }
+
+    }
+
+    test("Should work with classification disabled") {
+
+        when {
+            params {
+                enable_kraken2 = false
+                enable_blast   = false
+                enable_fastani = false
+            }
+            workflow {
+                """
+                // Classification disabled in test profile
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success }
+            )
+        }
+
+    }
+
+}

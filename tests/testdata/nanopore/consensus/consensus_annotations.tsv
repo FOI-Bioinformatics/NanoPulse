@@ -1,0 +1,4 @@
+cluster_id	sequence_id	length	taxon	confidence	classification_method
+0	cluster_0_consensus	1501	Escherichia coli	0.98	kraken2,blast
+1	cluster_1_consensus	1498	Bacillus subtilis	0.95	kraken2,blast
+2	cluster_2_consensus	1505	Staphylococcus aureus	0.92	kraken2

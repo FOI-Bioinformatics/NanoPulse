@@ -1,0 +1,128 @@
+name: classify_clusters
+description: Taxonomic classification of consensus sequences using multiple classifiers
+keywords:
+  - classification
+  - taxonomy
+  - kraken2
+  - blast
+  - fastani
+  - consensus
+
+components:
+  - kraken2/kraken2
+  - blast/blastn
+  - fastani_classify
+  - classify_consensus
+
+input:
+  - consensus:
+      type: channel
+      description: |
+        Channel of consensus sequences from assembly
+        Structure: [val(meta), path(consensus.fasta)]
+  - kraken2_db:
+      type: channel
+      description: KRAKEN2 database directory path
+  - blast_db:
+      type: channel
+      description: BLAST database path (base name)
+  - blast_tax_db:
+      type: channel
+      description: BLAST taxonomy database directory
+  - fastani_refs:
+      type: channel
+      description: FastANI reference genomes directory
+
+output:
+  - classification:
+      type: channel
+      description: |
+        Final consensus classification (CSV format)
+        Structure: [val(meta), path(classification.csv)]
+  - json:
+      type: channel
+      description: |
+        Classification results in JSON format
+        Structure: [val(meta), path(classification.json)]
+  - combined:
+      type: channel
+      description: |
+        Human-readable combined results
+        Structure: [val(meta), path(combined.txt)]
+  - fastani:
+      type: channel
+      description: |
+        FastANI individual results
+        Structure: [val(meta), path(ani.txt)]
+  - versions:
+      type: channel
+      description: Software versions from all classifiers
+
+notes: |
+  ## Installation Requirements
+
+  This subworkflow requires nf-core modules for KRAKEN2 and BLAST.
+
+  **Install nf-core modules**:
+  ```bash
+  # From pipeline root directory
+  nf-core modules install kraken2/kraken2
+  nf-core modules install blast/blastn
+  ```
+
+  After installation, uncomment the module includes and usage in main.nf.
+
+  ## Classification Strategy
+
+  **Parallel Execution**:
+  - All enabled classifiers run simultaneously for maximum throughput
+  - Each classifier processes consensus sequences independently
+  - Results are collected and combined
+
+  **Result Combination**:
+  - CLASSIFY_CONSENSUS module combines all results
+  - Priority: BLAST > KRAKEN2 > FastANI
+  - Confidence calculated based on classifier agreement
+
+  **Graceful Degradation**:
+  - Missing databases are handled gracefully (warnings only)
+  - Pipeline continues with available classifiers
+  - If no classifiers available, classification step is skipped
+
+  ## Configuration
+
+  Enable/disable classifiers via parameters:
+  ```
+  params.enable_kraken2 = true
+  params.enable_blast = true
+  params.enable_fastani = false
+  ```
+
+  Provide databases:
+  ```
+  params.kraken2_db = '/path/to/kraken2_db'
+  params.blast_db = '/path/to/blast_db'
+  params.blast_taxdb = '/path/to/taxdb'
+  params.fastani_ref_dir = '/path/to/references'
+  ```
+
+  ## Output Structure
+
+  ```
+  outdir/
+    sample_001/
+      cluster_0/
+        classification/
+          sample_001_cluster0_classification.csv
+          sample_001_cluster0_classification.json
+          sample_001_cluster0_combined.txt
+          sample_001_cluster0.ani.txt
+      cluster_1/
+        classification/
+          ...
+  ```
+
+authors:
+  - "@nanoclust-developers"
+maintainers:
+  - "@nanoclust-developers"

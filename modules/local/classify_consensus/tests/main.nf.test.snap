@@ -1,0 +1,144 @@
+{
+    "CLASSIFY_CONSENSUS - stub run": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_classification.csv:md5,6b825e28e8691207e1a70379e83d71f8"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_classification.json:md5,0e728ab24168ef3586e5bd9cdf177152"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_combined.txt:md5,0dace13be6d19f607366b522596be0ea"
+                    ]
+                ],
+                "3": [
+                    "versions.yml:md5,11dd2d58117cf90e9805b9b1431215ef"
+                ],
+                "classification": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_classification.csv:md5,6b825e28e8691207e1a70379e83d71f8"
+                    ]
+                ],
+                "combined": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_combined.txt:md5,0dace13be6d19f607366b522596be0ea"
+                    ]
+                ],
+                "json": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_classification.json:md5,0e728ab24168ef3586e5bd9cdf177152"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,11dd2d58117cf90e9805b9b1431215ef"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T10:49:41.004579"
+    },
+    "CLASSIFY_CONSENSUS - combine multiple classifiers": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_classification.csv:md5,5083b984d9d3c2892114fee09eb1c09f"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_classification.json:md5,a7cc34eb0a6d0ee12d3518da5c0fa94e"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_combined.txt:md5,bad9cba80758634ef8b013fe779ba445"
+                    ]
+                ],
+                "3": [
+                    "versions.yml:md5,81e0960a059200b311f3fb13e1dfc29d"
+                ],
+                "classification": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_classification.csv:md5,5083b984d9d3c2892114fee09eb1c09f"
+                    ]
+                ],
+                "combined": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_combined.txt:md5,bad9cba80758634ef8b013fe779ba445"
+                    ]
+                ],
+                "json": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_classification.json:md5,a7cc34eb0a6d0ee12d3518da5c0fa94e"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,81e0960a059200b311f3fb13e1dfc29d"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T10:49:14.790434"
+    }
+}

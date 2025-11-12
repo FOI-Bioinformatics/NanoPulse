@@ -1,0 +1,121 @@
+nextflow_process {
+
+    name "Test PLOTRESULTS"
+    script "../main.nf"
+    process "PLOTRESULTS"
+
+    tag "modules"
+    tag "modules_local"
+    tag "plotresults"
+
+    test("Should generate plots and report from analysis results") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', single_end:true ],
+                    file(params.test_data['nanopore']['analysis']['umap_coords'], checkIfExists: true),
+                    file(params.test_data['nanopore']['analysis']['clusters_tsv'], checkIfExists: true),
+                    file(params.test_data['nanopore']['consensus']['abundances_csv'], checkIfExists: true),
+                    file(params.test_data['nanopore']['consensus']['annotations_tsv'], checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("Should produce plots, HTML report, and summary") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_output', single_end:true ],
+                    file(params.test_data['nanopore']['analysis']['umap_coords'], checkIfExists: true),
+                    file(params.test_data['nanopore']['analysis']['clusters_tsv'], checkIfExists: true),
+                    file(params.test_data['nanopore']['consensus']['abundances_csv'], checkIfExists: true),
+                    file(params.test_data['nanopore']['consensus']['annotations_tsv'], checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.plots.size() == 1 },
+                { assert process.out.html.size() == 1 },
+                { assert process.out.summary.size() == 1 },
+                { assert process.out.versions.size() == 1 },
+                { assert process.out.html[0][1].toString().endsWith('_plots_report.html') },
+                { assert process.out.summary[0][1].toString().endsWith('_plot_summary.json') }
+            )
+        }
+
+    }
+
+    test("Should generate comprehensive visualization report") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_viz', single_end:true ],
+                    file(params.test_data['nanopore']['analysis']['umap_coords'], checkIfExists: true),
+                    file(params.test_data['nanopore']['analysis']['clusters_tsv'], checkIfExists: true),
+                    file(params.test_data['nanopore']['consensus']['abundances_csv'], checkIfExists: true),
+                    file(params.test_data['nanopore']['consensus']['annotations_tsv'], checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.plots.size() == 1 },
+                { assert process.out.html.size() == 1 }
+            )
+        }
+
+    }
+
+    test("Should run stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_stub', single_end:true ],
+                    file(params.test_data['nanopore']['analysis']['umap_coords'], checkIfExists: true),
+                    file(params.test_data['nanopore']['analysis']['clusters_tsv'], checkIfExists: true),
+                    file(params.test_data['nanopore']['consensus']['abundances_csv'], checkIfExists: true),
+                    file(params.test_data['nanopore']['consensus']['annotations_tsv'], checkIfExists: true)
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.plots.size() == 1 },
+                { assert process.out.html.size() == 1 },
+                { assert process.out.summary.size() == 1 }
+            )
+        }
+
+    }
+
+}

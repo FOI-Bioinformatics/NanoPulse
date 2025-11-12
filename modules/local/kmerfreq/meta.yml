@@ -1,0 +1,48 @@
+name: kmerfreq
+description: Calculate k-mer frequency vectors for sequencing reads
+keywords:
+  - kmer
+  - frequency
+  - nanopore
+  - sequencing
+  - clustering
+tools:
+  - custom:
+      description: Custom k-mer frequency calculator for NanoCLUST
+      homepage: https://github.com/genomicsITER/NanoCLUST
+      documentation: https://github.com/genomicsITER/NanoCLUST
+      tool_dev_url: https://github.com/genomicsITER/NanoCLUST
+      licence: ["MIT"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:true ]
+  - reads:
+      type: file
+      description: Input FASTQ or FASTA file
+      pattern: "*.{fastq,fq,fastq.gz,fq.gz,fasta,fa,fasta.gz,fa.gz}"
+  - kmer_size:
+      type: integer
+      description: Size of k-mers to calculate (default 7)
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+  - freqs:
+      type: file
+      description: K-mer frequency table with read ID, length, and frequency vectors
+      pattern: "*.kmer_freqs.txt"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@nanoclust-developers"
+maintainers:
+  - "@nanoclust-developers"

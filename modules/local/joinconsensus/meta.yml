@@ -1,0 +1,57 @@
+name: joinconsensus
+description: Join consensus sequences from multiple clusters with taxonomic annotations
+keywords:
+  - consensus
+  - merge
+  - annotation
+  - taxonomy
+  - fasta
+tools:
+  - python:
+      description: Python programming language
+      homepage: https://www.python.org/
+      documentation: https://docs.python.org/3/
+      licence: ['PSF']
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'sample_001' ]
+  - consensus_files:
+      type: file
+      description: List of consensus FASTA files from all clusters
+      pattern: "*_consensus.fasta"
+  - classification_files:
+      type: file
+      description: List of classification JSON files from all clusters
+      pattern: "*_classification.json"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'sample_001' ]
+  - fasta:
+      type: file
+      description: Merged FASTA file with all consensus sequences
+      pattern: "*_all_consensus.fasta"
+  - annotations:
+      type: file
+      description: TSV file with consensus annotations (cluster_id, taxon, rank, confidence, length, methods)
+      pattern: "*_consensus_annotations.tsv"
+  - summary:
+      type: file
+      description: JSON summary with statistics (total clusters, classification rate, taxa counts, etc.)
+      pattern: "*_consensus_summary.json"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@nanoclust-developers"
+maintainers:
+  - "@nanoclust-developers"

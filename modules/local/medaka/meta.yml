@@ -1,0 +1,61 @@
+name: medaka
+description: Neural network-based consensus polishing for nanopore sequencing data
+keywords:
+  - polishing
+  - consensus
+  - medaka
+  - nanopore
+  - neural-network
+tools:
+  - medaka:
+      description: Sequence correction provided by ONT Research
+      homepage: https://github.com/nanoporetech/medaka
+      documentation: https://github.com/nanoporetech/medaka/blob/master/README.md
+      tool_dev_url: https://github.com/nanoporetech/medaka
+      licence: ["Mozilla Public License 2.0"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'sample_001', cluster_id:'5', single_end:true ]
+  - draft:
+      type: file
+      description: Draft/polished consensus sequence to be further polished
+      pattern: "*.{fasta,fa}"
+  - corrected_reads:
+      type: file
+      description: Corrected reads for polishing
+      pattern: "*.{fasta,fa,fasta.gz,fa.gz}"
+  - model:
+      type: string
+      description: |
+        Medaka model name for basecalling/sequencing configuration
+        Common models:
+        - r941_min_high_g303: R9.4.1 flow cell, high accuracy basecalling (Guppy 3.0.3+)
+        - r941_min_sup_g507: R9.4.1 flow cell, super accuracy basecalling (Guppy 5.0.7+)
+        - r104_e81_sup_g5015: R10.4 flow cell, super accuracy basecalling (Guppy 5.0.15+)
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+  - consensus:
+      type: file
+      description: Final polished consensus sequence
+      pattern: "*_consensus.fasta"
+  - stats:
+      type: file
+      description: Statistics about medaka polishing (JSON format)
+      pattern: "*.stats.json"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@nanoclust-developers"
+maintainers:
+  - "@nanoclust-developers"

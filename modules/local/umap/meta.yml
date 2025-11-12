@@ -1,0 +1,59 @@
+name: umap
+description: Perform UMAP dimensionality reduction on k-mer frequency vectors
+keywords:
+  - dimensionality reduction
+  - umap
+  - clustering
+  - machine learning
+  - nanopore
+tools:
+  - umap:
+      description: Uniform Manifold Approximation and Projection
+      homepage: https://umap-learn.readthedocs.io/
+      documentation: https://umap-learn.readthedocs.io/
+      tool_dev_url: https://github.com/lmcinnes/umap
+      doi: "10.21105/joss.00861"
+      licence: ["BSD-3-Clause"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:true ]
+  - kmer_freqs:
+      type: file
+      description: K-mer frequency table from KMERFREQ process
+      pattern: "*.kmer_freqs.txt"
+  - n_components:
+      type: integer
+      description: Number of dimensions for UMAP projection (default 3)
+  - n_neighbors:
+      type: integer
+      description: Number of neighbors for UMAP (default 15)
+  - min_dist:
+      type: float
+      description: Minimum distance for UMAP (default 0.1)
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+  - coords:
+      type: file
+      description: UMAP coordinates for each read
+      pattern: "*.umap_coords.tsv"
+  - plot:
+      type: file
+      description: Visualization of UMAP projection
+      pattern: "*.umap_plot.png"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@nanoclust-developers"
+maintainers:
+  - "@nanoclust-developers"

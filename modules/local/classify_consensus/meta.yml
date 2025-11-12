@@ -1,0 +1,56 @@
+name: classify_consensus
+description: Combine classification results from multiple classifiers into consensus classification
+keywords:
+  - classification
+  - consensus
+  - taxonomy
+  - combination
+tools:
+  - python:
+      description: Python programming language
+      homepage: https://www.python.org/
+      documentation: https://docs.python.org/
+      licence: ["PSF-2.0"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'sample_001', cluster_id:'5', single_end:true ]
+  - sources:
+      type: list
+      description: |
+        List of classifier names (e.g., ['kraken2', 'blast', 'fastani'])
+  - classification_files:
+      type: list
+      description: |
+        List of classification result files corresponding to sources
+        Order must match sources list
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+  - classification:
+      type: file
+      description: Combined classification results in CSV format
+      pattern: "*_classification.csv"
+  - json:
+      type: file
+      description: Combined classification results in JSON format
+      pattern: "*_classification.json"
+  - combined:
+      type: file
+      description: Human-readable combined classification results
+      pattern: "*_combined.txt"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@nanoclust-developers"
+maintainers:
+  - "@nanoclust-developers"

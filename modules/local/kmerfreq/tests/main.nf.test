@@ -1,0 +1,84 @@
+nextflow_process {
+
+    name "Test KMERFREQ"
+    script "../main.nf"
+    process "KMERFREQ"
+
+    tag "modules"
+    tag "modules_local"
+    tag "kmerfreq"
+
+    test("Should calculate k-mer frequencies for FASTQ") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['cluster_fastq'], checkIfExists: true)
+                ]
+                input[1] = 7  // k-mer size
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("Should calculate k-mer frequencies with custom k-mer size") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_k5', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['cluster_fastq'], checkIfExists: true)
+                ]
+                input[1] = 5  // smaller k-mer size
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.freqs.size() == 1 },
+                { assert process.out.versions.size() == 1 }
+            )
+        }
+
+    }
+
+    test("Should run stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_stub', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['cluster_fastq'], checkIfExists: true)
+                ]
+                input[1] = 7
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.freqs.size() == 1 },
+                { assert process.out.freqs[0][1].toString().endsWith('.kmer_freqs.txt') }
+            )
+        }
+
+    }
+
+}

@@ -1,0 +1,37 @@
+{
+    "Should calculate k-mer frequencies for FASTQ": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.kmer_freqs.txt:md5,ee3e6141e437cc28b8e494b373a84d29"
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,a4f0a7b42704ccf5d31cd4764db9027e"
+                ],
+                "freqs": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.kmer_freqs.txt:md5,ee3e6141e437cc28b8e494b373a84d29"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,a4f0a7b42704ccf5d31cd4764db9027e"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T21:43:11.893943"
+    }
+}

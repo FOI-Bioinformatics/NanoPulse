@@ -1,0 +1,98 @@
+name: per_cluster_assembly
+description: Complete consensus assembly pipeline for individual clusters
+keywords:
+  - assembly
+  - polishing
+  - consensus
+  - nanopore
+  - clustering
+
+components:
+  - canu_correct
+  - draft_selection
+  - racon_iterative
+  - medaka
+
+input:
+  - ch_cluster_reads:
+      type: channel
+      description: |
+        Channel of clustered reads
+        Structure: [val(meta), path(reads)]
+        where meta contains: id, cluster_id, single_end, etc.
+  - genome_size:
+      type: string
+      description: |
+        Expected genome/amplicon size for Canu
+        Examples: "1.5k" for 16S rRNA, "1.8k" for 18S rRNA
+  - polishing_reads:
+      type: integer
+      description: "Number of reads to use for Canu correction (default: 100)"
+  - racon_rounds:
+      type: integer
+      description: "Number of iterative Racon polishing rounds (default: 4)"
+  - medaka_model:
+      type: string
+      description: |
+        Medaka basecalling model
+        Examples:
+        - "r941_min_high_g303 (R9.4.1, high accuracy, Guppy 3.0.3+)"
+        - "r941_min_sup_g507 (R9.4.1, super accuracy, Guppy 5.0.7+)"
+        - "r104_e81_sup_g5015 (R10.4, super accuracy, Guppy 5.0.15+)"
+
+output:
+  - consensus:
+      type: channel
+      description: |
+        Final polished consensus sequences
+        Structure: [val(meta), path(consensus.fasta)]
+  - stats:
+      type: channel
+      description: |
+        Statistics from all assembly steps (JSON format)
+        Structure: [val(meta), path(stats.json)]
+  - versions:
+      type: channel
+      description: |
+        Software versions from all modules
+        Structure: path(versions.yml)
+
+notes: |
+  This subworkflow implements the complete per-cluster assembly pipeline:
+
+  1. **CANU_CORRECT**: Read correction using Canu's correction algorithm
+     - Subsets reads to polishing_reads count
+     - May fail for small clusters (expected behavior)
+     - Failed clusters are filtered out
+
+  2. **DRAFT_SELECTION**: Select best corrected read as draft
+     - Uses fastANI all-vs-all comparison
+     - Selects read with highest average ANI
+     - Handles single-read clusters
+
+  3. **RACON_ITERATIVE**: Iterative polishing with Racon
+     - Runs racon_rounds iterations (default: 4)
+     - Each round: minimap2 alignment + racon polishing
+     - Handles racon failures gracefully
+
+  4. **MEDAKA**: Neural network-based final polishing
+     - Uses medaka_consensus with specified model
+     - Falls back to draft if medaka fails
+
+  Channel flow:
+  ```
+  ch_cluster_reads → CANU_CORRECT → filter → DRAFT_SELECTION
+                          ↓                          ↓
+                     ch_corrected ←── join ←─────────┘
+                          ↓
+                    RACON_ITERATIVE
+                          ↓
+                     ch_corrected ←── join
+                          ↓
+                       MEDAKA → consensus
+  ```
+
+authors:
+  - "@nanoclust-developers"
+maintainers:
+  - "@nanoclust-developers"

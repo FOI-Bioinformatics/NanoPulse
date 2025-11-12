@@ -1,0 +1,2 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+1	d2/685c78	62228	SPLITCLUSTERS (test_output)	COMPLETED	0	2025-11-12 13:47:18.169	197ms	158ms	-	-	-	-	-

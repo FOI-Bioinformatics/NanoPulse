@@ -1,0 +1,87 @@
+nextflow_process {
+
+    name "Test MEDAKA"
+    script "../main.nf"
+    process "MEDAKA"
+
+    tag "modules"
+    tag "modules_local"
+    tag "medaka"
+
+    test("MEDAKA - polished draft + corrected reads") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'0', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['polished_fasta'], checkIfExists: true),
+                    file(params.test_data['nanopore']['reads']['corrected_fasta'], checkIfExists: true)
+                ]
+                input[1] = "r941_min_high_g303"
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("MEDAKA - stub run") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'0', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['polished_fasta'], checkIfExists: true),
+                    file(params.test_data['nanopore']['reads']['corrected_fasta'], checkIfExists: true)
+                ]
+                input[1] = "r941_min_high_g303"
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("MEDAKA - parameter variations - different model") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', cluster_id:'5', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['polished_fasta'], checkIfExists: true),
+                    file(params.test_data['nanopore']['reads']['corrected_fasta'], checkIfExists: true)
+                ]
+                input[1] = "r941_min_sup_g507"  // Different model
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.versions
+                ).match() }
+            )
+        }
+
+    }
+
+}

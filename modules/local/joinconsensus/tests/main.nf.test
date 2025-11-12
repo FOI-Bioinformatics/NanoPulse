@@ -1,0 +1,135 @@
+nextflow_process {
+
+    name "Test JOINCONSENSUS"
+    script "../main.nf"
+    process "JOINCONSENSUS"
+
+    tag "modules"
+    tag "modules_local"
+    tag "joinconsensus"
+
+    test("Should join consensus sequences with classifications") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', single_end:true ],
+                    [
+                        file(params.test_data['nanopore']['consensus']['consensus_fasta'], checkIfExists: true)
+                    ],
+                    [
+                        file(params.test_data['classification']['classification_json'], checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("Should produce FASTA, annotations, and summary") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_output', single_end:true ],
+                    [
+                        file(params.test_data['nanopore']['consensus']['consensus_fasta'], checkIfExists: true)
+                    ],
+                    [
+                        file(params.test_data['classification']['classification_json'], checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.fasta.size() == 1 },
+                { assert process.out.annotations.size() == 1 },
+                { assert process.out.summary.size() == 1 },
+                { assert process.out.versions.size() == 1 },
+                { assert process.out.fasta[0][1].toString().endsWith('_all_consensus.fasta') },
+                { assert process.out.annotations[0][1].toString().endsWith('_consensus_annotations.tsv') },
+                { assert process.out.summary[0][1].toString().endsWith('_consensus_summary.json') }
+            )
+        }
+
+    }
+
+    test("Should handle multiple consensus sequences") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_multi', single_end:true ],
+                    [
+                        file(params.test_data['nanopore']['consensus']['cluster_0_consensus'], checkIfExists: true),
+                        file(params.test_data['nanopore']['consensus']['cluster_1_consensus'], checkIfExists: true),
+                        file(params.test_data['nanopore']['consensus']['cluster_2_consensus'], checkIfExists: true)
+                    ],
+                    [
+                        file(params.test_data['classification']['classification_json'], checkIfExists: true),
+                        file(params.test_data['classification']['classification_cluster0'], checkIfExists: true),
+                        file(params.test_data['classification']['classification_cluster1'], checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.fasta.size() == 1 },
+                { assert process.out.annotations.size() == 1 },
+                { assert process.out.summary.size() == 1 }
+            )
+        }
+
+    }
+
+    test("Should run stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_stub', single_end:true ],
+                    [
+                        file(params.test_data['nanopore']['consensus']['consensus_fasta'], checkIfExists: true)
+                    ],
+                    [
+                        file(params.test_data['classification']['classification_json'], checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.fasta.size() == 1 },
+                { assert process.out.annotations.size() == 1 },
+                { assert process.out.summary.size() == 1 }
+            )
+        }
+
+    }
+
+}

@@ -1,0 +1,1 @@
+- the upstream github is https://github.com/FOI-Bioinformatics/NanoPulse/

@@ -1,0 +1,125 @@
+nextflow_process {
+
+    name "Test GETABUNDANCES"
+    script "../main.nf"
+    process "GETABUNDANCES"
+
+    tag "modules"
+    tag "modules_local"
+    tag "getabundances"
+
+    test("Should calculate cluster abundances from stats and classifications") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', single_end:true ],
+                    file(params.test_data['nanopore']['analysis']['cluster_stats'], checkIfExists: true),
+                    [
+                        file(params.test_data['classification']['classification_json'], checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("Should produce abundances, diversity metrics, and summary") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_output', single_end:true ],
+                    file(params.test_data['nanopore']['analysis']['cluster_stats'], checkIfExists: true),
+                    [
+                        file(params.test_data['classification']['classification_json'], checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.abundances.size() == 1 },
+                { assert process.out.diversity.size() == 1 },
+                { assert process.out.summary.size() == 1 },
+                { assert process.out.versions.size() == 1 },
+                { assert process.out.abundances[0][1].toString().endsWith('_abundances.csv') },
+                { assert process.out.diversity[0][1].toString().endsWith('_diversity_metrics.txt') },
+                { assert process.out.summary[0][1].toString().endsWith('_abundance_summary.json') }
+            )
+        }
+
+    }
+
+    test("Should handle multiple classification files") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_multi', single_end:true ],
+                    file(params.test_data['nanopore']['analysis']['cluster_stats'], checkIfExists: true),
+                    [
+                        file(params.test_data['classification']['classification_json'], checkIfExists: true),
+                        file(params.test_data['classification']['classification_cluster0'], checkIfExists: true),
+                        file(params.test_data['classification']['classification_cluster1'], checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.abundances.size() == 1 },
+                { assert process.out.diversity.size() == 1 },
+                { assert process.out.summary.size() == 1 }
+            )
+        }
+
+    }
+
+    test("Should run stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_stub', single_end:true ],
+                    file(params.test_data['nanopore']['analysis']['cluster_stats'], checkIfExists: true),
+                    [
+                        file(params.test_data['classification']['classification_json'], checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.abundances.size() == 1 },
+                { assert process.out.diversity.size() == 1 },
+                { assert process.out.summary.size() == 1 }
+            )
+        }
+
+    }
+
+}

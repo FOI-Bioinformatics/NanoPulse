@@ -1,0 +1,81 @@
+name: plotresults
+description: Create comprehensive visualizations for clustering and classification results
+keywords:
+  - visualization
+  - plotting
+  - umap
+  - abundance
+  - taxonomy
+  - diversity
+tools:
+  - python:
+      description: Python programming language
+      homepage: https://www.python.org/
+      documentation: https://docs.python.org/3/
+      licence: ['PSF']
+  - matplotlib:
+      description: Python plotting library
+      homepage: https://matplotlib.org/
+      documentation: https://matplotlib.org/stable/contents.html
+      licence: ['PSF']
+  - pandas:
+      description: Data analysis library
+      homepage: https://pandas.pydata.org/
+      documentation: https://pandas.pydata.org/docs/
+      licence: ['BSD-3-Clause']
+  - numpy:
+      description: Numerical computing library
+      homepage: https://numpy.org/
+      documentation: https://numpy.org/doc/
+      licence: ['BSD-3-Clause']
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'sample_001' ]
+  - umap_vectors:
+      type: file
+      description: UMAP dimension reduction vectors
+      pattern: "*_umap_vectors.txt"
+  - clusters:
+      type: file
+      description: Cluster assignments for each read
+      pattern: "*_clusters.txt"
+  - abundances:
+      type: file
+      description: Cluster abundances CSV file
+      pattern: "*_abundances.csv"
+  - annotations:
+      type: file
+      description: Consensus annotations TSV file
+      pattern: "*_consensus_annotations.tsv"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'sample_001' ]
+  - plots:
+      type: file
+      description: PNG plot files (UMAP clustering, abundance distribution, taxonomy composition)
+      pattern: "*.png"
+  - html:
+      type: file
+      description: HTML report combining all plots with summary statistics
+      pattern: "*_plots_report.html"
+  - summary:
+      type: file
+      description: JSON summary with plot generation statistics
+      pattern: "*_plot_summary.json"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@nanoclust-developers"
+maintainers:
+  - "@nanoclust-developers"

@@ -1,0 +1,3 @@
+ERROR ~ Cannot get property 'genomes_dir' on null object
+
+ -- Check script '/Users/andreassjodin/Code/NanoPulse/.nf-test-3240fe1dab4671832eb9b555d7982be.nf' at line: 36 or see '/Users/andreassjodin/Code/NanoPulse/.nf-test/tests/3240fe1dab4671832eb9b555d7982be/meta/nextflow.log' file for more details

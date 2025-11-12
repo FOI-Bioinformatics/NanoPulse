@@ -1,0 +1,9 @@
+name: getabundances
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python>=3.11
+  - pandas>=2.0
+  - numpy>=1.26

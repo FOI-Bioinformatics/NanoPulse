@@ -1,0 +1,128 @@
+{
+    "MEDAKA - stub run": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0_consensus.fasta:md5,569878b58009c3e1b00313c2a6109e1f"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,fabfeeadc4b3afe13acecfd1f1573df5"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,f997bd6834dfc38e90d793a44bfcb3f0"
+                ],
+                "consensus": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0_consensus.fasta:md5,569878b58009c3e1b00313c2a6109e1f"
+                    ]
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,fabfeeadc4b3afe13acecfd1f1573df5"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,f997bd6834dfc38e90d793a44bfcb3f0"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T11:30:28.411138"
+    },
+    "MEDAKA - parameter variations - different model": {
+        "content": [
+            [
+                "versions.yml:md5,e16009e666005a2dd2a1e2baf566eb5d"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T11:30:41.515423"
+    },
+    "MEDAKA - polished draft + corrected reads": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0_consensus.fasta:md5,8daec9e966fac0ac4950700e54be29e2"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,eabab67cbb8455433289801cc62f3ff5"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,33daa72b49ba39f6a9765c9ba1f4ec1a"
+                ],
+                "consensus": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0_consensus.fasta:md5,8daec9e966fac0ac4950700e54be29e2"
+                    ]
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,eabab67cbb8455433289801cc62f3ff5"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,33daa72b49ba39f6a9765c9ba1f4ec1a"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-11T11:30:16.056577"
+    }
+}

@@ -1,0 +1,9 @@
+ 95.24	100	100	U	0	unclassified
+  4.76	5	0	R	1	root
+  4.76	5	0	D	2	  Bacteria
+  4.76	5	0	P	1239	    Firmicutes
+  4.76	5	0	C	91061	      Bacilli
+  4.76	5	0	O	186826	        Lactobacillales
+  4.76	5	0	F	81852	          Streptococcaceae
+  4.76	5	0	G	1301	            Streptococcus
+  4.76	5	5	S	1313	              Streptococcus pneumoniae

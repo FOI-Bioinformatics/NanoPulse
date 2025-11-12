@@ -1,0 +1,184 @@
+{
+    "PER_CLUSTER_ASSEMBLY - parameter variations": {
+        "content": [
+            [
+                "versions.yml:md5,809acf574006217266428ac4ff64bd3d"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-12T13:50:08.380597"
+    },
+    "PER_CLUSTER_ASSEMBLY - nanopore clustered reads": {
+        "content": [
+            {
+                "0": [
+                    
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "sample1_cluster0.stats.json:md5,e7f4b2ad4a958e5d73b1943f287168d1"
+                    ],
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "1",
+                            "single_end": true
+                        },
+                        "sample1_cluster1.stats.json:md5,16b3933e926f37b8395ec1ec8e8e8665"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,809acf574006217266428ac4ff64bd3d"
+                ],
+                "consensus": [
+                    
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "sample1_cluster0.stats.json:md5,e7f4b2ad4a958e5d73b1943f287168d1"
+                    ],
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "1",
+                            "single_end": true
+                        },
+                        "sample1_cluster1.stats.json:md5,16b3933e926f37b8395ec1ec8e8e8665"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,809acf574006217266428ac4ff64bd3d"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-12T13:49:58.70405"
+    },
+    "PER_CLUSTER_ASSEMBLY - stub run": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "sample1_cluster0_consensus.fasta:md5,569878b58009c3e1b00313c2a6109e1f"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "sample1_cluster0.selection.json:md5,3cc681f4edf7cda2e1bd515eede4ff1f"
+                    ],
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "sample1_cluster0.stats.json:md5,2e6ea3725baa306f3795b571171eae8e"
+                    ],
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "sample1_cluster0.stats.json:md5,ba650eda2ca55476567c55c2d43173d1"
+                    ],
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "sample1_cluster0.stats.json:md5,fabfeeadc4b3afe13acecfd1f1573df5"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,50122152822a700cde00e4565f7fd6c4",
+                    "versions.yml:md5,5d1c44c2515124955b09a4bde219d531",
+                    "versions.yml:md5,5e00ae329baa0a1d43040dfe96884ab4",
+                    "versions.yml:md5,809acf574006217266428ac4ff64bd3d"
+                ],
+                "consensus": [
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "sample1_cluster0_consensus.fasta:md5,569878b58009c3e1b00313c2a6109e1f"
+                    ]
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "sample1_cluster0.selection.json:md5,3cc681f4edf7cda2e1bd515eede4ff1f"
+                    ],
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "sample1_cluster0.stats.json:md5,2e6ea3725baa306f3795b571171eae8e"
+                    ],
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "sample1_cluster0.stats.json:md5,ba650eda2ca55476567c55c2d43173d1"
+                    ],
+                    [
+                        {
+                            "id": "sample1",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "sample1_cluster0.stats.json:md5,fabfeeadc4b3afe13acecfd1f1573df5"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,50122152822a700cde00e4565f7fd6c4",
+                    "versions.yml:md5,5d1c44c2515124955b09a4bde219d531",
+                    "versions.yml:md5,5e00ae329baa0a1d43040dfe96884ab4",
+                    "versions.yml:md5,809acf574006217266428ac4ff64bd3d"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-12T13:50:03.880063"
+    }
+}

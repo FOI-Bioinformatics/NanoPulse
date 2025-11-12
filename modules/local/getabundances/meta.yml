@@ -1,0 +1,63 @@
+name: getabundances
+description: Calculate cluster abundances and alpha diversity metrics
+keywords:
+  - abundance
+  - diversity
+  - shannon
+  - simpson
+  - taxonomy
+  - metrics
+tools:
+  - python:
+      description: Python programming language
+      homepage: https://www.python.org/
+      documentation: https://docs.python.org/3/
+      licence: ['PSF']
+  - pandas:
+      description: Data analysis library
+      homepage: https://pandas.pydata.org/
+      documentation: https://pandas.pydata.org/docs/
+      licence: ['BSD-3-Clause']
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'sample_001' ]
+  - cluster_stats:
+      type: file
+      description: Cluster statistics JSON with read counts per cluster
+      pattern: "cluster_stats.json"
+  - classification_files:
+      type: file
+      description: List of classification JSON files for taxonomic assignment
+      pattern: "*_classification.json"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'sample_001' ]
+  - abundances:
+      type: file
+      description: CSV file with cluster abundances (cluster_id, read_count, relative_abundance, taxon)
+      pattern: "*_abundances.csv"
+  - diversity:
+      type: file
+      description: Text file with diversity metrics (Shannon, Simpson, effective species)
+      pattern: "*_diversity_metrics.txt"
+  - summary:
+      type: file
+      description: JSON summary with detailed abundance and diversity statistics
+      pattern: "*_abundance_summary.json"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@nanoclust-developers"
+maintainers:
+  - "@nanoclust-developers"

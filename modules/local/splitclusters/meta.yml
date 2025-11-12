@@ -1,0 +1,57 @@
+name: splitclusters
+description: Split reads into separate FASTQ files by cluster assignment
+keywords:
+  - clustering
+  - split
+  - fastq
+  - bioinformatics
+tools:
+  - biopython:
+      description: Python tools for computational molecular biology
+      homepage: https://biopython.org/
+      documentation: https://biopython.org/wiki/Documentation
+      tool_dev_url: https://github.com/biopython/biopython
+      doi: "10.1093/bioinformatics/btp163"
+      licence: ["BSD-3-Clause"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:true ]
+  - reads:
+      type: file
+      description: Input FASTQ file with all reads
+      pattern: "*.{fastq,fq,fastq.gz,fq.gz}"
+  - cluster_assignments:
+      type: file
+      description: Cluster assignments from HDBSCAN process
+      pattern: "*.clusters.tsv"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+  - clustered_reads:
+      type: file
+      description: FASTQ files split by cluster (one file per cluster)
+      pattern: "cluster_*.fastq"
+  - unclustered:
+      type: file
+      description: Reads that were not assigned to any cluster (optional)
+      pattern: "unclustered.fastq"
+  - stats:
+      type: file
+      description: Statistics about cluster splitting (JSON format)
+      pattern: "cluster_stats.json"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@nanoclust-developers"
+maintainers:
+  - "@nanoclust-developers"
