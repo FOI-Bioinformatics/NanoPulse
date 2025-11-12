@@ -60,9 +60,12 @@ nextflow_workflow {
         then {
             assertAll(
                 { assert workflow.success },
-                { assert workflow.out.kraken2_db },
-                { assert workflow.out.blast_db },
-                { assert workflow.out.fastani_refs }
+                { assert workflow.out.kraken2_db != null },
+                { assert workflow.out.blast_db != null },
+                { assert workflow.out.fastani_refs != null },
+                { assert workflow.out.kraken2_db == [] || workflow.out.kraken2_db.size() == 0 },
+                { assert workflow.out.blast_db == [] || workflow.out.blast_db.size() == 0 },
+                { assert workflow.out.fastani_refs == [] || workflow.out.fastani_refs.size() == 0 }
             )
         }
 

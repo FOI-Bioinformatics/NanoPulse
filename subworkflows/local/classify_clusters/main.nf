@@ -71,7 +71,7 @@ workflow CLASSIFY_CLUSTERS {
     //
     // NOTE: Uncomment when nf-core module is installed
     /*
-    if (params.enable_kraken2 && !kraken2_db.isEmpty()) {
+    if (params.enable_kraken2) {
         KRAKEN2_KRAKEN2(
             ch_consensus_branched.valid,
             kraken2_db,
@@ -95,7 +95,7 @@ workflow CLASSIFY_CLUSTERS {
     //
     // NOTE: Uncomment when nf-core module is installed
     /*
-    if (params.enable_blast && !blast_db.isEmpty()) {
+    if (params.enable_blast) {
         // Prepare BLAST input with database
         ch_blast_input = ch_consensus_branched.valid
             .combine(blast_db)
@@ -118,7 +118,7 @@ workflow CLASSIFY_CLUSTERS {
     //
     // Run FastANI if enabled and references provided
     //
-    if (params.enable_fastani && !fastani_refs.isEmpty()) {
+    if (params.enable_fastani) {
         FASTANI_CLASSIFY(
             ch_consensus_branched.valid,
             fastani_refs
@@ -157,11 +157,10 @@ workflow CLASSIFY_CLUSTERS {
         }
         .set { ch_valid_classifications }
 
-    if (!ch_valid_classifications.isEmpty()) {
-        CLASSIFY_CONSENSUS(ch_valid_classifications)
+    // Run classification if we have any valid classifications
+    CLASSIFY_CONSENSUS(ch_valid_classifications)
 
-        ch_versions = ch_versions.mix(CLASSIFY_CONSENSUS.out.versions.first())
-    }
+    ch_versions = ch_versions.mix(CLASSIFY_CONSENSUS.out.versions.first().ifEmpty([]))
 
     emit:
     classification = params.enable_kraken2 || params.enable_blast || params.enable_fastani ?
