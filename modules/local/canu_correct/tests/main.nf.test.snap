@@ -69,7 +69,7 @@
                             "cluster_id": "0",
                             "single_end": true
                         },
-                        "test_cluster0.stats.json:md5,e056c6dfc70f9efd336b482a9622aa3a"
+                        "test_cluster0.stats.json:md5,7f0d6515b9a9692f2cb9770f19b05953"
                     ]
                 ],
                 "2": [
@@ -85,7 +85,7 @@
                             "cluster_id": "0",
                             "single_end": true
                         },
-                        "test_cluster0.stats.json:md5,e056c6dfc70f9efd336b482a9622aa3a"
+                        "test_cluster0.stats.json:md5,7f0d6515b9a9692f2cb9770f19b05953"
                     ]
                 ],
                 "versions": [
@@ -97,7 +97,7 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-11-11T10:48:37.304983"
+        "timestamp": "2025-11-12T20:42:15.545405"
     },
     "CANU_CORRECT - parameter variations": {
         "content": [

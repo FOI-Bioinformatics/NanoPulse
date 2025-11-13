@@ -60,6 +60,12 @@ process FASTANI_CLASSIFY {
 \t}
 \tEOF
 
+        # Version tracking (must be created before early exit)
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            fastani: \$(fastANI --version 2>&1 | grep -oP 'version \\K[0-9.]+' || echo "1.34")
+        END_VERSIONS
+
         exit 0
     fi
 

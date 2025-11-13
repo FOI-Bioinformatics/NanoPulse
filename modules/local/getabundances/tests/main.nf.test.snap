@@ -30,7 +30,7 @@
                     ]
                 ],
                 "3": [
-                    "versions.yml:md5,5e0e2476aa6ba7e43b9e0663f086039f"
+                    "versions.yml:md5,8504a6a5fbcbe2aa497cd9d58e4658e6"
                 ],
                 "abundances": [
                     [
@@ -60,7 +60,7 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,5e0e2476aa6ba7e43b9e0663f086039f"
+                    "versions.yml:md5,8504a6a5fbcbe2aa497cd9d58e4658e6"
                 ]
             }
         ],
@@ -68,6 +68,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-11-11T16:47:11.491314"
+        "timestamp": "2025-11-12T20:43:23.461761"
     }
 }

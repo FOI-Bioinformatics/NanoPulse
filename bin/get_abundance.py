@@ -40,7 +40,7 @@ def get_abundance_values(names,paths):
             
         data['rel_abundance'] = rel_abundance
         dfs.append(pd.DataFrame({'taxid': data['taxid'], 'rel_abundance': rel_abundance}))
-        data.to_csv("" + name + "_nanoclust_out.txt")
+        data.to_csv("" + name + "_nanopulse_out.txt")
 
     return dfs
 

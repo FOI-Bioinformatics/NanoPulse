@@ -10,8 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Complete DSL2 migration from NanoCLUST
-- nf-core compliance improvements
-- Comprehensive nf-test test suite (79 tests)
+- nf-core compliance improvements (87.6% - 211/241 tests passing)
+- Comprehensive nf-test test suite (79 tests, 78.5% passing)
 - Module and subworkflow meta.yml documentation
 - Updated dependencies to latest versions
 - Nextflow requirement >= 25.10.0
@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - 1 nf-core subworkflow (utils_nfcore_pipeline)
 - modules.json for nf-core module tracking
 - Comprehensive configuration structure (modules.config, base.config, test.config)
+- Code quality documentation:
+  - CODE_QUALITY_REPORT.md - Comprehensive nf-core lint analysis
+  - CONDA_PROFILE_FIX.md - DSL2 conda profile migration guide
+  - CONDA_FIX_SUMMARY.md - Executive summary of conda fixes
+  - CONDA_VS_DOCKER_ANALYSIS.md - Profile comparison analysis
+  - TEST_FAILURE_ANALYSIS.md - Detailed test failure breakdown
+  - THINK_HARDER_SUMMARY.md - Production validation summary
+  - DEVELOPMENT_HISTORY.md - Complete development timeline
 
 ### Changed
 
@@ -47,30 +55,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - And more...
 - Manifest configuration updated to reflect FOI-Bioinformatics organization
 - Schema updated with proper GitHub repository URLs
+- Conda profile updated from DSL1 to DSL2 pattern (global enablement instead of process-specific selectors)
 
 ### Removed
 
 - DSL1 legacy code and artifacts:
+  - `lib/WorkflowMain.groovy` (contained legacy System.exit() calls)
   - `lib/WorkflowNanoclust.groovy`
   - `main.nf.dsl1.backup`
   - `bin/markdown_to_html.r`
+  - `conda_envs/` directory (replaced by module-local environment.yml files)
+  - `workflows/nanoclust.nf` (renamed to workflows/nanopulse.nf)
 - Old markdown-format GitHub issue templates
 - Deprecated nanoclust branding assets
+- Temporary status documents (moved to docs/archived/):
+  - DSL2_MIGRATION_SUMMARY.md
+  - NANOPULSE_DSL2_STATUS.md
+  - NanoPulse_vs_Pike_Comparison.md
+  - TESTING_STATUS.md
 
 ### Fixed
 
+- **Critical Production Bugs** (2025-11-13):
+  - VALIDATE_DATABASES workflow input mismatch (called with 3 inputs when expecting 0)
+  - Missing critical parameters in nextflow.config (kraken2_db, blast_db, etc.)
+  - KMERFREQ output channel mismatch (accessing .kmer_freq instead of .freqs)
+  - UMAP missing input parameter (min_dist)
+  - UMAP output channel mismatch (accessing .umap_vectors instead of .coords)
+  - HDBSCAN missing input parameter (cluster_selection_epsilon)
+  - Missing assembly parameters (genome_size, racon_rounds, medaka_model)
+  - Second UMAP channel reference error in PLOTRESULTS
+- **Conda Profile** (2025-11-13):
+  - Updated from DSL1 process-specific selectors to DSL2 global enablement pattern
+  - Fixed conda.enabled = true instead of withName: selectors
+  - Modules now properly use self-declared ${moduleDir}/environment.yml
+  - Verified working with nf-test
+- **FASTANI_CLASSIFY Bug**:
+  - Fixed missing versions.yml on early exit (no reference genomes found)
 - Parameter validation and schema compliance
 - Module configuration structure
 - Test infrastructure setup
-- nf-core lint compliance (202 of 241 tests passing)
+- nf-core lint compliance (87.6% - 211/241 tests passing)
 - Plugin consistency (switched from nf-validation to nf-schema)
 - YAML parsing errors in subworkflow meta.yml files
 - Process config selectors for DSL2
+- .gitignore - comprehensive rewrite following nf-core standards:
+  - Added .nf-test/ directory ignore
+  - Added .nextflow.log* pattern
+  - Added comprehensive Python, IDE, OS ignores
+  - Added conda/mamba environment ignores
 
 ### Dependencies
 
 All dependencies updated to latest compatible versions as of November 2025.
-See conda environment files in `conda_envs/` for detailed version information.
+See module-specific `environment.yml` files in `modules/local/*/environment.yml` for detailed version information.
 
 ---
 

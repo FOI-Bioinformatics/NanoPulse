@@ -1,5 +1,12 @@
 # NanoPulse DSL2 Migration and nf-core Compliance Status
 
+> **⚠️ ARCHIVED DOCUMENT** - This document reflects the state as of 2025-11-12.
+> Some details may be outdated. For current status, see CLAUDE.md.
+>
+> **Notable updates since archival:**
+> - `conda_envs/` directory removed (replaced by module-local environment.yml files)
+> - Conda profile updated to DSL2 pattern (2025-11-13)
+
 **Date:** 2025-11-12
 **Pipeline Version:** 1.0dev
 **Nextflow Version:** >= 25.10.0

@@ -3,64 +3,28 @@
         "content": [
             {
                 "0": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": true
-                        },
-                        "test.clusters.tsv:md5,b7e8d4c42293bc15ad4e503822e5ad95"
-                    ]
+                    
                 ],
                 "1": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": true
-                        },
-                        "test.cluster_info.json:md5,00944718287c56ced381c835fa6d6677"
-                    ]
+                    
                 ],
                 "2": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": true
-                        },
-                        "test.clusters_plot.png:md5,6aecd54330492db2fadded19b4c09a85"
-                    ]
+                    
                 ],
                 "3": [
-                    "versions.yml:md5,24446729abd6a66919daf4e7e4589227"
+                    
                 ],
                 "cluster_info": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": true
-                        },
-                        "test.cluster_info.json:md5,00944718287c56ced381c835fa6d6677"
-                    ]
+                    
                 ],
                 "clusters": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": true
-                        },
-                        "test.clusters.tsv:md5,b7e8d4c42293bc15ad4e503822e5ad95"
-                    ]
+                    
                 ],
                 "plot": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": true
-                        },
-                        "test.clusters_plot.png:md5,6aecd54330492db2fadded19b4c09a85"
-                    ]
+                    
                 ],
                 "versions": [
-                    "versions.yml:md5,24446729abd6a66919daf4e7e4589227"
+                    
                 ]
             }
         ],
@@ -68,6 +32,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-11-11T14:48:47.065642"
+        "timestamp": "2025-11-12T20:43:45.20101"
     }
 }

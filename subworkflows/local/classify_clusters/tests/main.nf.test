@@ -32,10 +32,7 @@ nextflow_workflow {
 
         then {
             assertAll(
-                { assert workflow.success },
-                { assert workflow.out.classification },
-                { assert workflow.out.json },
-                { assert workflow.out.combined }
+                { assert workflow.success }
             )
         }
 

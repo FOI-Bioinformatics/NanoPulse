@@ -1,6 +1,6 @@
-![nf-core/nanoclust](images/nf-core-nanoclust_logo.png)
+![FOI-Bioinformatics/NanoPulse](images/nf-core-nanoclust_logo.png)
 
-**De novo clustering and consensus building for ONT 16S sequencing data**.
+**De novo clustering and consensus building for ONT amplicon sequencing data (16S, 18S, ITS, and other amplicons)**.
 
 ## Introduction
 
@@ -12,7 +12,7 @@ i. Install [`nextflow`](https://nf-co.re/usage/installation)
 
 ii. Install [`docker`](https://docs.docker.com/engine/installation/) or [`conda`](https://conda.io/miniconda.html)
 
-iii. Clone the NanoCLUST repository and test the pipeline on a minimal dataset with a single command
+iii. Clone the NanoPulse repository and test the pipeline on a minimal dataset with a single command
 
 *Download a BLAST database for cluster sequence classification. For NCBI 16S rRNA database:
 
@@ -31,7 +31,7 @@ iv. Start running your own analysis!
 Run a single sample analysis using default parameters:
 
 ```bash
-nextflow run main.nf -profile <conda,docker> --reads 'sample.fastq' --db "fullpath/to/nanoclust/db/16S_ribosomal_RNA" --tax "fullpath/to/nanoclust/db/taxdb/"
+nextflow run main.nf -profile <conda,docker> --reads 'sample.fastq' --db "fullpath/to/nanopulse/db/16S_ribosomal_RNA" --tax "fullpath/to/nanopulse/db/taxdb/"
 ```
 
 See usage and output sections for all of the available options when running the pipeline.
@@ -39,9 +39,19 @@ See usage and output sections for all of the available options when running the 
 
 ## Credits
 
-Rodríguez-Pérez H, Ciuffreda L, Flores C (2020). NanoCLUST: a species-level analysis of 16S rRNA nanopore sequencing data. Submitted.
+### NanoPulse
+**Maintainer:** FOI-Bioinformatics Team
+**Repository:** https://github.com/FOI-Bioinformatics/NanoPulse
+**License:** MIT License
 
-This work was supported by Instituto de Salud Carlos III [PI14/00844, PI17/00610, and FI18/00230] and co-financed by the European Regional Development Funds, “A way of making Europe” from the European Union; Ministerio de Ciencia e Innovación [RTC-2017-6471-1, AEI/FEDER, UE]; Cabildo Insular de Tenerife [CGIEU0000219140]; Fundación Canaria Instituto de Investigación Sanitaria de Canarias [PIFUN48/18]; and by the agreement with Instituto Tecnológico y de Energías Renovables (ITER) to strengthen scientific and technological education, training, research, development and innovation in Genomics, Personalized Medicine and Biotechnology [OA17/008]. 
+### Original NanoCLUST Development
+**Authors:** Hector Rodriguez-Perez, Laura Ciuffreda, Carlos Flores
+**Repository:** https://github.com/genomicsITER/NanoCLUST
+
+Rodríguez-Pérez H, Ciuffreda L, Flores C (2021). NanoCLUST: a species-level analysis of 16S rRNA nanopore sequencing data. *Bioinformatics.* 37(11):1600-1601. doi:10.1093/bioinformatics/btaa900
+
+**Original Funding:**
+This work was supported by Instituto de Salud Carlos III [PI14/00844, PI17/00610, and FI18/00230] and co-financed by the European Regional Development Funds, "A way of making Europe" from the European Union; Ministerio de Ciencia e Innovación [RTC-2017-6471-1, AEI/FEDER, UE]; Cabildo Insular de Tenerife [CGIEU0000219140]; Fundación Canaria Instituto de Investigación Sanitaria de Canarias [PIFUN48/18]; and by the agreement with Instituto Tecnológico y de Energías Renovables (ITER) to strengthen scientific and technological education, training, research, development and innovation in Genomics, Personalized Medicine and Biotechnology [OA17/008]. 
 
 ## Contributions and Support
 

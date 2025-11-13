@@ -33,7 +33,7 @@
                     ]
                 ],
                 "3": [
-                    "versions.yml:md5,e83cb33f3e7042c474444ecd33b52310"
+                    "versions.yml:md5,7f9bd19c554d472eb2bdb52f35430632"
                 ],
                 "clustered_reads": [
                     [
@@ -66,7 +66,7 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,e83cb33f3e7042c474444ecd33b52310"
+                    "versions.yml:md5,7f9bd19c554d472eb2bdb52f35430632"
                 ]
             }
         ],
@@ -74,6 +74,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-11-11T16:41:49.287246"
+        "timestamp": "2025-11-12T20:49:33.774624"
     }
 }

@@ -30,7 +30,7 @@ MultiQC report - a standalone HTML file that can be viewed in your web browser
 * `Project_multiqc_data/`
 Directory containing parsed statistics from the different tools used in the pipeline
 
-## NanoCLUST output
+## NanoPulse output
 
 ### UMAP and HDBSCAN steps
 The pipeline uses UMAP technique to project sequence read data. The cluster assignment is performed by HDBSCAN. 
@@ -39,7 +39,7 @@ The pipeline uses UMAP technique to project sequence read data. The cluster assi
 HDBSCAN raw output in TSV format. Contains the read IDs and assigned cluster
 
 ### Polished sequences extraction and classification
-NanoCLUST builds a polished sequence from each cluster using Canu, Racon and Medaka. The sequence is then classified using blastn and a local database provided by the user. The polished sequence and the classification output table is included in the output:
+NanoPulse builds a polished sequence from each cluster using Canu, Racon and Medaka. The sequence is then classified using blastn and a local database provided by the user. The polished sequence and the classification output table is included in the output:
 
 * `results/sample_name/clusterX/draft_read.fasta`
 Draft sequence extracted from the cluster
@@ -51,7 +51,7 @@ Draft sequence extracted from the cluster
 Blast classification output 
 
 ### Additional plots
-NanoCLUST generates the UMAP projection plot and stacked barplots for single and pooled samples at different taxonomic levels. The plot module uses the taxid included in the classification table and [Unipept Taxonomy API](http://api.unipept.ugent.be)
+NanoPulse generates the UMAP projection plot and stacked barplots for single and pooled samples at different taxonomic levels. The plot module uses the taxid included in the classification table and [Unipept Taxonomy API](http://api.unipept.ugent.be)
 
 * `results/sample_name/hdbscan.output.png`
 UMAP projection and HDBSCAN clustering plot.

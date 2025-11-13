@@ -9,9 +9,9 @@
                             "single_end": true
                         },
                         [
-                            "test_abundance_distribution.png:md5,3c52f8eae0d51611f35e5cc0a65b1a5a",
-                            "test_taxonomy_composition.png:md5,b6bb1dae2978f1f233cf1a5f981a3a39",
-                            "test_umap_clustering.png:md5,ad0233b8ca5519fcf7e5fc2c20bc5d11"
+                            "test_abundance_distribution.png:md5,42d08c80ecf45194dd0b3d9e8155ebeb",
+                            "test_taxonomy_composition.png:md5,82464bea3bd6723db2b2bb4788723319",
+                            "test_umap_clustering.png:md5,be08ba06be8c204e906e42679d58afad"
                         ]
                     ]
                 ],
@@ -21,7 +21,7 @@
                             "id": "test",
                             "single_end": true
                         },
-                        "test_plots_report.html:md5,f260676e7399b44749103b65fdbe283b"
+                        "test_plots_report.html:md5,e555be3830ed0e4f9b15b1034e3bae4d"
                     ]
                 ],
                 "2": [
@@ -34,7 +34,7 @@
                     ]
                 ],
                 "3": [
-                    "versions.yml:md5,f83306fa9c2b5adf229ef24cddcc0971"
+                    "versions.yml:md5,f14014325e0952ba2005e9041f47450e"
                 ],
                 "html": [
                     [
@@ -42,7 +42,7 @@
                             "id": "test",
                             "single_end": true
                         },
-                        "test_plots_report.html:md5,f260676e7399b44749103b65fdbe283b"
+                        "test_plots_report.html:md5,e555be3830ed0e4f9b15b1034e3bae4d"
                     ]
                 ],
                 "plots": [
@@ -52,9 +52,9 @@
                             "single_end": true
                         },
                         [
-                            "test_abundance_distribution.png:md5,3c52f8eae0d51611f35e5cc0a65b1a5a",
-                            "test_taxonomy_composition.png:md5,b6bb1dae2978f1f233cf1a5f981a3a39",
-                            "test_umap_clustering.png:md5,ad0233b8ca5519fcf7e5fc2c20bc5d11"
+                            "test_abundance_distribution.png:md5,42d08c80ecf45194dd0b3d9e8155ebeb",
+                            "test_taxonomy_composition.png:md5,82464bea3bd6723db2b2bb4788723319",
+                            "test_umap_clustering.png:md5,be08ba06be8c204e906e42679d58afad"
                         ]
                     ]
                 ],
@@ -68,7 +68,7 @@
                     ]
                 ],
                 "versions": [
-                    "versions.yml:md5,f83306fa9c2b5adf229ef24cddcc0971"
+                    "versions.yml:md5,f14014325e0952ba2005e9041f47450e"
                 ]
             }
         ],
@@ -76,6 +76,6 @@
             "nf-test": "0.9.3",
             "nextflow": "25.10.0"
         },
-        "timestamp": "2025-11-11T20:12:11.522237"
+        "timestamp": "2025-11-13T15:12:35.268778"
     }
 }

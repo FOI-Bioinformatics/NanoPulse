@@ -5,13 +5,13 @@ import re
 
 # TODO nf-core: Add additional regexes for new tools in process get_software_versions
 regexes = {
-    'nf-core/nanoclust': ['v_pipeline.txt', r"(\S+)"],
+    'FOI-Bioinformatics/NanoPulse': ['v_pipeline.txt', r"(\S+)"],
     'Nextflow': ['v_nextflow.txt', r"(\S+)"],
     'FastQC': ['v_fastqc.txt', r"FastQC v(\S+)"],
     'MultiQC': ['v_multiqc.txt', r"multiqc, version (\S+)"],
 }
 results = OrderedDict()
-results['nf-core/nanoclust'] = '<span style="color:#999999;\">N/A</span>'
+results['FOI-Bioinformatics/NanoPulse'] = '<span style="color:#999999;\">N/A</span>'
 results['Nextflow'] = '<span style="color:#999999;\">N/A</span>'
 results['FastQC'] = '<span style="color:#999999;\">N/A</span>'
 results['MultiQC'] = '<span style="color:#999999;\">N/A</span>'
@@ -35,8 +35,8 @@ for k in results:
 # Dump to YAML
 print ('''
 id: 'software_versions'
-section_name: 'nf-core/nanoclust Software Versions'
-section_href: 'https://github.com/nf-core/nanoclust'
+section_name: 'FOI-Bioinformatics/NanoPulse Software Versions'
+section_href: 'https://github.com/FOI-Bioinformatics/NanoPulse'
 plot_type: 'html'
 description: 'are collected at run time from the software output.'
 data: |

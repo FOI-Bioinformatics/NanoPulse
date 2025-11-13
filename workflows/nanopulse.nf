@@ -41,7 +41,7 @@ include { methodsDescriptionText  } from '../subworkflows/local/utils_nfcore_nan
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-workflow NANOCLUST {
+workflow NANOPULSE {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
@@ -58,7 +58,7 @@ workflow NANOCLUST {
         .map { meta, reads ->
             // Ensure meta has required fields
             def new_meta = meta + [
-                single_end: true  // NanoCLUST processes single-end reads
+                single_end: true  // NanoPulse processes single-end reads
             ]
             [new_meta, reads]
         }
@@ -81,11 +81,7 @@ workflow NANOCLUST {
     //
     // Validate classification databases
     //
-    VALIDATE_DATABASES(
-        params.kraken2_db ? Channel.value(file(params.kraken2_db)) : Channel.empty(),
-        params.blast_db ? Channel.value(file(params.blast_db)) : Channel.empty(),
-        params.fastani_ref_dir ? Channel.value(file(params.fastani_ref_dir)) : Channel.empty()
-    )
+    VALIDATE_DATABASES()
 
     //
     // STEP 1: K-mer frequency calculation
@@ -100,9 +96,10 @@ workflow NANOCLUST {
     // STEP 2: UMAP dimensionality reduction
     //
     UMAP(
-        KMERFREQ.out.kmer_freq,
+        KMERFREQ.out.freqs,
         params.umap_dimensions,
-        params.umap_neighbors
+        params.umap_neighbors,
+        params.umap_min_dist
     )
     ch_versions = ch_versions.mix(UMAP.out.versions.first())
 
@@ -110,9 +107,10 @@ workflow NANOCLUST {
     // STEP 3: HDBSCAN clustering
     //
     HDBSCAN(
-        UMAP.out.umap_vectors,
+        UMAP.out.coords,
         params.min_cluster_size,
-        params.min_samples
+        params.min_samples,
+        params.cluster_sel_epsilon
     )
     ch_versions = ch_versions.mix(HDBSCAN.out.versions.first())
 
@@ -226,7 +224,7 @@ workflow NANOCLUST {
     //
     // STEP 9: Create comprehensive plots
     //
-    ch_plotresults_input = UMAP.out.umap_vectors
+    ch_plotresults_input = UMAP.out.coords
         .join(HDBSCAN.out.clusters, by: 0)
         .join(GETABUNDANCES.out.abundances, by: 0)
         .join(JOINCONSENSUS.out.annotations, by: 0)

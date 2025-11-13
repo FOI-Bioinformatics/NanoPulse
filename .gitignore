@@ -1,13 +1,97 @@
+# Nextflow files
 .nextflow*
 work/
+.nextflow.log*
+*.trace
+*.timeline
+*.report
+
+# nf-test files
+.nf-test/
+.nf-test.log*
+testing/
+testing*
+
+# Output directories
 data/
 db/
+results/
 results*/
-.DS_Store
-tests/test_data
+pipeline_info/
+
+# Python
 *.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and temp files
 *.log
 *.tmp
+*.temp
+null/
+
+# Large data files
 *.tar.gz
+*.zip
+*.bam
+*.sam
+*.cram
 *.fasta
+*.fa
 *.fastq
+*.fq
+*.fastq.gz
+*.fq.gz
+
+# Conda/Mamba environments
+.conda/
+.mamba/
+conda-meta/
+env/
+venv/
+
+# Documentation build artifacts
+docs/_build/
+docs/.doctrees/
+
+# Test data (but keep test configs)
+tests/test_data/
+test_datasets/*.fastq
+test_datasets/*.fasta
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Coverage reports
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Editor artifacts
+.ropeproject
+.mypy_cache/
+.dmypy.json
+dmypy.json

@@ -19,7 +19,7 @@ nextflow run main.nf --reads 'data/mock_sample.fastq' --db 'db/blastdb' --tax 'd
 ```
 This will launch the pipeline with the `conda` or `docker` configuration profiles. See below for more information about profiles.
 
-*Database and taxdb should be downloaded in the NanoCLUST dir.
+*Database and taxdb should be downloaded in the NanoPulse dir.
 
 *--min_cluster_size and --polishing reads have default values to 50 and 100 respectively. We recommend to manually assign these when working with your own data to see how the pipeline output may change specially at low taxonomic levels such as species.
 
@@ -36,13 +36,13 @@ results         # Finished results (configurable, see below)
 When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you're running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:
 
 ```bash
-nextflow pull nf-core/nanoclust
+nextflow pull FOI-Bioinformatics/NanoPulse
 ```
 
 ### Reproducibility
 It's a good idea to specify a pipeline version when running the pipeline on your data. This ensures that a specific version of the pipeline code and software are used when you run your pipeline. If you keep using the same tag, you'll be running the same version of the pipeline, even if there have been changes to the code since.
 
-First, go to the [nf-core/nanoclust releases page](https://github.com/nf-core/nanoclust/releases) and find the latest version number - numeric only (eg. `1.3.1`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.3.1`.
+First, go to the [FOI-Bioinformatics/NanoPulse releases page](https://github.com/FOI-Bioinformatics/NanoPulse/releases) and find the latest version number - numeric only (eg. `1.0.0`). Then specify this when running the pipeline with `-r` (one hyphen) - eg. `-r 1.0.0`.
 
 This version number will be logged in reports when you run the pipeline, so that you'll know what you used when you look back in the future.
 
@@ -60,11 +60,11 @@ Pulls most software from [Bioconda](https://bioconda.github.io/)
 
 * `docker`
 A generic configuration profile to be used with [Docker](http://docker.com/)
-Pulls software from dockerhub: [`nfcore/nanoclust`](http://hub.docker.com/r/nfcore/nanoclust/)
+Note: NanoPulse uses original NanoCLUST containers (hecrp/*) for compatibility
 
 * `singularity`
 A generic configuration profile to be used with [Singularity](http://singularity.lbl.gov/)
-Pulls software from DockerHub: [`nfcore/nanoclust`](http://hub.docker.com/r/nfcore/nanoclust/)
+Note: NanoPulse uses original NanoCLUST containers for compatibility
 
 * `test`
 A profile with a complete configuration for automated testing
@@ -124,7 +124,7 @@ The pipeline uses blastn software for the classification of the polished sequenc
 Path to the local blast database. Database files can be downloaded using FTP directly from [NCBI](ftp://ftp.ncbi.nlm.nih.gov/blast/db/)
 
 For 16S rRNA database, download 16S_ribosomal_RNA.tar.gz, decompress the file under a db directory and specify the full path:
-  * `--db "/path/to/nanoclust/db/16S_ribosomal_RNA"`
+  * `--db "/path/to/nanopulse/db/16S_ribosomal_RNA"`
 
 #### `--tax`
 --db option will only output the tax ID for the target. For complete classification output, specify the taxdb path along with the local database. Taxdb database is also available from [NCBI databases](ftp://ftp.ncbi.nlm.nih.gov/blast/db/) (taxdb.tar.gz)

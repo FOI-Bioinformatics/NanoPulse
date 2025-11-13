@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/FOI-Bioinformatics/NanoPulse/master/nextflow_schema.json",
   "title": "FOI-Bioinformatics/NanoPulse pipeline parameters",
-  "description": "De novo clustering and consensus building for ONT 16S sequencing data",
+  "description": "De novo clustering and consensus building for ONT amplicon sequencing data (16S, 18S, ITS, and other amplicons)",
   "type": "object",
   "$defs": {
     "input_output_options": {
@@ -127,7 +127,7 @@
     },
     "multiqc_config": {
       "type": "string",
-      "default": "/Users/andreassjodin/Code/NanoPulse/assets/multiqc_config.yaml"
+      "default": "/Users/andreassjodin/Code/NanoPulse/assets/multiqc_config.yml"
     },
     "email": {
       "type": "boolean"
@@ -184,6 +184,66 @@
     "igenomes_base": {
       "type": "string",
       "default": "s3://ngi-igenomes/igenomes/"
+    },
+    "publish_dir_mode": {
+      "type": "string",
+      "default": "copy"
+    },
+    "multiqc_title": {
+      "type": "string"
+    },
+    "validationSkipDuplicateCheck": {
+      "type": "boolean"
+    },
+    "validationShowHiddenParams": {
+      "type": "boolean"
+    },
+    "validationSchemaIgnoreParams": {
+      "type": "string"
+    },
+    "kraken2_db": {
+      "type": "string"
+    },
+    "blast_db": {
+      "type": "string"
+    },
+    "blast_taxdb": {
+      "type": "string"
+    },
+    "fastani_ref_dir": {
+      "type": "string"
+    },
+    "kmer_size": {
+      "type": "integer",
+      "default": 9
+    },
+    "umap_dimensions": {
+      "type": "integer",
+      "default": 3
+    },
+    "umap_neighbors": {
+      "type": "integer",
+      "default": 15
+    },
+    "umap_min_dist": {
+      "type": "number",
+      "default": 0.1
+    },
+    "min_samples": {
+      "type": "integer",
+      "default": 5
+    },
+    "genome_size": {
+      "type": "string",
+      "default": "1.5k"
+    },
+    "racon_rounds": {
+      "type": "integer",
+      "default": 4
+    },
+    "medaka_model": {
+      "type": "string",
+      "default": "r941_min_high_g303"
     }
   }
 }

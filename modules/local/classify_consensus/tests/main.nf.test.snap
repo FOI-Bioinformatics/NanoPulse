@@ -1,4 +1,75 @@
 {
+    "CLASSIFY_CONSENSUS - single classifier - BLAST only": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_classification.csv:md5,f7fba82fa4529a9cb4aa4abafea19d3b"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_classification.json:md5,82d05d4305ded12c05eda0f639c7360b"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_combined.txt:md5,cdbac0c1bd4ad03e04c9641aa59f354b"
+                    ]
+                ],
+                "3": [
+                    "versions.yml:md5,81e0960a059200b311f3fb13e1dfc29d"
+                ],
+                "classification": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_classification.csv:md5,f7fba82fa4529a9cb4aa4abafea19d3b"
+                    ]
+                ],
+                "combined": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_combined.txt:md5,cdbac0c1bd4ad03e04c9641aa59f354b"
+                    ]
+                ],
+                "json": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0"
+                        },
+                        "test_cluster0_classification.json:md5,82d05d4305ded12c05eda0f639c7360b"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,81e0960a059200b311f3fb13e1dfc29d"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-13T07:10:01.949054"
+    },
     "CLASSIFY_CONSENSUS - stub run": {
         "content": [
             {

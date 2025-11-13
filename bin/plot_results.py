@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Create comprehensive visualizations for NanoCLUST results.
+Create comprehensive visualizations for NanoPulse results.
 
 This script generates multiple plots:
 - UMAP clustering visualization (colored by cluster and abundance)
@@ -421,7 +421,7 @@ def create_html_report(
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NanoCLUST Results - {sample_id}</title>
+    <title>NanoPulse Results - {sample_id}</title>
     <style>
         body {{
             font-family: Arial, sans-serif;
@@ -477,7 +477,7 @@ def create_html_report(
 </head>
 <body>
     <div class="header">
-        <h1>NanoCLUST Analysis Results</h1>
+        <h1>NanoPulse Analysis Results</h1>
         <p>Sample: {sample_id}</p>
     </div>
 
@@ -524,7 +524,7 @@ def create_html_report(
 def main():
     """Main entry point."""
     parser = argparse.ArgumentParser(
-        description="Create comprehensive visualizations for NanoCLUST results"
+        description="Create comprehensive visualizations for NanoPulse results"
     )
 
     parser.add_argument('--umap_vectors', type=Path, required=True, help='UMAP vectors file')

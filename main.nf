@@ -1,10 +1,13 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    genomicsITER/NanoPulse
+    FOI-Bioinformatics/NanoPulse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/genomicsITER/NanoPulse
-    Website: https://github.com/genomicsITER/NanoPulse
+    Github : https://github.com/FOI-Bioinformatics/NanoPulse
+    Website: https://github.com/FOI-Bioinformatics/NanoPulse
+
+    Originally based on NanoCLUST by Rodriguez-Perez et al.
+    https://github.com/genomicsITER/NanoCLUST
 ----------------------------------------------------------------------------------------
 */
 
@@ -16,7 +19,7 @@ nextflow.enable.dsl = 2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { NANOCLUST as NANOPULSE } from './workflows/nanoclust'
+include { NANOPULSE } from './workflows/nanopulse'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_nanopulse_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_nanopulse_pipeline'
 
@@ -29,7 +32,7 @@ include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_nano
 //
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
-workflow GENOMICSITER_NANOPULSE {
+workflow FOI_BIOINFORMATICS_NANOPULSE {
 
     take:
     samplesheet // channel: samplesheet read in from --input
@@ -72,7 +75,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    GENOMICSITER_NANOPULSE (
+    FOI_BIOINFORMATICS_NANOPULSE (
         PIPELINE_INITIALISATION.out.samplesheet
     )
 
@@ -86,7 +89,7 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        GENOMICSITER_NANOPULSE.out.multiqc_report
+        FOI_BIOINFORMATICS_NANOPULSE.out.multiqc_report
     )
 }
 

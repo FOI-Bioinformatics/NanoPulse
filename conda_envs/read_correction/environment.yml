@@ -1,8 +1,0 @@
-name: read_correction-
-channels:
-  - conda-forge
-  - bioconda
-  - defaults
-dependencies:
-  - canu =2.3
-

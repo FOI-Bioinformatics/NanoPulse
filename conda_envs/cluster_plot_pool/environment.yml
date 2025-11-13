@@ -1,9 +1,0 @@
-name: cluster_plot_pool
-channels:
-  - conda-forge
-  - bioconda
-  - defaults
-dependencies:
-  - pandas =2.3.3
-  - matplotlib-base =3.10.7
-  - requests =2.32.5

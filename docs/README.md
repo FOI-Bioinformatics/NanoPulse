@@ -1,6 +1,6 @@
-# nf-core/nanoclust: Documentation
+# FOI-Bioinformatics/NanoPulse: Documentation
 
-The nf-core/nanoclust documentation is split into the following files:
+The FOI-Bioinformatics/NanoPulse documentation is split into the following files:
 
 1. [Introduction](index.md)
 3. [Usage](2usage.md)
