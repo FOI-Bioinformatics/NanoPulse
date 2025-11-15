@@ -51,8 +51,8 @@ process CANU_CORRECT {
 
     # Check if correction succeeded
     if [ \$CANU_EXIT -eq 0 ] && [ -f ${prefix}.correctedReads.fasta.gz ]; then
-        # Decompress output
-        gunzip ${prefix}.correctedReads.fasta.gz
+        # Decompress output with pigz (parallel decompression)
+        pigz -d -p $task.cpus ${prefix}.correctedReads.fasta.gz
 
         # Count corrected reads
         CORRECTED_READS=\$(grep -c "^>" ${prefix}.correctedReads.fasta || echo "0")

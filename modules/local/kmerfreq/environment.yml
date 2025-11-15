@@ -8,3 +8,4 @@ dependencies:
   - biopython>=1.83
   - pandas>=2.0
   - tqdm>=4.66
+  - pigz>=2.8

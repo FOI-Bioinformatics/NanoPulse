@@ -6,3 +6,4 @@ channels:
 dependencies:
   - canu=2.2
   - bc=1.07.1
+  - pigz>=2.8
