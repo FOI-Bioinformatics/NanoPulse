@@ -12,8 +12,8 @@ process KMERFREQ {
     val kmer_size
 
     output:
-    tuple val(meta), path("*.kmer_freqs.txt"), emit: freqs
-    path "versions.yml"                       , emit: versions
+    tuple val(meta), path("*.kmer_freqs.txt.gz"), emit: freqs
+    path "versions.yml"                          , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -27,7 +27,7 @@ process KMERFREQ {
         --kmer-size $kmer_size \\
         --threads $task.cpus \\
         $args \\
-        > ${prefix}.kmer_freqs.txt
+        | gzip -c > ${prefix}.kmer_freqs.txt.gz
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -42,9 +42,7 @@ process KMERFREQ {
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
     # Create stub k-mer frequency file
-    echo -e "read_id\\tlength\\tkmer1\\tkmer2\\tkmer3" > ${prefix}.kmer_freqs.txt
-    echo -e "read_001\\t1500\\t0.1\\t0.2\\t0.3" >> ${prefix}.kmer_freqs.txt
-    echo -e "read_002\\t1600\\t0.15\\t0.25\\t0.35" >> ${prefix}.kmer_freqs.txt
+    echo -e "read_id\\tlength\\tkmer1\\tkmer2\\tkmer3" | gzip -c > ${prefix}.kmer_freqs.txt.gz
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
