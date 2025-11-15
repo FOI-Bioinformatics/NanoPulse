@@ -6,7 +6,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { CANU_CORRECT    } from '../../../modules/local/canu_correct/main'
+include { RAVEN_CORRECT   } from '../../../modules/local/raven_correct/main'
 include { DRAFT_SELECTION } from '../../../modules/local/draft_selection/main'
 include { RACON_ITERATIVE } from '../../../modules/local/racon_iterative/main'
 include { MEDAKA          } from '../../../modules/local/medaka/main'
@@ -18,9 +18,9 @@ include { MEDAKA          } from '../../../modules/local/medaka/main'
 
     Description:
         Performs consensus sequence generation for each cluster through:
-        1. Canu read correction
+        1. Raven assembly with built-in polishing
         2. Draft selection via fastANI
-        3. Iterative Racon polishing
+        3. Iterative Racon polishing (optional)
         4. Medaka neural network polishing
 
     Input:
@@ -52,26 +52,26 @@ workflow PER_CLUSTER_ASSEMBLY {
     ch_all_stats = Channel.empty()
 
     //
-    // MODULE: CANU_CORRECT - Correct reads using Canu
+    // MODULE: RAVEN_CORRECT - Assemble and correct reads using Raven
     //
-    CANU_CORRECT(
+    RAVEN_CORRECT(
         ch_cluster_reads,
         genome_size,
         polishing_reads
     )
-    ch_versions = ch_versions.mix(CANU_CORRECT.out.versions.first())
-    ch_all_stats = ch_all_stats.mix(CANU_CORRECT.out.stats)
+    ch_versions = ch_versions.mix(RAVEN_CORRECT.out.versions.first())
+    ch_all_stats = ch_all_stats.mix(RAVEN_CORRECT.out.stats)
 
     //
-    // Filter successful corrections
-    // Canu can fail for small clusters - this is expected
+    // Filter successful assemblies
+    // Raven can fail for small clusters - this is expected
     //
-    ch_corrected_reads = CANU_CORRECT.out.corrected
+    ch_corrected_reads = RAVEN_CORRECT.out.corrected
         .filter { meta, fasta ->
             if (fasta.size() > 0) {
                 return true
             } else {
-                log.warn "Cluster ${meta.cluster_id} failed Canu correction - skipping assembly"
+                log.warn "Cluster ${meta.cluster_id} failed Raven assembly - skipping polishing"
                 return false
             }
         }

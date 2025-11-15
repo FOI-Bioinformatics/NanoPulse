@@ -1,0 +1,57 @@
+name: raven_correct
+description: Assemble and correct long nanopore reads using Raven assembler with built-in polishing
+keywords:
+  - assembly
+  - correction
+  - nanopore
+  - long-reads
+  - raven
+  - polishing
+tools:
+  - raven:
+      description: Raven is a de novo genome assembler for long uncorrected reads
+      homepage: https://github.com/lbcb-sci/raven
+      documentation: https://github.com/lbcb-sci/raven/blob/master/README.md
+      tool_dev_url: https://github.com/lbcb-sci/raven
+      doi: "10.1038/s43588-021-00073-4"
+      licence: ["MIT"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'sample_001', cluster_id:'5', single_end:true ]
+  - reads:
+      type: file
+      description: Input FASTQ file with nanopore reads for a single cluster
+      pattern: "*.{fastq,fq,fastq.gz,fq.gz}"
+  - genome_size:
+      type: string
+      description: Expected genome/amplicon size (used for statistics, not assembly)
+  - polishing_reads:
+      type: integer
+      description: Number of reads to use for assembly (default 100)
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+  - corrected:
+      type: file
+      description: Assembled contig(s) in FASTA format (optional - may fail for small clusters)
+      pattern: "*.correctedReads.fasta"
+  - stats:
+      type: file
+      description: Statistics about the assembly process (JSON format)
+      pattern: "*.stats.json"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@foi-bioinformatics"
+maintainers:
+  - "@foi-bioinformatics"

@@ -1,0 +1,8 @@
+name: raven_correct
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - raven-assembler=1.8.3
+  - seqtk>=1.3
