@@ -41,9 +41,9 @@ process RACON_ITERATIVE {
 
     # Iterative polishing loop
     for round in \$(seq 1 ${rounds}); do
-        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" >&2
+        echo "==========================================" >&2
         echo "Round \${round}/${rounds}" >&2
-        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" >&2
+        echo "==========================================" >&2
 
         # Alignment with minimap2
         echo "  [1/2] Running minimap2 alignment..." >&2
@@ -77,7 +77,7 @@ process RACON_ITERATIVE {
 
         # Check if racon succeeded
         if [ \$racon_exit -eq 0 ] && [ -s round_\${round}_polished.fasta ]; then
-            echo "  ✓ Racon polishing succeeded" >&2
+            echo "  + Racon polishing succeeded" >&2
             current_draft=\$(realpath round_\${round}_polished.fasta)
             round_status[\${round}]="success"
             total_success=\$((total_success + 1))
@@ -87,7 +87,7 @@ process RACON_ITERATIVE {
             round_sizes[\${round}]=\${seq_len}
             echo "  Polished sequence length: \${seq_len} bp" >&2
         else
-            echo "  ✗ Racon polishing failed (exit code: \$racon_exit)" >&2
+            echo "  X Racon polishing failed (exit code: \$racon_exit)" >&2
             echo "  Using previous draft for this round" >&2
             cp \${current_draft} round_\${round}_polished.fasta
             round_status[\${round}]="failed"
@@ -106,12 +106,12 @@ process RACON_ITERATIVE {
     cp \${current_draft} ${prefix}_polished.fasta
     final_length=\$(awk '/^>/ {next} {total += length(\$0)} END {print total}' ${prefix}_polished.fasta)
 
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" >&2
+    echo "==========================================" >&2
     echo "Polishing complete!" >&2
     echo "  Successful rounds: \${total_success}/${rounds}" >&2
     echo "  Failed rounds: \${total_failed}/${rounds}" >&2
     echo "  Final length: \${final_length} bp" >&2
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" >&2
+    echo "==========================================" >&2
 
     # Generate statistics JSON
     cat <<-EOF > ${prefix}.stats.json

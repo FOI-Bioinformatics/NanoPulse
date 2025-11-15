@@ -112,7 +112,7 @@ process DRAFT_SELECTION {
 \t}
 \tEOF
 
-        echo "✓ Selected draft: \$DRAFT_ID (avg ANI: \$AVG_ANI)" >&2
+        echo "+ Selected draft: \$DRAFT_ID (avg ANI: \$AVG_ANI)" >&2
     fi
 
     # Version tracking

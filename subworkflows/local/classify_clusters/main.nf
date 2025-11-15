@@ -185,9 +185,9 @@ workflow CLASSIFY_CLUSTERS {
 workflow.onComplete {
     if (params.enable_kraken2 || params.enable_blast || params.enable_fastani) {
         log.info """
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        ====================================================================
         Classification Subworkflow Complete!
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        ====================================================================
         """.stripIndent()
     }
 }

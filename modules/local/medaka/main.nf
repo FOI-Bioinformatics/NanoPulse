@@ -45,7 +45,7 @@ process MEDAKA {
 
     # Check if medaka succeeded
     if [ \$medaka_exit -eq 0 ] && [ -f medaka_output/consensus.fasta ]; then
-        echo "✓ Medaka polishing succeeded" >&2
+        echo "+ Medaka polishing succeeded" >&2
 
         # Extract consensus
         cp medaka_output/consensus.fasta ${prefix}_consensus.fasta
@@ -71,7 +71,7 @@ process MEDAKA {
         echo "  Total length: \${total_length} bp" >&2
     else
         # Medaka failed - use draft as fallback
-        echo "✗ Medaka polishing failed (exit code: \$medaka_exit)" >&2
+        echo "X Medaka polishing failed (exit code: \$medaka_exit)" >&2
         echo "  Using draft sequence as consensus (fallback)" >&2
 
         # Create output directory if it doesn't exist

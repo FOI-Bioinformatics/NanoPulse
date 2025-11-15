@@ -85,7 +85,7 @@ process FASTANI_CLASSIFY {
 
     # Check results
     if [ \$FASTANI_EXIT -eq 0 ] && [ -s ${prefix}.ani.txt ]; then
-        echo "✓ FastANI completed successfully" >&2
+        echo "+ FastANI completed successfully" >&2
 
         # Parse results - find best hit
         BEST_HIT=\$(sort -k3 -rn ${prefix}.ani.txt | head -n1)
@@ -133,7 +133,7 @@ process FASTANI_CLASSIFY {
 \tEOF
         fi
     else
-        echo "✗ FastANI failed or no significant matches found" >&2
+        echo "X FastANI failed or no significant matches found" >&2
 
         # Create empty results
         touch ${prefix}.ani.txt

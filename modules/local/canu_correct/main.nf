@@ -1,6 +1,6 @@
 process CANU_CORRECT {
     tag "$meta.id"
-    label 'process_high'
+    label 'process_low'
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -69,7 +69,7 @@ process CANU_CORRECT {
 \t}
 \tEOF
 
-        echo "✓ Canu correction succeeded: \$CORRECTED_READS reads corrected from \$INPUT_READS input" >&2
+        echo "+ Canu correction succeeded: \$CORRECTED_READS reads corrected from \$INPUT_READS input" >&2
     else
         # Correction failed - this is expected for small clusters
         echo "WARNING: Canu correction failed for cluster ${meta.cluster_id} (exit code: \$CANU_EXIT)" >&2

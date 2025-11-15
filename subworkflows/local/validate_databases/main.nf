@@ -23,31 +23,31 @@ workflow VALIDATE_DATABASES {
 
                 if (!hash_file.exists() || !opts_file.exists() || !taxo_file.exists()) {
                     error """
-                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    ====================================================================
                     ERROR: Invalid KRAKEN2 database
-                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    ====================================================================
 
                     Database path: ${db}
 
                     Missing required files:
-                    ${!hash_file.exists() ? "  ✗ hash.k2d" : ""}
-                    ${!opts_file.exists() ? "  ✗ opts.k2d" : ""}
-                    ${!taxo_file.exists() ? "  ✗ taxo.k2d" : ""}
+                    ${!hash_file.exists() ? "  X hash.k2d" : ""}
+                    ${!opts_file.exists() ? "  X opts.k2d" : ""}
+                    ${!taxo_file.exists() ? "  X taxo.k2d" : ""}
 
                     Please ensure you have a complete KRAKEN2 database.
                     Download: https://benlangmead.github.io/aws-indexes/k2
                     """.stripIndent()
                 }
 
-                log.info "✓ KRAKEN2 database validated: ${db}"
+                log.info "+ KRAKEN2 database validated: ${db}"
                 return db
             }
     } else {
         if (params.enable_kraken2) {
             log.warn """
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            ====================================================================
             WARNING: KRAKEN2 enabled but no database provided
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            ====================================================================
 
             KRAKEN2 classification will be SKIPPED.
 
@@ -75,16 +75,16 @@ workflow VALIDATE_DATABASES {
 
                 if (found_exts.size() != required_exts.size()) {
                     error """
-                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    ====================================================================
                     ERROR: Invalid BLAST database
-                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    ====================================================================
 
                     Database: ${db_path}
 
                     Missing required files:
                     ${required_exts.collect { ext ->
                         def exists = file("${db_path}${ext}").exists()
-                        exists ? "  ✓ ${db_name}${ext}" : "  ✗ ${db_name}${ext}"
+                        exists ? "  + ${db_name}${ext}" : "  X ${db_name}${ext}"
                     }.join('\n')}
 
                     Please ensure you have a formatted BLAST database.
@@ -92,7 +92,7 @@ workflow VALIDATE_DATABASES {
                     """.stripIndent()
                 }
 
-                log.info "✓ BLAST database validated: ${db_path}"
+                log.info "+ BLAST database validated: ${db_path}"
                 return file(db_path).parent
             }
 
@@ -107,21 +107,21 @@ workflow VALIDATE_DATABASES {
 
                     if (!has_names || !has_nodes) {
                         error """
-                        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                        ====================================================================
                         ERROR: Invalid BLAST taxonomy database
-                        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                        ====================================================================
 
                         Taxonomy DB: ${params.blast_taxdb}
 
                         Missing required files:
-                        ${has_names ? "  ✓ names.dmp" : "  ✗ names.dmp"}
-                        ${has_nodes ? "  ✓ nodes.dmp" : "  ✗ nodes.dmp"}
+                        ${has_names ? "  + names.dmp" : "  X names.dmp"}
+                        ${has_nodes ? "  + nodes.dmp" : "  X nodes.dmp"}
 
                         Download: update_blastdb.pl --decompress taxdb
                         """.stripIndent()
                     }
 
-                    log.info "✓ BLAST taxonomy database validated: ${params.blast_taxdb}"
+                    log.info "+ BLAST taxonomy database validated: ${params.blast_taxdb}"
                     return file(params.blast_taxdb)
                 }
         } else {
@@ -131,9 +131,9 @@ workflow VALIDATE_DATABASES {
     } else {
         if (params.enable_blast) {
             log.warn """
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            ====================================================================
             WARNING: BLAST enabled but no database provided
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            ====================================================================
 
             BLAST classification will be SKIPPED.
 
@@ -157,9 +157,9 @@ workflow VALIDATE_DATABASES {
 
                 if (n_refs == 0) {
                     error """
-                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    ====================================================================
                     ERROR: No FastANI reference genomes found
-                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    ====================================================================
 
                     Reference directory: ${ref_dir}
 
@@ -169,15 +169,15 @@ workflow VALIDATE_DATABASES {
                     """.stripIndent()
                 }
 
-                log.info "✓ FastANI references validated: ${n_refs} genomes in ${ref_dir}"
+                log.info "+ FastANI references validated: ${n_refs} genomes in ${ref_dir}"
                 return ref_dir
             }
     } else {
         if (params.enable_fastani) {
             log.warn """
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            ====================================================================
             WARNING: FastANI enabled but no references provided
-            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            ====================================================================
 
             FastANI classification will be SKIPPED.
 
