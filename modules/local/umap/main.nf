@@ -13,8 +13,8 @@ process UMAP {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/umap-learn:0.5.3' :
-        'quay.io/biocontainers/umap-learn:0.5.3' }"
+        'https://depot.galaxyproject.org/singularity/umap-learn:0.5.6--py311hca9a8f5_0' :
+        'quay.io/biocontainers/umap-learn:0.5.6--py311hca9a8f5_0' }"
 
     input:
     tuple val(meta), path(kmer_freqs)

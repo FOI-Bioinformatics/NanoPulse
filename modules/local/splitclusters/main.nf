@@ -4,8 +4,8 @@ process SPLITCLUSTERS {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/biopython:1.78' :
-        'biocontainers/biopython:1.78' }"
+        'https://depot.galaxyproject.org/singularity/biopython:1.83--py311h9b8898c_1' :
+        'quay.io/biocontainers/biopython:1.83--py311h9b8898c_1' }"
 
     input:
     tuple val(meta), path(reads), path(cluster_assignments)
