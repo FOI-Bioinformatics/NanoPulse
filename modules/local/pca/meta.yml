@@ -1,0 +1,50 @@
+name: pca
+description: PCA dimensionality reduction for k-mer frequency data
+keywords:
+  - dimensionality reduction
+  - pca
+  - preprocessing
+  - feature extraction
+  - memory optimization
+tools:
+  - sklearn:
+      description: Machine learning library for Python
+      homepage: https://scikit-learn.org/
+      documentation: https://scikit-learn.org/stable/modules/decomposition.html#pca
+      licence: ["BSD-3-Clause"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - kmer_freqs:
+      type: file
+      description: K-mer frequency table (TSV or NPZ sparse matrix format)
+      pattern: "*.{txt.gz,npz}"
+  - n_components:
+      type: integer
+      description: Number of principal components to extract
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - features:
+      type: file
+      description: PCA-reduced feature matrix
+      pattern: "*.pca_features.tsv"
+  - variance_report:
+      type: file
+      description: JSON report of variance explained by each component
+      pattern: "*.variance_explained.json"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@FOI-Bioinformatics"

@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """
-UMAP dimensionality reduction for k-mer frequency vectors
+PaCMAP dimensionality reduction for k-mer frequency vectors
+
+PaCMAP (Pairwise Controlled Manifold Approximation Projection) is a modern alternative
+to UMAP that provides:
+- 2-3x faster computation
+- Better preservation of local and global structure
+- More stable results across runs
+- Better scalability to large datasets
 
 Supports both dense (TSV) and sparse (NPZ) input formats for memory efficiency.
 """
@@ -10,14 +17,14 @@ import sys
 import os
 import numpy as np
 import pandas as pd
-import umap
+import pacmap
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.sparse import load_npz, issparse
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description='Perform UMAP dimensionality reduction on k-mer frequency data'
+        description='Perform PaCMAP dimensionality reduction on k-mer frequency data'
     )
 
     parser.add_argument(
@@ -28,35 +35,36 @@ def parse_args():
     parser.add_argument(
         '-o', '--output',
         required=True,
-        help='Output UMAP coordinates (TSV format)'
+        help='Output PaCMAP coordinates (TSV format)'
     )
     parser.add_argument(
         '-p', '--plot',
-        default='umap_projection.png',
+        default='pacmap_projection.png',
         help='Output plot file (PNG format)'
     )
     parser.add_argument(
         '-n', '--n-components',
         type=int,
         default=3,
-        help='Number of UMAP dimensions [3]'
+        help='Number of PaCMAP dimensions [3]'
     )
     parser.add_argument(
         '--n-neighbors',
         type=int,
         default=15,
-        help='Number of neighbors for UMAP [15]'
+        help='Number of neighbors for PaCMAP [15]'
     )
     parser.add_argument(
-        '--min-dist',
+        '--mn-ratio',
         type=float,
-        default=0.1,
-        help='Minimum distance for UMAP [0.1]'
+        default=0.5,
+        help='Mid-near pairs ratio [0.5]'
     )
     parser.add_argument(
-        '--metric',
-        default='euclidean',
-        help='Distance metric for UMAP [euclidean]'
+        '--fp-ratio',
+        type=float,
+        default=2.0,
+        help='Further pairs ratio [2.0]'
     )
     parser.add_argument(
         '--random-state',
@@ -68,11 +76,6 @@ def parse_args():
         '--verbose',
         action='store_true',
         help='Verbose output'
-    )
-    parser.add_argument(
-        '--low-memory',
-        action='store_true',
-        help='Enable low-memory mode for UMAP (uses sparse matrices efficiently)'
     )
 
     return parser.parse_args()
@@ -118,7 +121,11 @@ def load_sparse_kmer_data(npz_file):
     print(f"Matrix format: {type(sparse_matrix).__name__}", file=sys.stderr)
     print(f"Sparsity: {100 * (1 - sparse_matrix.nnz / (sparse_matrix.shape[0] * sparse_matrix.shape[1])):.2f}%", file=sys.stderr)
 
-    return metadata, sparse_matrix, list(kmer_names)
+    # PaCMAP requires dense arrays, so convert (memory spike but necessary)
+    print(f"Converting to dense array for PaCMAP processing...", file=sys.stderr)
+    dense_matrix = sparse_matrix.toarray()
+
+    return metadata, dense_matrix, list(kmer_names)
 
 def load_kmer_data(filename):
     """
@@ -144,49 +151,66 @@ def load_kmer_data(filename):
 
     return metadata, features, feature_cols
 
-def perform_umap(features, n_components, n_neighbors, min_dist, metric, random_state, verbose, low_memory=False):
+def perform_pacmap(features, n_components, n_neighbors, mn_ratio, fp_ratio, random_state, verbose):
     """
-    Perform UMAP dimensionality reduction.
+    Perform PaCMAP dimensionality reduction.
+
+    PaCMAP parameters:
+    - n_neighbors: Number of nearest neighbors (similar to UMAP)
+    - MN_ratio: Controls mid-near pair generation (0.5 = balanced)
+    - FP_ratio: Controls further pair generation (2.0 = more global structure)
 
     Args:
-        features: Dense or sparse feature matrix
-        low_memory: If True, enables low_memory mode in UMAP (better for sparse matrices)
-    """
-    # Check if input is sparse
-    is_sparse = issparse(features)
-    if is_sparse:
-        print(f"Input is sparse matrix - UMAP will use optimized sparse routines", file=sys.stderr)
+        features: Dense feature matrix
+        n_components: Number of dimensions to reduce to
+        n_neighbors: Number of neighbors for local structure
+        mn_ratio: Mid-near pairs ratio
+        fp_ratio: Further pairs ratio
+        random_state: Random seed
+        verbose: Verbosity level
 
-    reducer = umap.UMAP(
+    Returns:
+        embedding: PaCMAP-transformed data
+        reducer: Fitted PaCMAP object
+    """
+    print(f"\nPerforming PaCMAP dimensionality reduction...", file=sys.stderr)
+
+    reducer = pacmap.PaCMAP(
         n_components=n_components,
         n_neighbors=n_neighbors,
-        min_dist=min_dist,
-        metric=metric,
+        MN_ratio=mn_ratio,
+        FP_ratio=fp_ratio,
         random_state=random_state,
-        verbose=verbose,
-        low_memory=low_memory  # Enable low memory mode for large/sparse datasets
+        verbose=verbose
     )
 
-    # UMAP automatically handles sparse matrices efficiently
+    # Convert DataFrame to numpy if needed
+    if isinstance(features, pd.DataFrame):
+        features = features.values
+
+    # Fit and transform
     embedding = reducer.fit_transform(features)
+
+    print(f"PaCMAP completed successfully!", file=sys.stderr)
 
     return embedding, reducer
 
 def create_output_dataframe(metadata, embedding, n_components):
-    """Create output dataframe with UMAP coordinates."""
-    # Create column names for UMAP dimensions
-    umap_cols = [f"UMAP{i+1}" for i in range(n_components)]
+    """Create output dataframe with PaCMAP coordinates."""
+    # Create column names for PaCMAP dimensions
+    # Use same naming as UMAP for drop-in compatibility
+    pacmap_cols = [f"UMAP{i+1}" for i in range(n_components)]
 
-    # Create DataFrame with UMAP coordinates
-    df_umap = pd.DataFrame(embedding, columns=umap_cols)
+    # Create DataFrame with PaCMAP coordinates
+    df_pacmap = pd.DataFrame(embedding, columns=pacmap_cols)
 
     # Concatenate with metadata
-    output = pd.concat([metadata.reset_index(drop=True), df_umap], axis=1)
+    output = pd.concat([metadata.reset_index(drop=True), df_pacmap], axis=1)
 
     return output
 
-def plot_umap(embedding, output_file, n_components):
-    """Create visualization of UMAP projection."""
+def plot_pacmap(embedding, output_file, n_components):
+    """Create visualization of PaCMAP projection."""
     if n_components >= 2:
         plt.figure(figsize=(12, 10))
 
@@ -203,9 +227,9 @@ def plot_umap(embedding, output_file, n_components):
             cmap='viridis'
         )
 
-        plt.xlabel("UMAP1", fontsize=14)
-        plt.ylabel("UMAP2", fontsize=14)
-        plt.title(f"UMAP Projection of {len(embedding)} reads", fontsize=16)
+        plt.xlabel("PaCMAP1", fontsize=14)
+        plt.ylabel("PaCMAP2", fontsize=14)
+        plt.title(f"PaCMAP Projection of {len(embedding)} reads", fontsize=16)
         plt.colorbar(label='Read index')
 
         plt.tight_layout()
@@ -224,45 +248,44 @@ def main():
     metadata, features, feature_names = load_kmer_data(args.input)
     print(f"Loaded {len(metadata)} reads with {len(feature_names)} features", file=sys.stderr)
 
-    # Perform UMAP
-    print(f"Performing UMAP dimensionality reduction...", file=sys.stderr)
+    # Perform PaCMAP
+    print(f"\nPaCMAP Configuration:", file=sys.stderr)
     print(f"  n_components={args.n_components}", file=sys.stderr)
     print(f"  n_neighbors={args.n_neighbors}", file=sys.stderr)
-    print(f"  min_dist={args.min_dist}", file=sys.stderr)
-    print(f"  metric={args.metric}", file=sys.stderr)
+    print(f"  MN_ratio={args.mn_ratio}", file=sys.stderr)
+    print(f"  FP_ratio={args.fp_ratio}", file=sys.stderr)
     print(f"  random_state={args.random_state}", file=sys.stderr)
 
-    embedding, reducer = perform_umap(
+    embedding, reducer = perform_pacmap(
         features,
         args.n_components,
         args.n_neighbors,
-        args.min_dist,
-        args.metric,
+        args.mn_ratio,
+        args.fp_ratio,
         args.random_state,
-        args.verbose,
-        args.low_memory
+        args.verbose
     )
 
     # Create output DataFrame
     output_df = create_output_dataframe(metadata, embedding, args.n_components)
 
     # Save results
-    print(f"Saving UMAP coordinates to {args.output}...", file=sys.stderr)
+    print(f"\nSaving PaCMAP coordinates to {args.output}...", file=sys.stderr)
     output_df.to_csv(args.output, sep="\t", index=False)
 
     # Create plot
     if args.plot:
         print(f"Creating visualization...", file=sys.stderr)
-        plot_umap(embedding, args.plot, args.n_components)
+        plot_pacmap(embedding, args.plot, args.n_components)
 
-    print("UMAP dimensionality reduction complete!", file=sys.stderr)
+    print("\nPaCMAP dimensionality reduction complete!", file=sys.stderr)
 
     # Print summary statistics
     print("\nSummary:", file=sys.stderr)
     print(f"  Input reads: {len(metadata)}", file=sys.stderr)
     print(f"  Input features: {len(feature_names)}", file=sys.stderr)
     print(f"  Output dimensions: {args.n_components}", file=sys.stderr)
-    print(f"  Variance explained (approx): N/A for UMAP", file=sys.stderr)
+    print(f"  Algorithm: PaCMAP (faster alternative to UMAP)", file=sys.stderr)
 
 if __name__ == "__main__":
     main()

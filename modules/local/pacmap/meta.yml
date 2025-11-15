@@ -1,0 +1,60 @@
+name: pacmap
+description: PaCMAP dimensionality reduction for k-mer frequency data (UMAP alternative)
+keywords:
+  - dimensionality reduction
+  - pacmap
+  - manifold learning
+  - clustering
+  - visualization
+tools:
+  - pacmap:
+      description: Pairwise Controlled Manifold Approximation Projection
+      homepage: https://github.com/YingfanWang/PaCMAP
+      documentation: https://pacmap.readthedocs.io/
+      tool_dev_url: https://github.com/YingfanWang/PaCMAP
+      licence: ["Apache-2.0"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - kmer_freqs:
+      type: file
+      description: K-mer frequency table (TSV or NPZ sparse matrix format)
+      pattern: "*.{txt.gz,npz}"
+  - n_components:
+      type: integer
+      description: Number of PaCMAP dimensions to compute
+  - n_neighbors:
+      type: integer
+      description: Number of neighbors for local structure preservation
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - coords:
+      type: file
+      description: PaCMAP coordinate matrix (named umap_coords.tsv for compatibility)
+      pattern: "*.umap_coords.tsv"
+  - plot:
+      type: file
+      description: Visualization of PaCMAP projection
+      pattern: "*.pacmap_plot.png"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@FOI-Bioinformatics"
+
+notes:
+  - PaCMAP is a drop-in replacement for UMAP with better performance and quality
+  - 2-3x faster than UMAP for large datasets
+  - Better preservation of both local and global structure
+  - Output files use UMAP naming convention for compatibility

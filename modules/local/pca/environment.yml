@@ -1,12 +1,11 @@
-name: kmerfreq
+name: pca
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
   - python>=3.11
-  - biopython>=1.83
-  - tqdm>=4.66
-  - pigz>=2.8
-  - scipy>=1.11
+  - scikit-learn>=1.4
+  - pandas>=2.0
   - numpy>=1.26
+  - scipy>=1.11

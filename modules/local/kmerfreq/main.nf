@@ -12,7 +12,9 @@ process KMERFREQ {
     val kmer_size
 
     output:
-    tuple val(meta), path("*.kmer_freqs.txt.gz"), emit: freqs
+    tuple val(meta), path("*.kmer_freqs.txt.gz"), optional: true, emit: freqs_tsv
+    tuple val(meta), path("kmer_freqs.npz"), optional: true, emit: freqs_npz
+    tuple val(meta), path("kmer_freqs_metadata.npz"), optional: true, emit: freqs_meta
     path "versions.yml"                          , emit: versions
 
     when:
