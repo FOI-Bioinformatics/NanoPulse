@@ -11,3 +11,4 @@ dependencies:
   - scikit-learn>=1.4
   - matplotlib-base>=3.8
   - seaborn>=0.13
+  - psutil>=5.9  # For memory validation

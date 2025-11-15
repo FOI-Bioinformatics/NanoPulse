@@ -1,6 +1,15 @@
 process UMAP {
     tag "$meta.id"
-    label 'process_high_memory'
+    label 'process_high'  // High memory and CPU requirements
+
+    // Memory requirements (5x base memory for UMAP overhead):
+    // - 1k reads × 131k features: ~5.2 GB
+    // - 10k reads × 131k features: ~52 GB
+    // - 50k reads × 131k features: ~260 GB
+    // - 100k reads × 131k features: ~525 GB
+    //
+    // Use --umap_set_size to control input size and memory usage
+    // Recommended: 10k-50k reads for desktop/laptop, 100k for servers
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -26,6 +35,18 @@ process UMAP {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def random_state = task.ext.random_state ?: 42  // Reproducibility
     """
+    # Memory validation: estimate requirements and check available memory
+    # This prevents OOM crashes and provides helpful error messages
+    echo "Checking memory requirements..." >&2
+    umap_memory_check.py \\
+        --input $kmer_freqs \\
+        --safety-factor 5.0 || {
+        echo "ERROR: Insufficient memory for UMAP!" >&2
+        echo "Consider using --umap_set_size to reduce input reads" >&2
+        exit 1
+    }
+
+    # Run UMAP dimensionality reduction
     umap_reduce.py \\
         --input $kmer_freqs \\
         --output ${prefix}.umap_coords.tsv \\
@@ -44,6 +65,7 @@ process UMAP {
         numpy: \$(python -c "import numpy; print(numpy.__version__)")
         pandas: \$(python -c "import pandas; print(pandas.__version__)")
         scikit-learn: \$(python -c "import sklearn; print(sklearn.__version__)")
+        psutil: \$(python -c "import psutil; print(psutil.__version__)")
     END_VERSIONS
     """
 
