@@ -158,7 +158,8 @@ workflow NANOPULSE {
         params.genome_size,
         params.polishing_reads,
         params.racon_rounds,
-        params.medaka_model
+        params.medaka_model,
+        params.skip_racon
     )
     ch_versions = ch_versions.mix(PER_CLUSTER_ASSEMBLY.out.versions)
 

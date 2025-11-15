@@ -45,6 +45,7 @@ workflow PER_CLUSTER_ASSEMBLY {
     polishing_reads     // val: number of reads for correction (default: 100)
     racon_rounds        // val: number of racon rounds (default: 4)
     medaka_model        // val: medaka model (default: "r941_min_high_g303")
+    skip_racon          // val: skip Racon polishing (default: false)
 
     main:
 
@@ -87,7 +88,7 @@ workflow PER_CLUSTER_ASSEMBLY {
 
     //
     // Join draft with corrected reads for polishing
-    // Need both draft and reads for Racon
+    // Need both draft and reads for Racon/Medaka
     //
     ch_draft_and_reads = DRAFT_SELECTION.out.draft
         .join(ch_corrected_reads, by: 0)  // Join on meta
@@ -96,23 +97,36 @@ workflow PER_CLUSTER_ASSEMBLY {
         }
 
     //
-    // MODULE: RACON_ITERATIVE - Iterative polishing with Racon
+    // Conditional: Skip Racon if requested (60-80% faster)
+    // Recent benchmarks show Medaka-only achieves same accuracy as Racon+Medaka
     //
-    RACON_ITERATIVE(
-        ch_draft_and_reads,
-        racon_rounds
-    )
-    ch_versions = ch_versions.mix(RACON_ITERATIVE.out.versions.first())
-    ch_all_stats = ch_all_stats.mix(RACON_ITERATIVE.out.stats)
+    if (!skip_racon) {
+        //
+        // MODULE: RACON_ITERATIVE - Iterative polishing with Racon
+        //
+        log.info "Running Racon polishing (${racon_rounds} rounds)"
+        RACON_ITERATIVE(
+            ch_draft_and_reads,
+            racon_rounds
+        )
+        ch_versions = ch_versions.mix(RACON_ITERATIVE.out.versions.first())
+        ch_all_stats = ch_all_stats.mix(RACON_ITERATIVE.out.stats)
 
-    //
-    // Join polished consensus with corrected reads for Medaka
-    //
-    ch_polished_and_reads = RACON_ITERATIVE.out.polished
-        .join(ch_corrected_reads, by: 0)  // Join on meta
-        .map { meta, polished, corrected_reads ->
-            [meta, polished, corrected_reads]
-        }
+        //
+        // Join polished consensus with corrected reads for Medaka
+        //
+        ch_polished_and_reads = RACON_ITERATIVE.out.polished
+            .join(ch_corrected_reads, by: 0)  // Join on meta
+            .map { meta, polished, corrected_reads ->
+                [meta, polished, corrected_reads]
+            }
+    } else {
+        //
+        // Skip Racon - use draft directly for Medaka
+        //
+        log.info "Skipping Racon polishing (skip_racon=true) - using draft for Medaka"
+        ch_polished_and_reads = ch_draft_and_reads
+    }
 
     //
     // MODULE: MEDAKA - Neural network polishing
