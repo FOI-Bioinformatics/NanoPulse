@@ -132,7 +132,7 @@ workflow NANOPULSE {
         .transpose()  // Split list into individual emissions
         .map { meta, cluster_file ->
             // Extract cluster ID from filename
-            def cluster_id = cluster_file.baseName.replaceAll('cluster_', '')
+            def cluster_id = cluster_file.simpleName.replaceAll('cluster_', '')
 
             // Create new meta with cluster_id
             def cluster_meta = meta + [cluster_id: cluster_id.toInteger()]
