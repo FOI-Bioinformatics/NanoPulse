@@ -9,6 +9,7 @@ include { FASTQC                  } from '../modules/nf-core/fastqc/main'
 include { NANOPLOT                } from '../modules/nf-core/nanoplot/main'
 
 // Clustering modules
+include { SEQTK_SAMPLE            } from '../modules/local/seqtk_sample/main'
 include { KMERFREQ                } from '../modules/local/kmerfreq/main'
 include { UMAP                    } from '../modules/local/umap/main'
 include { HDBSCAN                 } from '../modules/local/hdbscan/main'
@@ -84,10 +85,19 @@ workflow NANOPULSE {
     VALIDATE_DATABASES()
 
     //
-    // STEP 1: K-mer frequency calculation
+    // STEP 1: Subsample reads for clustering (if needed)
+    //
+    SEQTK_SAMPLE(
+        ch_reads,
+        params.umap_set_size
+    )
+    ch_versions = ch_versions.mix(SEQTK_SAMPLE.out.versions.first())
+
+    //
+    // STEP 2: K-mer frequency calculation
     //
     KMERFREQ(
-        ch_reads,
+        SEQTK_SAMPLE.out.reads,
         params.kmer_size
     )
     ch_versions = ch_versions.mix(KMERFREQ.out.versions.first())

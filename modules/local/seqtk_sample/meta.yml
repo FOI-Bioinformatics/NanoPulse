@@ -1,0 +1,42 @@
+name: seqtk_sample
+description: Subsample FASTQ reads using seqtk with intelligent fallback
+keywords:
+  - subsampling
+  - fastq
+  - seqtk
+  - optimization
+tools:
+  - seqtk:
+      description: Toolkit for processing sequences in FASTA/FASTQ format
+      homepage: https://github.com/lh3/seqtk
+      documentation: https://github.com/lh3/seqtk
+      tool_dev_url: https://github.com/lh3/seqtk
+      licence: ["MIT"]
+
+input:
+  - meta:
+      type: map
+      description: Groovy Map containing sample information (e.g. [ id:'sample1' ])
+  - reads:
+      type: file
+      description: Input FASTQ file
+      pattern: "*.{fastq,fq,fastq.gz,fq.gz}"
+  - sample_size:
+      type: integer
+      description: Target number of reads to subsample. If input has fewer reads, all reads are used.
+
+output:
+  - meta:
+      type: map
+      description: Groovy Map containing sample information
+  - reads:
+      type: file
+      description: Subsampled FASTQ file
+      pattern: "*.sampled.fastq"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@FOI-Bioinformatics"
