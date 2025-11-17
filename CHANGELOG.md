@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nextflow requirement >= 25.10.0
 - Parameter validation with nf-schema
 - Modular DSL2 structure with:
-  - 13 local modules (kmerfreq, umap, hdbscan, splitclusters, canu_correct, draft_selection, racon_iterative, medaka, classify_consensus, fastani_classify, getabundances, joinconsensus, plotresults)
+  - 12 local modules (kmerfreq, pca, pacmap, umap, hdbscan, splitclusters, raven_correct, draft_selection, racon_iterative, medaka, classify_consensus, getabundances, joinconsensus, plotresults)
   - 4 local subworkflows (per_cluster_assembly, classify_clusters, validate_databases, utils_nfcore_nanopulse_pipeline)
   - 3 nf-core modules (fastqc, multiqc, nanoplot)
   - 1 nf-core subworkflow (utils_nfcore_pipeline)
@@ -73,6 +73,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - NANOPULSE_DSL2_STATUS.md
   - NanoPulse_vs_Pike_Comparison.md
   - TESTING_STATUS.md
+- **Code cleanup** (2025-11-17):
+  - `modules/local/fastani_classify/` - FastANI amplicon classification (scientifically invalid for short amplicons)
+  - `modules/local/canu_correct/` - Canu error correction module (dead code, never called)
+  - FastANI classification parameters: `enable_fastani`, `fastani_ref_dir`
+  - Deprecated classification parameters: `db`, `tax`
 
 ### Fixed
 

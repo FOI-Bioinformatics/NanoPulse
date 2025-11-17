@@ -1,9 +1,0 @@
-name: canu_correct
-channels:
-  - conda-forge
-  - bioconda
-  - defaults
-dependencies:
-  - canu=2.2
-  - bc=1.07.1
-  - pigz>=2.8

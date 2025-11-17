@@ -14,7 +14,6 @@
 // include { KRAKEN2_KRAKEN2 } from '../../../modules/nf-core/kraken2/kraken2/main'
 // include { BLAST_BLASTN    } from '../../../modules/nf-core/blast/blastn/main'
 
-include { FASTANI_CLASSIFY   } from '../../../modules/local/fastani_classify/main'
 include { CLASSIFY_CONSENSUS } from '../../../modules/local/classify_consensus/main'
 
 /*
@@ -26,7 +25,6 @@ include { CLASSIFY_CONSENSUS } from '../../../modules/local/classify_consensus/m
         Taxonomic classification of consensus sequences using multiple classifiers:
         - KRAKEN2: k-mer based classification
         - BLAST: alignment-based classification
-        - FastANI: ANI-based classification
         All results are combined into consensus classification.
 
     Input:
@@ -34,7 +32,6 @@ include { CLASSIFY_CONSENSUS } from '../../../modules/local/classify_consensus/m
         kraken2_db: KRAKEN2 database path
         blast_db: BLAST database path
         blast_tax_db: BLAST taxonomy database path
-        fastani_refs: FastANI reference genomes path
 
     Output:
         classification: Final classification CSV
@@ -51,7 +48,6 @@ workflow CLASSIFY_CLUSTERS {
     kraken2_db       // channel: path to kraken2 database
     blast_db         // channel: path to blast database
     blast_tax_db     // channel: path to blast taxonomy database
-    fastani_refs     // channel: path to FastANI reference genomes
     use_probabilistic_classification  // val: enable probabilistic EM classification (default: false)
 
     main:
@@ -117,25 +113,6 @@ workflow CLASSIFY_CLUSTERS {
     */
 
     //
-    // Run FastANI if enabled and references provided
-    //
-    if (params.enable_fastani) {
-        FASTANI_CLASSIFY(
-            ch_consensus_branched.valid,
-            fastani_refs
-        )
-
-        ch_classifications = ch_classifications.mix(
-            FASTANI_CLASSIFY.out.results
-                .map { meta, results ->
-                    [meta, 'fastani', results]
-                }
-        )
-
-        ch_versions = ch_versions.mix(FASTANI_CLASSIFY.out.versions.first())
-    }
-
-    //
     // Group classifications by meta and combine
     //
     ch_classifications
@@ -167,16 +144,15 @@ workflow CLASSIFY_CLUSTERS {
     ch_versions = ch_versions.mix(CLASSIFY_CONSENSUS.out.versions.first().ifEmpty([]))
 
     emit:
-    classification = params.enable_kraken2 || params.enable_blast || params.enable_fastani ?
+    classification = params.enable_kraken2 || params.enable_blast ?
                      CLASSIFY_CONSENSUS.out.classification : Channel.empty()
-    json          = params.enable_kraken2 || params.enable_blast || params.enable_fastani ?
+    json          = params.enable_kraken2 || params.enable_blast ?
                     CLASSIFY_CONSENSUS.out.json : Channel.empty()
-    combined      = params.enable_kraken2 || params.enable_blast || params.enable_fastani ?
+    combined      = params.enable_kraken2 || params.enable_blast ?
                     CLASSIFY_CONSENSUS.out.combined : Channel.empty()
     // Individual classifier outputs
     // kraken2       = params.enable_kraken2 ? KRAKEN2_KRAKEN2.out.report : Channel.empty()
     // blast         = params.enable_blast ? BLAST_BLASTN.out.txt : Channel.empty()
-    fastani       = params.enable_fastani ? FASTANI_CLASSIFY.out.results : Channel.empty()
     versions      = ch_versions
 }
 
@@ -187,7 +163,7 @@ workflow CLASSIFY_CLUSTERS {
 */
 
 workflow.onComplete {
-    if (params.enable_kraken2 || params.enable_blast || params.enable_fastani) {
+    if (params.enable_kraken2 || params.enable_blast) {
         log.info """
         ====================================================================
         Classification Subworkflow Complete!

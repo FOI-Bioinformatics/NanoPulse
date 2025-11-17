@@ -74,10 +74,10 @@ The pipeline has been thoroughly tested with real ONT data and fully optimized f
 - ✅ Achieved 87.6% nf-core compliance (211/241 tests)
 - ✅ Removed all legacy DSL1 artifacts
 
-**Modules Created** (13 local):
-- kmerfreq, umap, hdbscan, splitclusters
-- canu_correct, draft_selection, racon_iterative, medaka
-- classify_consensus, fastani_classify
+**Modules Created** (12 local):
+- kmerfreq, umap, pacmap, hdbscan, splitclusters
+- raven_correct, draft_selection, racon_iterative, medaka
+- classify_consensus
 - joinconsensus, getabundances, plotresults
 
 **Subworkflows Created** (4):
@@ -245,14 +245,14 @@ fi
    - Replaced `gzip` with `pigz -p $task.cpus -c` in compression
    - Updated stub test to use pigz
 
-2. **CANU_CORRECT Module**:
-   - Added pigz>=2.8 to `modules/local/canu_correct/environment.yml`
+2. **RAVEN_CORRECT Module** (Note: Originally documented as CANU_CORRECT, but Canu was never used - Raven is the actual assembler):
+   - Added pigz>=2.8 to `modules/local/raven_correct/environment.yml`
    - Replaced `gunzip` with `pigz -d -p $task.cpus` for decompression
-   - Parallel decompression of Canu correctedReads.fasta.gz
+   - Parallel decompression of Raven correctedReads.fasta.gz
 
 **Impact**:
 - **Compression**: 2-4x speedup (linear scaling with CPU cores)
-- **Decompression**: 2-4x speedup for Canu output processing
+- **Decompression**: 2-4x speedup for Raven output processing
 - **Resource Efficiency**: Better CPU utilization during I/O operations
 
 **Combined Phase 5 + Phase 6 Results**:
@@ -298,7 +298,7 @@ withName: 'SPLITCLUSTERS' {
     ]
 }
 
-withName: 'CANU_CORRECT' {
+withName: 'RAVEN_CORRECT' {
     publishDir = [
         enabled: false  // Disable - intermediate files, only used for draft selection
     ]
@@ -313,17 +313,17 @@ withName: 'DRAFT_SELECTION' {
 
 **What's Still Published** (user-relevant outputs):
 - ✅ QC reports (FastQC, NanoPlot, MultiQC)
-- ✅ UMAP coordinates and plots (clustering visualization)
+- ✅ UMAP/PaCMAP coordinates and plots (clustering visualization)
 - ✅ HDBSCAN cluster assignments and statistics
 - ✅ Final consensus sequences (Medaka output)
-- ✅ Classification results (BLAST, Kraken2, FastANI)
+- ✅ Classification results (BLAST, Kraken2)
 - ✅ Abundance tables and summary reports
 - ✅ Final plots and visualizations
 
 **What's No Longer Published** (intermediate files):
-- ❌ K-mer frequency tables (large, only for UMAP input)
+- ❌ K-mer frequency tables (large, only for dimensionality reduction input)
 - ❌ Individual cluster FASTQ files (only for assembly input)
-- ❌ Canu corrected reads (only for draft selection)
+- ❌ Raven corrected reads (only for draft selection)
 - ❌ Draft sequences (only for Racon polishing)
 
 **Measured Impact**:
@@ -1017,8 +1017,8 @@ main.nf
 21. plotresults - Generate visualizations with confidence color-coding (Phase 11)
 
 **Subworkflows (4):**
-1. per_cluster_assembly - Complete assembly pipeline (Canu → Draft → Racon → Medaka)
-2. classify_clusters - Multi-classifier support (BLAST, Kraken2, FastANI)
+1. per_cluster_assembly - Complete assembly pipeline (Raven → Draft → Racon → Medaka)
+2. classify_clusters - Multi-classifier support (BLAST, Kraken2)
 3. validate_databases - Database validation and setup
 4. utils_nfcore_nanopulse_pipeline - nf-core utility functions
 
@@ -1034,24 +1034,25 @@ Input FASTQ
     ↓
 SEQTK_SAMPLE (intelligent subsampling, default: 100k reads)
     ↓
-KMERFREQ (k=9, gzip compressed output)
+KMERFREQ (k=9, NPZ sparse matrix output)
     ↓
-UMAP (3D, neighbors=15, min_dist=0.1)
+PCA (optional, 50 components, 99% variance)
+    ↓
+UMAP/PACMAP (3D dimensionality reduction, switchable via dimreduction_algorithm parameter)
     ↓
 HDBSCAN (min_cluster_size=50, epsilon=0.5)
     ↓
 SPLITCLUSTERS
     ↓
 PER_CLUSTER_ASSEMBLY
-    ├─ CANU_CORRECT (error correction, pigz decompression)
-    ├─ DRAFT_SELECTION (fastANI)
-    ├─ RACON_ITERATIVE (4 rounds)
+    ├─ RAVEN_CORRECT (assembly and error correction)
+    ├─ DRAFT_SELECTION (fastANI read-to-read comparison)
+    ├─ RACON_ITERATIVE (4 rounds, optional via skip_racon)
     └─ MEDAKA (neural network polishing)
     ↓
 CLASSIFY_CLUSTERS
     ├─ BLAST (optional)
-    ├─ KRAKEN2 (optional)
-    └─ FASTANI (optional)
+    └─ KRAKEN2 (optional)
     ↓
 JOINCONSENSUS (aggregate results)
     ↓

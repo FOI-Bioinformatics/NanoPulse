@@ -17,7 +17,7 @@ NanoPulse is a production-ready Nextflow pipeline for species-level analysis of 
 - **Updated dependencies** - All tools updated to latest versions (Nextflow 25.10.0+)
 - **Comprehensive testing** - 62/79 tests passing (78.5% coverage)
 - **General amplicon support** - 16S, 18S, ITS, and other amplicon types
-- **Multiple classifiers** - Kraken2, BLAST, and FastANI support
+- **Multiple classifiers** - Kraken2 and BLAST support
 - **Active maintenance** - Ongoing development and bug fixes
 
 ### Relationship to NanoCLUST
@@ -33,7 +33,7 @@ NanoPulse is based on the excellent [NanoCLUST pipeline](https://github.com/geno
 - Updated tool versions (all 38 dependencies)
 - Real-world data validation (5,147 ONT reads tested)
 - nf-core best practices implementation
-- Multiple classification backends (Kraken2, FastANI)
+- Multiple classification backends (Kraken2)
 - Enhanced QC reporting (NanoPlot)
 
 ## Pipeline Overview
@@ -44,14 +44,13 @@ The pipeline performs the following steps:
 2. **UMAP dimensionality reduction** - Reduce k-mer space to 3D
 3. **HDBSCAN clustering** - Identify read clusters
 4. **Per-cluster assembly** - Generate consensus sequences:
-   - Canu error correction
+   - Raven error correction
    - FastANI draft selection
    - Racon polishing (4 rounds)
    - Medaka neural network polishing
 5. **Taxonomic classification** - Optional classifiers:
    - BLAST against NCBI databases
    - Kraken2 classification
-   - FastANI species identification
 6. **Abundance calculation** - Generate abundance tables and diversity metrics
 7. **Visualization** - Interactive HTML reports with UMAP plots
 
@@ -98,7 +97,6 @@ nextflow run FOI-Bioinformatics/NanoPulse \
     --input samplesheet.csv \
     --outdir results \
     --enable_blast false \
-    --enable_fastani false \
     --enable_kraken2 false
 ```
 
@@ -126,7 +124,7 @@ nextflow run FOI-Bioinformatics/NanoPulse \
     --blast_taxdb db/taxdb
 ```
 
-#### 4. Run with All Classifiers
+#### 4. Run with Kraken2 Classification
 
 ```bash
 nextflow run FOI-Bioinformatics/NanoPulse \
@@ -137,9 +135,7 @@ nextflow run FOI-Bioinformatics/NanoPulse \
     --blast_db /path/to/blast/db \
     --blast_taxdb /path/to/taxdb \
     --enable_kraken2 true \
-    --kraken2_db /path/to/kraken2/db \
-    --enable_fastani true \
-    --fastani_ref_dir /path/to/reference/genomes
+    --kraken2_db /path/to/kraken2/db
 ```
 
 ## Key Parameters
@@ -154,8 +150,6 @@ nextflow run FOI-Bioinformatics/NanoPulse \
 - `--blast_taxdb` - Path to BLAST taxonomy database
 - `--enable_kraken2` - Enable Kraken2 classification (default: `false`)
 - `--kraken2_db` - Path to Kraken2 database
-- `--enable_fastani` - Enable FastANI classification (default: `true`)
-- `--fastani_ref_dir` - Directory with reference genomes
 
 ### Clustering Parameters
 - `--kmer_size` - K-mer size for feature extraction (default: `9`)
