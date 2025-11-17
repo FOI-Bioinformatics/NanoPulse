@@ -114,7 +114,7 @@ Minimum number of reads necessary to call a cluster. Note that sensitivity decre
 ## Polishing parameters
 
 #### `--polishing_reads` (100)
-Numbers of reads used in the canu, racon and medaka polishing steps.
+Numbers of reads used in the raven, racon and medaka polishing steps.
 
 ## Taxonomic and taxdb databases 
 

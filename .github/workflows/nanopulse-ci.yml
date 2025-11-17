@@ -224,7 +224,6 @@ jobs:
             --input test_datasets/samplesheet_mock4.csv \
             --outdir test_results \
             --enable_blast false \
-            --enable_fastani false \
             --enable_kraken2 false
 
       - name: Validate outputs

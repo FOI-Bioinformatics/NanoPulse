@@ -277,8 +277,8 @@ nextflow run . \
     # Classification databases
     --enable_blast true \
     --blast_db /path/to/nt \
-    --enable_fastani true \
-    --fastani_ref_dir /path/to/16S_refs \
+    --enable_blast true \
+     \
     \
     # Execution profile
     --profile conda
@@ -390,7 +390,7 @@ phylotree_alignment_method = 'auto'    # Fast alignment
 --novelty_threshold 0.3
 
 # Use multiple classification methods
---enable_blast true --enable_fastani true
+--enable_blast true --enable_blast true
 ```
 
 ### Issue: Too many novel sequences

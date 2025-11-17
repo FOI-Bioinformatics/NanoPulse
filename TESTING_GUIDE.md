@@ -164,7 +164,7 @@ Status: Production-ready, all tests pass in correct environment
 - DRAFT_SELECTION (requires: fastANI)
 - RACON_ITERATIVE (requires: racon, minimap2)
 - MEDAKA (requires: medaka)
-- CANU_CORRECT (requires: canu)
+- RAVEN_CORRECT (requires: raven)
 - FASTQC (requires: fastqc)
 
 **Total**: 21 tests

@@ -8,7 +8,7 @@ keywords:
   - clustering
 
 components:
-  - canu_correct
+  - raven_correct
   - draft_selection
   - racon_iterative
   - medaka
@@ -23,11 +23,11 @@ input:
   - genome_size:
       type: string
       description: |
-        Expected genome/amplicon size for Canu
+        Expected genome/amplicon size for Raven
         Examples: "1.5k" for 16S rRNA, "1.8k" for 18S rRNA
   - polishing_reads:
       type: integer
-      description: "Number of reads to use for Canu correction (default: 100)"
+      description: "Number of reads to use for Raven correction (default: 100)"
   - racon_rounds:
       type: integer
       description: "Number of iterative Racon polishing rounds (default: 4)"
@@ -60,7 +60,7 @@ output:
 notes: |
   This subworkflow implements the complete per-cluster assembly pipeline:
 
-  1. **CANU_CORRECT**: Read correction using Canu's correction algorithm
+  1. **RAVEN_CORRECT**: Read correction using Raven's correction algorithm
      - Subsets reads to polishing_reads count
      - May fail for small clusters (expected behavior)
      - Failed clusters are filtered out
@@ -81,7 +81,7 @@ notes: |
 
   Channel flow:
   ```
-  ch_cluster_reads → CANU_CORRECT → filter → DRAFT_SELECTION
+  ch_cluster_reads → RAVEN_CORRECT → filter → DRAFT_SELECTION
                           ↓                          ↓
                      ch_corrected ←── join ←─────────┘
                           ↓

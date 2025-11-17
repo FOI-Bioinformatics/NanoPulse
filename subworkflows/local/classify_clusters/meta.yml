@@ -5,13 +5,11 @@ keywords:
   - taxonomy
   - kraken2
   - blast
-  - fastani
   - consensus
 
 components:
   - kraken2/kraken2
   - blast/blastn
-  - fastani_classify
   - classify_consensus
 
 input:
@@ -29,9 +27,6 @@ input:
   - blast_tax_db:
       type: channel
       description: BLAST taxonomy database directory
-  - fastani_refs:
-      type: channel
-      description: FastANI reference genomes directory
 
 output:
   - classification:
@@ -49,11 +44,6 @@ output:
       description: |
         Human-readable combined results
         Structure: [val(meta), path(combined.txt)]
-  - fastani:
-      type: channel
-      description: |
-        FastANI individual results
-        Structure: [val(meta), path(ani.txt)]
   - versions:
       type: channel
       description: Software versions from all classifiers
@@ -81,7 +71,7 @@ notes: |
 
   **Result Combination**:
   - CLASSIFY_CONSENSUS module combines all results
-  - Priority: BLAST > KRAKEN2 > FastANI
+  - Priority: BLAST > KRAKEN2
   - Confidence calculated based on classifier agreement
 
   **Graceful Degradation**:
@@ -95,7 +85,6 @@ notes: |
   ```
   params.enable_kraken2 = true
   params.enable_blast = true
-  params.enable_fastani = false
   ```
 
   Provide databases:
@@ -103,7 +92,6 @@ notes: |
   params.kraken2_db = '/path/to/kraken2_db'
   params.blast_db = '/path/to/blast_db'
   params.blast_taxdb = '/path/to/taxdb'
-  params.fastani_ref_dir = '/path/to/references'
   ```
 
   ## Output Structure
@@ -116,7 +104,6 @@ notes: |
           sample_001_cluster0_classification.csv
           sample_001_cluster0_classification.json
           sample_001_cluster0_combined.txt
-          sample_001_cluster0.ani.txt
       cluster_1/
         classification/
           ...

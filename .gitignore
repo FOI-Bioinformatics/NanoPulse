@@ -12,6 +12,7 @@ work/
 testing/
 testing_*/
 test_results*/
+.nf-test*
 
 # Output directories
 data/

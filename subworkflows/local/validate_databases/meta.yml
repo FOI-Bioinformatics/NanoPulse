@@ -1,12 +1,11 @@
 name: validate_databases
-description: Validate and prepare classification databases (KRAKEN2, BLAST, FastANI)
+description: Validate and prepare classification databases (KRAKEN2, BLAST)
 keywords:
   - validation
   - databases
   - classification
   - kraken2
   - blast
-  - fastani
 
 components: []
 
@@ -17,10 +16,8 @@ input:
         - params.kraken2_db: Path to KRAKEN2 database directory
         - params.blast_db: Path to BLAST database (base name)
         - params.blast_taxdb: Path to BLAST taxonomy database directory
-        - params.fastani_ref_dir: Path to FastANI reference genomes directory
         - params.enable_kraken2: Enable KRAKEN2 classification
         - params.enable_blast: Enable BLAST classification
-        - params.enable_fastani: Enable FastANI classification
 
 output:
   - kraken2_db:
@@ -32,9 +29,6 @@ output:
   - blast_tax_db:
       type: channel
       description: Validated BLAST taxonomy database directory (empty if not provided)
-  - fastani_refs:
-      type: channel
-      description: Validated FastANI reference directory (empty if not provided)
   - versions:
       type: channel
       description: Software versions
@@ -49,10 +43,6 @@ notes: |
   **BLAST Database Validation**:
   - Checks for required files: .nhr, .nin, .nsq
   - Optionally validates taxonomy database (names.dmp, nodes.dmp)
-
-  **FastANI Reference Validation**:
-  - Checks for FASTA files in reference directory
-  - Counts available reference genomes
 
   **Graceful Degradation**:
   - If database missing but classifier enabled: warning (skip classifier)
