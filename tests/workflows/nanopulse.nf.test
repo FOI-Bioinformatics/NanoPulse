@@ -1,0 +1,498 @@
+nextflow_workflow {
+
+    name "Integration tests for NANOPULSE workflow"
+    script "../../workflows/nanopulse.nf"
+    workflow "NANOPULSE"
+
+    tag "workflows"
+    tag "integration"
+    tag "nanopulse"
+
+    // ===================================================================================
+    // TEST 1: Small dataset (100 reads, 3 clusters) - Fast smoke test (STUB MODE)
+    // ===================================================================================
+    test("NANOPULSE - small dataset (100 reads, 3 clusters)") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                // Create samplesheet channel with explicit paths
+                def meta = [id: 'test_small', single_end: true]
+                def reads = file("${projectDir}/tests/testdata/integration/small_100reads.fastq", checkIfExists: true)
+
+                ch_samplesheet = Channel.of([meta, reads])
+
+                input[0] = ch_samplesheet
+                """
+            }
+
+            params {
+                // Pipeline parameters
+                outdir = "\${launchDir}/test_output"
+
+                // Disable classification for speed
+                enable_blast = false
+                enable_fastani = false
+                enable_kraken2 = false
+
+                // Disable QC for speed
+                multiqc = false
+
+                // Clustering parameters
+                kmer_size = 9
+                umap_set_size = 100  // Process all reads
+                umap_dimensions = 3
+                umap_neighbors = 15
+                umap_min_dist = 0.1
+                min_cluster_size = 10  // Lower for small dataset
+                min_samples = 3
+                cluster_sel_epsilon = 0.5
+
+                // Assembly parameters
+                genome_size = "1.5k"
+                polishing_reads = 50
+                racon_rounds = 2  // Reduced for speed
+                medaka_model = "r941_min_high_g303"
+                skip_racon = false
+
+                // Phase 2 optimizations - NPZ format (default)
+                enable_pca = true
+                pca_n_components = 50
+                dimreduction_algorithm = "pacmap"
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert workflow.out.consensus },
+                { assert workflow.out.annotations },
+                { assert workflow.out.abundances },
+                { assert workflow.out.diversity },
+                { assert workflow.out.plots },
+                { assert workflow.out.html_report },
+
+                // Verify outputs exist
+                { assert workflow.out.consensus.size() == 1 },
+                { assert workflow.out.annotations.size() == 1 },
+                { assert workflow.out.abundances.size() == 1 },
+
+                // Snapshot key outputs for regression testing
+                { assert snapshot(
+                    workflow.out.versions
+                ).match("small_dataset_versions") }
+            )
+        }
+    }
+
+    // ===================================================================================
+    // TEST 2: Medium dataset (500 reads, 5 clusters) - Standard workflow (STUB MODE)
+    // ===================================================================================
+    test("NANOPULSE - medium dataset (500 reads, 5 clusters)") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                def meta = [id: 'test_medium', single_end: true]
+                def reads = file("${projectDir}/tests/testdata/integration/medium_500reads.fastq", checkIfExists: true)
+
+                ch_samplesheet = Channel.of([meta, reads])
+
+                input[0] = ch_samplesheet
+                """
+            }
+
+            params {
+                outdir = "\${launchDir}/test_output"
+
+                // Disable classification
+                enable_blast = false
+                enable_fastani = false
+                enable_kraken2 = false
+                multiqc = false
+
+                // Standard parameters
+                kmer_size = 9
+                umap_set_size = 500
+                min_cluster_size = 20
+                min_samples = 5
+                umap_dimensions = 3
+                umap_neighbors = 15
+                umap_min_dist = 0.1
+
+                // Assembly
+                genome_size = "1.5k"
+                polishing_reads = 100
+                racon_rounds = 2
+                medaka_model = "r941_min_high_g303"
+                skip_racon = false
+
+                // Phase 2 optimizations enabled
+                enable_pca = true
+                pca_n_components = 50
+                dimreduction_algorithm = "pacmap"
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert workflow.out.consensus.size() == 1 },
+                { assert workflow.out.abundances.size() == 1 },
+                { assert snapshot(
+                    workflow.out.versions
+                ).match("medium_dataset_versions") }
+            )
+        }
+    }
+
+    // ===================================================================================
+    // TEST 3: Single cluster scenario - Edge case (STUB MODE)
+    // ===================================================================================
+    test("NANOPULSE - single cluster dataset (200 reads)") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                def meta = [id: 'test_single', single_end: true]
+                def reads = file("${projectDir}/tests/testdata/integration/single_cluster_200reads.fastq", checkIfExists: true)
+
+                ch_samplesheet = Channel.of([meta, reads])
+
+                input[0] = ch_samplesheet
+                """
+            }
+
+            params {
+                outdir = "\${launchDir}/test_output"
+                enable_blast = false
+                enable_fastani = false
+                enable_kraken2 = false
+                multiqc = false
+
+                kmer_size = 9
+                umap_set_size = 200
+                min_cluster_size = 50
+                min_samples = 10
+                umap_dimensions = 3
+                umap_neighbors = 15
+                umap_min_dist = 0.1
+
+                genome_size = "1.5k"
+                polishing_reads = 100
+                racon_rounds = 2
+                medaka_model = "r941_min_high_g303"
+                skip_racon = false
+
+                // Phase 2 optimizations enabled
+                enable_pca = true
+                pca_n_components = 50
+                dimreduction_algorithm = "pacmap"
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                // Single cluster should produce single consensus
+                { assert workflow.out.consensus.size() == 1 },
+                { assert snapshot(
+                    workflow.out.versions
+                ).match("single_cluster_versions") }
+            )
+        }
+    }
+
+    // ===================================================================================
+    // TEST 4: Multi-sample processing - Parallelization test
+    // ===================================================================================
+    test("NANOPULSE - multi-sample (2 samples)") {
+
+        options "-stub"
+
+
+        when {
+            workflow {
+                """
+                ch_samplesheet = Channel.of(
+                    [[id: 'sample_a', single_end: true], file("${projectDir}/tests/testdata/integration/small_100reads.fastq", checkIfExists: true)],
+                    [[id: 'sample_b', single_end: true], file("${projectDir}/tests/testdata/integration/medium_500reads.fastq", checkIfExists: true)]
+                )
+
+                input[0] = ch_samplesheet
+                """
+            }
+
+            params {
+                outdir = "\${launchDir}/test_output"
+                enable_blast = false
+                enable_fastani = false
+                enable_kraken2 = false
+                multiqc = false
+
+                kmer_size = 9
+                umap_set_size = 500
+                min_cluster_size = 10
+                min_samples = 3
+
+                genome_size = "1.5k"
+                polishing_reads = 50
+                racon_rounds = 2
+                medaka_model = "r941_min_high_g303"
+                skip_racon = false
+
+                // Phase 2 optimizations enabled
+                enable_pca = true
+                pca_n_components = 50
+                dimreduction_algorithm = "pacmap"
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                // Should have outputs for both samples
+                { assert workflow.out.consensus.size() == 2 },
+                { assert workflow.out.abundances.size() == 2 },
+                { assert snapshot(
+                    workflow.out.versions
+                ).match("multi_sample_versions") }
+            )
+        }
+    }
+
+    // ===================================================================================
+    // TEST 5: UMAP vs PaCMAP comparison - Algorithm validation
+    // ===================================================================================
+    test("NANOPULSE - UMAP algorithm") {
+
+        options "-stub"
+
+
+        when {
+            workflow {
+                """
+                def meta = [id: 'test_umap', single_end: true]
+                def reads = file("${projectDir}/tests/testdata/integration/small_100reads.fastq", checkIfExists: true)
+
+                ch_samplesheet = Channel.of([meta, reads])
+
+                input[0] = ch_samplesheet
+                """
+            }
+
+            params {
+                outdir = "\${launchDir}/test_output"
+                enable_blast = false
+                enable_fastani = false
+                enable_kraken2 = false
+                multiqc = false
+
+                kmer_size = 9
+                umap_set_size = 100
+                min_cluster_size = 10
+                min_samples = 3
+
+                genome_size = "1.5k"
+                polishing_reads = 50
+                racon_rounds = 2
+                medaka_model = "r941_min_high_g303"
+                skip_racon = false
+
+                // Use UMAP instead of PaCMAP
+                enable_pca = true
+                pca_n_components = 50
+                dimreduction_algorithm = "umap"
+                umap_dimensions = 3
+                umap_neighbors = 15
+                umap_min_dist = 0.1
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert workflow.out.consensus.size() == 1 },
+                { assert snapshot(
+                    workflow.out.versions
+                ).match("umap_algorithm_versions") }
+            )
+        }
+    }
+
+    // ===================================================================================
+    // TEST 6: Without PCA preprocessing - Baseline comparison
+    // ===================================================================================
+    test("NANOPULSE - without PCA preprocessing") {
+
+        options "-stub"
+
+
+        when {
+            workflow {
+                """
+                def meta = [id: 'test_no_pca', single_end: true]
+                def reads = file("${projectDir}/tests/testdata/integration/small_100reads.fastq", checkIfExists: true)
+
+                ch_samplesheet = Channel.of([meta, reads])
+
+                input[0] = ch_samplesheet
+                """
+            }
+
+            params {
+                outdir = "\${launchDir}/test_output"
+                enable_blast = false
+                enable_fastani = false
+                enable_kraken2 = false
+                multiqc = false
+
+                kmer_size = 9
+                umap_set_size = 100
+                min_cluster_size = 10
+                min_samples = 3
+
+                genome_size = "1.5k"
+                polishing_reads = 50
+                racon_rounds = 2
+                medaka_model = "r941_min_high_g303"
+                skip_racon = false
+
+                // Disable PCA - use raw k-mer features with TSV format
+                enable_pca = false
+                kmer_output_format = 'tsv'  // Explicitly use TSV when PCA disabled
+                dimreduction_algorithm = "umap"
+                umap_dimensions = 3
+                umap_neighbors = 15
+                umap_min_dist = 0.1
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert workflow.out.consensus.size() == 1 },
+                { assert snapshot(
+                    workflow.out.versions
+                ).match("no_pca_versions") }
+            )
+        }
+    }
+
+    // ===================================================================================
+    // TEST 7: Racon polishing disabled - Speed test
+    // ===================================================================================
+    test("NANOPULSE - skip Racon polishing") {
+
+        options "-stub"
+
+
+        when {
+            workflow {
+                """
+                def meta = [id: 'test_skip_racon', single_end: true]
+                def reads = file("${projectDir}/tests/testdata/integration/small_100reads.fastq", checkIfExists: true)
+
+                ch_samplesheet = Channel.of([meta, reads])
+
+                input[0] = ch_samplesheet
+                """
+            }
+
+            params {
+                outdir = "\${launchDir}/test_output"
+                enable_blast = false
+                enable_fastani = false
+                enable_kraken2 = false
+                multiqc = false
+
+                kmer_size = 9
+                umap_set_size = 100
+                min_cluster_size = 10
+                min_samples = 3
+
+                genome_size = "1.5k"
+                polishing_reads = 100
+                racon_rounds = 0
+                medaka_model = "r941_min_high_g303"
+                skip_racon = true  // Skip Racon, only Medaka
+
+                // Phase 2 optimizations enabled
+                enable_pca = true
+                pca_n_components = 50
+                dimreduction_algorithm = "pacmap"
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert workflow.out.consensus.size() == 1 },
+                { assert snapshot(
+                    workflow.out.versions
+                ).match("skip_racon_versions") }
+            )
+        }
+    }
+
+    // ===================================================================================
+    // TEST 8: Stub run - CI/CD fast validation
+    // ===================================================================================
+    test("NANOPULSE - stub run") {
+
+        options "-stub"
+
+        when {
+            workflow {
+                """
+                def meta = [id: 'test_stub', single_end: true]
+                def reads = file("${projectDir}/tests/testdata/integration/small_100reads.fastq", checkIfExists: true)
+
+                ch_samplesheet = Channel.of([meta, reads])
+
+                input[0] = ch_samplesheet
+                """
+            }
+
+            params {
+                outdir = "\${launchDir}/test_output"
+                enable_blast = false
+                enable_fastani = false
+                enable_kraken2 = false
+                multiqc = false
+
+                kmer_size = 9
+                umap_set_size = 100
+                min_cluster_size = 10
+
+                genome_size = "1.5k"
+                polishing_reads = 50
+                racon_rounds = 2
+                medaka_model = "r941_min_high_g303"
+
+                // Phase 2 optimizations enabled
+                enable_pca = true
+                pca_n_components = 50
+                dimreduction_algorithm = "pacmap"
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert workflow.out.consensus },
+                { assert workflow.out.abundances },
+                { assert snapshot(
+                    workflow.out.versions
+                ).match("stub_run_versions") }
+            )
+        }
+    }
+
+}

@@ -1,0 +1,2 @@
+sample,fastq
+test_single,tests/testdata/integration/single_cluster_200reads.fastq

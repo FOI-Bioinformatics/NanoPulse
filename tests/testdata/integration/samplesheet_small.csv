@@ -1,0 +1,2 @@
+sample,fastq
+test_small,tests/testdata/integration/small_100reads.fastq

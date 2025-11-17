@@ -1,0 +1,114 @@
+{
+    "medium_dataset_versions": {
+        "content": [
+            [
+                [
+                    
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-16T10:27:22.316757"
+    },
+    "single_cluster_versions": {
+        "content": [
+            [
+                [
+                    
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-16T10:27:27.918507"
+    },
+    "skip_racon_versions": {
+        "content": [
+            [
+                [
+                    
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-16T10:27:50.806282"
+    },
+    "no_pca_versions": {
+        "content": [
+            [
+                [
+                    
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-16T10:27:44.879962"
+    },
+    "stub_run_versions": {
+        "content": [
+            [
+                [
+                    
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-16T10:27:56.425883"
+    },
+    "small_dataset_versions": {
+        "content": [
+            [
+                [
+                    
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-16T10:27:16.777471"
+    },
+    "umap_algorithm_versions": {
+        "content": [
+            [
+                [
+                    
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-16T10:27:39.077414"
+    },
+    "multi_sample_versions": {
+        "content": [
+            [
+                [
+                    
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-16T10:27:33.382733"
+    }
+}

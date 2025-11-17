@@ -1,0 +1,55 @@
+{
+    "Should reduce k-mer frequencies to PaCMAP coordinates": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.umap_coords.tsv:md5,9fe2aa8157cbf82af77cddf034d494d3"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.pacmap_plot.png:md5,d430bc1f16709f1ebe4c82e04a8d0cd7"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,0c0ebf333465c6a0fd0f6cdbf88a6710"
+                ],
+                "coords": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.umap_coords.tsv:md5,9fe2aa8157cbf82af77cddf034d494d3"
+                    ]
+                ],
+                "plot": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.pacmap_plot.png:md5,d430bc1f16709f1ebe4c82e04a8d0cd7"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,0c0ebf333465c6a0fd0f6cdbf88a6710"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-16T00:28:39.426472"
+    }
+}

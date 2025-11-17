@@ -1,0 +1,3 @@
+sample,fastq
+sample_a,tests/testdata/integration/small_100reads.fastq
+sample_b,tests/testdata/integration/medium_500reads.fastq

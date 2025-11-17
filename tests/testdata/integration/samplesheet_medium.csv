@@ -1,0 +1,2 @@
+sample,fastq
+test_medium,tests/testdata/integration/medium_500reads.fastq

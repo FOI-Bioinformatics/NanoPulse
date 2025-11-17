@@ -1,0 +1,55 @@
+{
+    "Should perform PCA dimensionality reduction on k-mer frequencies": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.pca_features.tsv:md5,c2ecc0b36597cd6dcceb355107579e6a"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.variance_explained.json:md5,06bc23039c33ab768f3951e90c88a881"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,9a352eff589b2bee3ba45421b628fdc8"
+                ],
+                "features": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.pca_features.tsv:md5,c2ecc0b36597cd6dcceb355107579e6a"
+                    ]
+                ],
+                "variance_report": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": true
+                        },
+                        "test.variance_explained.json:md5,06bc23039c33ab768f3951e90c88a881"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,9a352eff589b2bee3ba45421b628fdc8"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-16T00:31:38.522579"
+    }
+}
