@@ -429,7 +429,7 @@ cat phylogeny/*.aln.fasta
 
 1. **Always visualize first**: Check UMAP plots before diving into sequence analysis
 
-2. **Use multiple classification methods**: Combine BLAST + FastANI for robust classification
+2. **Use multiple classification methods**: Combine BLAST + Kraken2 for robust classification
 
 3. **Validate novel sequences**: Low confidence ≠ novel species - could be:
    - Rare but known organisms
