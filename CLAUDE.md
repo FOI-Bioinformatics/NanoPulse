@@ -8,7 +8,7 @@ NanoPulse is a production-ready Nextflow DSL2 pipeline for Oxford Nanopore ampli
 
 ### Relationship to NanoCLUST
 
-**This is a separate application** - not backward compatible with NanoCLUST. While the core scientific methodology is identical (UMAP + HDBSCAN clustering), Nano Pulse is a modernized implementation with:
+**This is a separate application** - not backward compatible with NanoCLUST. While the core scientific methodology is identical (UMAP/PaCMAP + HDBSCAN clustering (switchable dimensionality reduction)), Nano Pulse is a modernized implementation with:
 - Complete DSL2 rewrite
 - Production bug fixes
 - General amplicon support
@@ -647,7 +647,7 @@ noise_min_abundance = 5              // Min reads per rescued cluster
 
 **Created bin/classify_consensus_probabilistic.py** (558 lines):
 - Complete EM algorithm implementation
-- Multi-source integration (BLAST + KRAKEN2 + FastANI)
+- Multi-source integration (BLAST + KRAKEN2)
 - Novelty detection with configurable threshold
 
 **EM Algorithm Details**:
@@ -993,28 +993,27 @@ main.nf
 
 ### Key Components
 
-**Local Modules (21):**
+**Local Modules (20):**
 1. seqtk_sample - Intelligent read subsampling
 2. kmerfreq - K-mer frequency calculation
 3. pca - PCA dimensionality reduction (Phase 2 optimization)
-4. umap - UMAP dimensionality reduction
-5. pacmap - PaCMAP dimensionality reduction (Phase 2 optimization)
+4. umap - UMAP dimensionality reduction (default)
+5. pacmap - PaCMAP dimensionality reduction (Phase 2 optimization, optional alternative)
 6. hdbscan - HDBSCAN clustering
 7. rescue_noise - Noise point rescue (Phase 11)
 8. splitclusters - Split reads by cluster
 9. raven_correct - Raven error correction
-10. draft_selection - FastANI draft selection
+10. draft_selection - Best draft selection via read-to-read FastANI comparison
 11. racon_iterative - Racon iterative polishing
 12. medaka - Medaka neural network polishing
-13. classify_consensus - BLAST/probabilistic classification (Phase 11)
-14. fastani_classify - FastANI classification
-15. aggregate_classifications - Classification JSON aggregation (Phase 11)
-16. extract_novel_sequences - Novel sequence extraction (Phase 11)
-17. build_phylotree - Phylogenetic tree construction (Phase 11)
-18. create_phyloseq - R phyloseq object creation (Phase 11)
-19. joinconsensus - Join consensus sequences
-20. getabundances - Calculate abundances
-21. plotresults - Generate visualizations with confidence color-coding (Phase 11)
+13. classify_consensus - BLAST/Kraken2/probabilistic classification (Phase 11)
+14. aggregate_classifications - Classification JSON aggregation (Phase 11)
+15. extract_novel_sequences - Novel sequence extraction (Phase 11)
+16. build_phylotree - Phylogenetic tree construction (Phase 11)
+17. create_phyloseq - R phyloseq object creation (Phase 11)
+18. joinconsensus - Join consensus sequences
+19. getabundances - Calculate abundances
+20. plotresults - Generate visualizations with confidence color-coding (Phase 11)
 
 **Subworkflows (4):**
 1. per_cluster_assembly - Complete assembly pipeline (Raven → Draft → Racon → Medaka)
@@ -1227,7 +1226,6 @@ nextflow run . -profile test --input test_data.csv -preview
 **Classification (optional):**
 - `enable_blast` = true (BLAST classification)
 - `enable_kraken2` = false (Kraken2 classification)
-- `enable_fastani` = true (FastANI classification)
 
 ### Memory Requirements
 

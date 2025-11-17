@@ -8,7 +8,7 @@
 
 ## About NanoPulse
 
-NanoPulse is a production-ready Nextflow pipeline for species-level analysis of Oxford Nanopore Technologies (ONT) amplicon sequencing data. It performs de novo clustering using UMAP dimensionality reduction and HDBSCAN clustering, followed by consensus sequence generation and taxonomic classification.
+NanoPulse is a production-ready Nextflow pipeline for species-level analysis of Oxford Nanopore Technologies (ONT) amplicon sequencing data. It performs de novo clustering using UMAP/PaCMAP dimensionality reduction (switchable) and HDBSCAN clustering, followed by consensus sequence generation and taxonomic classification.
 
 **This is a modernized fork of [NanoCLUST](https://github.com/genomicsITER/NanoCLUST)** with significant enhancements:
 
@@ -41,7 +41,7 @@ NanoPulse is based on the excellent [NanoCLUST pipeline](https://github.com/geno
 The pipeline performs the following steps:
 
 1. **K-mer frequency calculation** - Extract k-mer features from reads
-2. **UMAP dimensionality reduction** - Reduce k-mer space to 3D
+2. **UMAP/PaCMAP dimensionality reduction** - Reduce k-mer space to 3D (switchable)
 3. **HDBSCAN clustering** - Identify read clusters
 4. **Per-cluster assembly** - Generate consensus sequences:
    - Raven error correction
@@ -174,7 +174,7 @@ nextflow run FOI-Bioinformatics/NanoPulse \
 
 ### Memory Considerations
 
-The UMAP clustering step is memory-intensive:
+The UMAP/PaCMAP clustering step is memory-intensive:
 - **Default settings** (umap_set_size = 100,000): 32-36 GB RAM
 - **Reduced settings** (umap_set_size = 50,000): 10-13 GB RAM
 
@@ -214,7 +214,7 @@ results/
 ├── diversity/
 │   └── {sample}_diversity.txt           # Diversity metrics
 ├── plots/
-│   └── {sample}_umap_plot.png          # UMAP visualization
+│   └── {sample}_dimreduction_plot.png          # UMAP visualization
 ├── html_reports/
 │   └── {sample}_report.html            # Interactive HTML report
 ├── multiqc/
