@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+message: "If you use NanoPulse, please cite both this software and the original NanoCLUST paper."
+title: "NanoPulse: Amplicon sequence clustering for Oxford Nanopore sequencing"
+version: 1.0.0dev
+date-released: 2025-11-16
+url: "https://github.com/FOI-Bioinformatics/NanoPulse"
+repository-code: "https://github.com/FOI-Bioinformatics/NanoPulse"
+license: MIT
+authors:
+  - family-names: "FOI-Bioinformatics"
+    affiliation: "Swedish Defence Research Agency"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Rodriguez-Perez"
+      given-names: "Hector"
+    - family-names: "Ciuffreda"
+      given-names: "Laura"
+    - family-names: "Flores"
+      given-names: "Carlos"
+  title: "NanoCLUST: a species-level analysis of 16S rRNA nanopore sequencing data"
+  journal: "Bioinformatics"
+  volume: 37
+  issue: 11
+  year: 2021
+  month: 6
+  start: 1600
+  end: 1601
+  doi: "10.1093/bioinformatics/btaa900"
+  url: "https://doi.org/10.1093/bioinformatics/btaa900"
+references:
+  - type: software
+    authors:
+      - family-names: "Rodriguez-Perez"
+        given-names: "Hector"
+      - family-names: "Ciuffreda"
+        given-names: "Laura"
+      - family-names: "Flores"
+        given-names: "Carlos"
+    title: "NanoCLUST"
+    version: 2.0.0
+    url: "https://github.com/genomicsITER/NanoCLUST"
+    license: MIT

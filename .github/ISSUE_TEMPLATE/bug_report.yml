@@ -1,0 +1,68 @@
+name: Bug report
+description: Report something that is broken or incorrect
+labels: bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before you post this issue, please check the documentation:
+
+        - [NanoPulse documentation](https://github.com/FOI-Bioinformatics/NanoPulse)
+        - [Troubleshooting](https://github.com/FOI-Bioinformatics/NanoPulse/blob/master/docs/usage.md)
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description of the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+
+  - type: textarea
+    id: command_used
+    attributes:
+      label: Command used and terminal output
+      description: Steps to reproduce the behaviour. Please paste the command you used to launch the pipeline and the output from your terminal.
+      render: console
+      placeholder: |
+        $ nextflow run FOI-Bioinformatics/NanoPulse \
+           --input samplesheet.csv \
+           --outdir results \
+           -profile docker
+
+        Some output where something broke
+
+  - type: textarea
+    id: files
+    attributes:
+      label: Relevant files
+      description: |
+        Please provide relevant files that may help debug the issue.
+
+        Common files:
+        - `.nextflow.log` (hidden file in the launch directory)
+        - A relevant process work directory containing:
+          - `.command.sh`
+          - `.command.log`
+          - `.command.err`
+      placeholder: |
+        Drag and drop files here or paste content
+
+  - type: textarea
+    id: system
+    attributes:
+      label: System information
+      description: |
+        * Nextflow version _(eg. 25.10.0)_
+        * Hardware _(eg. HPC, Desktop, Cloud)_
+        * Executor _(eg. local, SLURM, SGE, PBS, AWS Batch)_
+        * Container engine _(eg. Docker, Singularity, Apptainer, Conda)_
+        * OS _(eg. Ubuntu 22.04, macOS 14.0)_
+        * Version of NanoPulse _(eg. 1.0.0, commit hash)_
+      placeholder: |
+        Nextflow version:
+        Hardware:
+        Executor:
+        Container:
+        OS:
+        NanoPulse version:
