@@ -244,7 +244,6 @@ workflow NANOPULSE {
         VALIDATE_DATABASES.out.kraken2_db,
         VALIDATE_DATABASES.out.blast_db,
         VALIDATE_DATABASES.out.blast_tax_db,
-        VALIDATE_DATABASES.out.fastani_refs,
         params.use_probabilistic_classification
     )
     ch_versions = ch_versions.mix(CLASSIFY_CLUSTERS.out.versions)
@@ -289,7 +288,7 @@ workflow NANOPULSE {
     //
     // Handle optional classification: create dummy channel if classification is disabled
     // This ensures JOINCONSENSUS can run even without classification databases
-    def classification_enabled = params.enable_kraken2 || params.enable_blast || params.enable_fastani
+    def classification_enabled = params.enable_kraken2 || params.enable_blast
 
     ch_sample_classifications_final = classification_enabled ?
         ch_sample_classifications :

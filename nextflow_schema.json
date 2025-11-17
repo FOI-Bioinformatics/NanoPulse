@@ -84,10 +84,6 @@
       "type": "boolean",
       "default": true
     },
-    "enable_fastani": {
-      "type": "boolean",
-      "default": true
-    },
     "umap_set_size": {
       "type": "integer",
       "default": 100000
@@ -208,9 +204,6 @@
       "type": "string"
     },
     "blast_taxdb": {
-      "type": "string"
-    },
-    "fastani_ref_dir": {
       "type": "string"
     },
     "kmer_size": {

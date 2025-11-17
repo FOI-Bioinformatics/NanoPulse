@@ -146,52 +146,9 @@ workflow VALIDATE_DATABASES {
         ch_tax_db = Channel.empty()
     }
 
-    // Validate FastANI reference genomes
-    if (params.fastani_ref_dir) {
-        ch_fastani_refs = Channel
-            .fromPath(params.fastani_ref_dir, checkIfExists: true, type: 'dir')
-            .map { ref_dir ->
-                // Count reference genomes
-                def ref_files = file("${ref_dir}/*.{fasta,fa,fna}", type: 'file')
-                def n_refs = ref_files instanceof List ? ref_files.size() : (ref_files ? 1 : 0)
-
-                if (n_refs == 0) {
-                    error """
-                    ====================================================================
-                    ERROR: No FastANI reference genomes found
-                    ====================================================================
-
-                    Reference directory: ${ref_dir}
-
-                    No FASTA files found (.fasta, .fa, .fna)
-
-                    Please provide a directory with reference genomes.
-                    """.stripIndent()
-                }
-
-                log.info "+ FastANI references validated: ${n_refs} genomes in ${ref_dir}"
-                return ref_dir
-            }
-    } else {
-        if (params.enable_fastani) {
-            log.warn """
-            ====================================================================
-            WARNING: FastANI enabled but no references provided
-            ====================================================================
-
-            FastANI classification will be SKIPPED.
-
-            To enable FastANI:
-              --fastani_ref_dir /path/to/reference/genomes
-            """.stripIndent()
-        }
-        ch_fastani_refs = Channel.empty()
-    }
-
     emit:
     kraken2_db   = ch_kraken2_db
     blast_db     = ch_blast_db
     blast_tax_db = ch_tax_db
-    fastani_refs = ch_fastani_refs
     versions     = ch_versions
 }
