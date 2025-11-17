@@ -1,19 +1,33 @@
-# nf-core/nanoclust pull request
-
-Many thanks for contributing to nf-core/nanoclust!
-
-Please fill in the appropriate checklist below (delete whatever is not relevant).
-These are the most common things requested on pull requests (PRs).
-
 ## PR checklist
 
-- [ ] This comment contains a description of changes (with reason)
-- [ ] If you've fixed a bug or added code that should be tested, add tests!
-- [ ] If necessary, also make a PR on the [nf-core/nanoclust branch on the nf-core/test-datasets repo](https://github.com/nf-core/test-datasets/pull/new/nf-core/nanoclust)
-- [ ] Ensure the test suite passes (`nextflow run . -profile test,docker`).
-- [ ] Make sure your code lints (`nf-core lint .`).
-- [ ] Documentation in `docs` is updated
-- [ ] `CHANGELOG.md` is updated
-- [ ] `README.md` is updated
+- [ ] This comment contains a description of changes (with reason).
+- [ ] Branch is up-to-date with the `dev` branch.
+- [ ] Tests pass with `nf-test test --profile docker,test`.
+- [ ] Pipeline runs successfully with test data.
+- [ ] New code is documented and follows style guidelines.
+- [ ] New features have corresponding tests.
+- [ ] CLAUDE.md updated with any significant changes.
 
-**Learn more about contributing:** [CONTRIBUTING.md](https://github.com/nf-core/nanoclust/tree/master/.github/CONTRIBUTING.md)
+## Description
+
+<!-- Please provide a brief description of your changes -->
+
+## Related issues
+
+<!-- If this PR addresses an issue, please link it here -->
+
+Closes #
+
+## Testing
+
+<!-- Describe what testing you have performed -->
+
+**Test command:**
+```bash
+nextflow run . -profile test,docker --outdir test_results
+```
+
+**Test results:**
+- [ ] Unit tests pass
+- [ ] Integration tests pass
+- [ ] Real data validation (if applicable)

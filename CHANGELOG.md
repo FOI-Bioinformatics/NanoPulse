@@ -85,6 +85,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - HDBSCAN missing input parameter (cluster_selection_epsilon)
   - Missing assembly parameters (genome_size, racon_rounds, medaka_model)
   - Second UMAP channel reference error in PLOTRESULTS
+- **NPZ/PCA Configuration Mismatch** (2025-11-17):
+  - Fixed contradictory default configuration causing pipeline crash
+  - Changed `enable_pca = false` → `enable_pca = true` to match NPZ output format
+  - Root cause: Workflow expected TSV when PCA disabled, but KMERFREQ outputs NPZ sparse matrices
+  - Impact: Pipeline now runs successfully with 100% clustering success, preserves memory efficiency
 - **Conda Profile** (2025-11-13):
   - Updated from DSL1 process-specific selectors to DSL2 global enablement pattern
   - Fixed conda.enabled = true instead of withName: selectors
