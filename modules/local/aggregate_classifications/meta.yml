@@ -1,0 +1,43 @@
+name: aggregate_classifications
+description: Aggregate individual classification JSON files into a single array
+keywords:
+  - json aggregation
+  - classification results
+  - data merging
+tools:
+  - python:
+      description: Python programming language
+      homepage: https://www.python.org/
+      documentation: https://docs.python.org/3/
+      tool_dev_url: https://github.com/python/cpython
+      licence: ["PSF-2.0"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:true ]
+  - classification_jsons:
+      type: list
+      description: List of individual classification JSON files
+      pattern: "*.json"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+  - aggregated:
+      type: file
+      description: Single JSON file containing array of all classifications
+      pattern: "*.aggregated_classifications.json"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@foi-bioinformatics"
+maintainers:
+  - "@foi-bioinformatics"

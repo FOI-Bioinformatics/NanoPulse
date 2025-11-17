@@ -22,6 +22,7 @@ process SPLITCLUSTERS {
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+
     #!/usr/bin/env python3
 
     from Bio import SeqIO
@@ -127,27 +128,29 @@ process SPLITCLUSTERS {
         f.write(f'    biopython: {Bio.__version__}\\n')
     """
 
+
     stub:
     """
+
     # Create stub cluster files
     touch cluster_0.fastq cluster_1.fastq cluster_2.fastq
     touch unclustered.fastq
 
     # Create stub statistics
     cat <<-EOF > cluster_stats.json
-\t{
-\t  "total_reads": 1000,
-\t  "skipped_reads": 0,
-\t  "n_clusters": 3,
-\t  "n_clustered_reads": 950,
-\t  "n_unclustered_reads": 50,
-\t  "cluster_sizes": {
-\t    "0": 400,
-\t    "1": 350,
-\t    "2": 200
-\t  }
-\t}
-\tEOF
+    {
+      "total_reads": 1000,
+      "skipped_reads": 0,
+      "n_clusters": 3,
+      "n_clustered_reads": 950,
+      "n_unclustered_reads": 50,
+      "cluster_sizes": {
+        "0": 400,
+        "1": 350,
+        "2": 200
+      }
+    }
+    EOF
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -155,4 +158,5 @@ process SPLITCLUSTERS {
         biopython: 1.78
     END_VERSIONS
     """
+
 }

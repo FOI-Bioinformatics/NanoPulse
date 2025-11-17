@@ -1,0 +1,70 @@
+name: rescue_noise
+description: Rescue HDBSCAN noise points through secondary clustering with vsearch
+keywords:
+  - clustering
+  - vsearch
+  - noise rescue
+  - secondary clustering
+  - nanopore
+tools:
+  - vsearch:
+      description: USEARCH-compatible versatile open-source tool for sequence analysis
+      homepage: https://github.com/torognes/vsearch
+      documentation: https://github.com/torognes/vsearch/wiki
+      tool_dev_url: https://github.com/torognes/vsearch
+      doi: "10.7717/peerj.2584"
+      licence: ["GPL-3.0-or-later", "BSD-2-Clause"]
+  - seqtk:
+      description: A fast and lightweight tool for processing sequences in FASTA/Q formats
+      homepage: https://github.com/lh3/seqtk
+      documentation: https://github.com/lh3/seqtk
+      tool_dev_url: https://github.com/lh3/seqtk
+      licence: ["MIT"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:true ]
+  - reads:
+      type: file
+      description: Original FASTQ reads
+      pattern: "*.fastq"
+  - clusters_tsv:
+      type: file
+      description: HDBSCAN cluster assignments with noise points (cluster_id = -1)
+      pattern: "*.clusters.tsv"
+  - identity_threshold:
+      type: float
+      description: Vsearch identity threshold for clustering (default 0.70)
+  - min_abundance:
+      type: integer
+      description: Minimum cluster size for rescued clusters (default 5)
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+  - clusters:
+      type: file
+      description: Updated cluster assignments with rescued noise points
+      pattern: "*.rescued_clusters.tsv"
+  - consensus:
+      type: file
+      description: Consensus sequences for rescued clusters (optional if no rescues)
+      pattern: "*.rescued_consensus.fasta"
+  - stats:
+      type: file
+      description: Rescue statistics (JSON format)
+      pattern: "*.rescue_stats.json"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@foi-bioinformatics"
+maintainers:
+  - "@foi-bioinformatics"

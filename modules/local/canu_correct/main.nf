@@ -25,6 +25,7 @@ process CANU_CORRECT {
     def prefix = task.ext.prefix ?: "${meta.id}_cluster${meta.cluster_id}"
     def random_seed = task.ext.random_seed ?: 42
     """
+
     # Subset reads for polishing (default: first 100 reads)
     head -n\$(( ${polishing_reads} * 4 )) ${reads} > subset.fastq
 
@@ -90,15 +91,17 @@ process CANU_CORRECT {
     fi
 
     # Version tracking
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        canu: \$(canu --version 2>&1 | grep -oP '(?<=Canu )\\S+' || echo "2.2")
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    canu: \$(canu --version 2>&1 | grep -oP '(?<=Canu )\\S+' || echo "2.2")
+END_VERSIONS
     """
+
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}_cluster${meta.cluster_id}"
     """
+
     # Create stub corrected reads
     cat <<-EOF > ${prefix}.correctedReads.fasta
 \t>corrected_read_1
@@ -119,9 +122,10 @@ process CANU_CORRECT {
 \t}
 \tEOF
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        canu: 2.2
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    canu: 2.2
+END_VERSIONS
     """
+
 }

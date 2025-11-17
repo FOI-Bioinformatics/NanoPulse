@@ -1,0 +1,64 @@
+name: build_phylotree
+description: Build phylogenetic tree from consensus sequences using MAFFT and FastTree
+keywords:
+  - phylogeny
+  - phylogenetic tree
+  - multiple sequence alignment
+  - mafft
+  - fasttree
+tools:
+  - mafft:
+      description: Multiple alignment program for amino acid or nucleotide sequences
+      homepage: https://mafft.cbrc.jp/alignment/software/
+      documentation: https://mafft.cbrc.jp/alignment/software/manual/manual.html
+      tool_dev_url: https://mafft.cbrc.jp/alignment/software/source.html
+      doi: "10.1093/molbev/mst010"
+      licence: ["BSD"]
+  - fasttree:
+      description: Infers approximately-maximum-likelihood phylogenetic trees from alignments
+      homepage: http://www.microbesonline.org/fasttree/
+      documentation: http://www.microbesonline.org/fasttree/#Usage
+      tool_dev_url: http://www.microbesonline.org/fasttree/
+      doi: "10.1371/journal.pone.0009490"
+      licence: ["GPL v2"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:true ]
+  - consensus_fasta:
+      type: file
+      description: Consensus sequences in FASTA format
+      pattern: "*.fasta"
+  - alignment_method:
+      type: string
+      description: MAFFT alignment method ('auto' or 'accurate')
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+  - alignment:
+      type: file
+      description: Multiple sequence alignment in FASTA format
+      pattern: "*.aln.fasta"
+  - tree:
+      type: file
+      description: Phylogenetic tree in Newick format
+      pattern: "*.tree"
+  - stats:
+      type: file
+      description: Tree statistics (sequences, model, log-likelihood)
+      pattern: "*.tree_stats.txt"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@foi-bioinformatics"
+maintainers:
+  - "@foi-bioinformatics"

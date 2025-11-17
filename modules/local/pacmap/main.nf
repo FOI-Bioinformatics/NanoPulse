@@ -27,6 +27,7 @@ process PACMAP {
     def mn_ratio = task.ext.mn_ratio ?: 0.5
     def fp_ratio = task.ext.fp_ratio ?: 2.0
     """
+
     # Run PaCMAP dimensionality reduction
     # NOTE: Output file is named 'umap_coords.tsv' for drop-in compatibility with UMAP
     pacmap_reduce.py \\
@@ -51,9 +52,11 @@ process PACMAP {
     END_VERSIONS
     """
 
+
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+
     # Create stub PaCMAP coordinates file (named umap_coords for compatibility)
     echo -e "read\\tlength\\tUMAP1\\tUMAP2\\tUMAP3" > ${prefix}.umap_coords.tsv
     echo -e "read_001\\t1500\\t0.5\\t1.2\\t-0.3" >> ${prefix}.umap_coords.tsv
@@ -72,4 +75,5 @@ process PACMAP {
         scipy: 1.11.0
     END_VERSIONS
     """
+
 }

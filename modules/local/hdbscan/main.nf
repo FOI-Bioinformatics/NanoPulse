@@ -29,6 +29,7 @@ process HDBSCAN {
     def selection_method = task.ext.cluster_selection_method ?: 'eom'
     def dimensions = task.ext.dimensions ?: 'UMAP1,UMAP2'  // Which UMAP dims to use
     """
+
     hdbscan_cluster.py \\
         --input $umap_coords \\
         --output ${prefix}.clusters.tsv \\
@@ -59,9 +60,11 @@ process HDBSCAN {
     END_VERSIONS
     """
 
+
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+
     # Create stub cluster assignments with realistic structure
     cat <<-EOF > ${prefix}.clusters.tsv
 \tread\tlength\tUMAP1\tUMAP2\tcluster_id
@@ -94,13 +97,14 @@ process HDBSCAN {
     # Create stub plot
     touch ${prefix}.clusters_plot.png
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        python: 3.10.0
-        hdbscan: 0.8.33
-        numpy: 1.24.3
-        pandas: 1.5.3
-        scikit-learn: 1.2.2
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    python: 3.10.0
+    hdbscan: 0.8.33
+    numpy: 1.24.3
+    pandas: 1.5.3
+    scikit-learn: 1.2.2
+END_VERSIONS
     """
+
 }

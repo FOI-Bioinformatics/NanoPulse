@@ -24,6 +24,7 @@ process FASTANI_CLASSIFY {
     def prefix = task.ext.prefix ?: "${meta.id}_cluster${meta.cluster_id}"
     def min_ani = task.ext.min_ani ?: 80.0
     """
+
     #!/bin/bash
     set -e
 
@@ -61,10 +62,10 @@ process FASTANI_CLASSIFY {
 \tEOF
 
         # Version tracking (must be created before early exit)
-        cat <<-END_VERSIONS > versions.yml
-        "${task.process}":
-            fastani: \$(fastANI --version 2>&1 | grep -oP 'version \\K[0-9.]+' || echo "1.34")
-        END_VERSIONS
+        cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    fastani: \$(fastANI --version 2>&1 | grep -oP 'version \\K[0-9.]+' || echo "1.34")
+END_VERSIONS
 
         exit 0
     fi
@@ -153,15 +154,17 @@ process FASTANI_CLASSIFY {
     fi
 
     # Version tracking
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        fastani: \$(fastANI --version 2>&1 | grep -oP 'version \\K[0-9.]+' || echo "1.34")
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    fastani: \$(fastANI --version 2>&1 | grep -oP 'version \\K[0-9.]+' || echo "1.34")
+END_VERSIONS
     """
+
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}_cluster${meta.cluster_id}"
     """
+
     # Create stub ANI results
     cat <<-EOF > ${prefix}.ani.txt
 \tref_genome_1.fasta\t${query}\t96.5\t450\t500
@@ -186,9 +189,10 @@ process FASTANI_CLASSIFY {
 \t}
 \tEOF
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        fastani: 1.34
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    fastani: 1.34
+END_VERSIONS
     """
+
 }

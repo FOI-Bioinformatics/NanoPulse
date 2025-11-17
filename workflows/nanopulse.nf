@@ -15,6 +15,7 @@ include { PCA                     } from '../modules/local/pca/main'
 include { UMAP                    } from '../modules/local/umap/main'
 include { PACMAP                  } from '../modules/local/pacmap/main'
 include { HDBSCAN                 } from '../modules/local/hdbscan/main'
+include { RESCUE_NOISE            } from '../modules/local/rescue_noise/main'
 include { SPLITCLUSTERS           } from '../modules/local/splitclusters/main'
 
 // Assembly & polishing subworkflow
@@ -25,9 +26,13 @@ include { VALIDATE_DATABASES      } from '../subworkflows/local/validate_databas
 include { CLASSIFY_CLUSTERS       } from '../subworkflows/local/classify_clusters/main'
 
 // Utility modules
-include { JOINCONSENSUS           } from '../modules/local/joinconsensus/main'
-include { GETABUNDANCES           } from '../modules/local/getabundances/main'
-include { PLOTRESULTS             } from '../modules/local/plotresults/main'
+include { JOINCONSENSUS             } from '../modules/local/joinconsensus/main'
+include { GETABUNDANCES             } from '../modules/local/getabundances/main'
+include { PLOTRESULTS               } from '../modules/local/plotresults/main'
+include { AGGREGATE_CLASSIFICATIONS } from '../modules/local/aggregate_classifications/main'
+include { EXTRACT_NOVEL_SEQUENCES   } from '../modules/local/extract_novel_sequences/main'
+include { BUILD_PHYLOTREE           } from '../modules/local/build_phylotree/main'
+include { CREATE_PHYLOSEQ           } from '../modules/local/create_phyloseq/main'
 
 // MultiQC
 include { MULTIQC                 } from '../modules/nf-core/multiqc/main'
@@ -171,10 +176,32 @@ workflow NANOPULSE {
     ch_versions = ch_versions.mix(HDBSCAN.out.versions.first())
 
     //
+    // STEP 3b: Rescue HDBSCAN noise points (optional)
+    //
+    // NanoASV-inspired approach: Apply secondary clustering to noise points (cluster_id = -1)
+    // using vsearch with relaxed parameters (70% identity, min 5 reads). This recovers
+    // low-abundance clusters that HDBSCAN classified as noise.
+    //
+    ch_final_clusters = Channel.empty()
+
+    if (params.rescue_noise_points) {
+        RESCUE_NOISE(
+            ch_reads.join(HDBSCAN.out.clusters, by: 0),
+            params.noise_identity_threshold,
+            params.noise_min_abundance
+        )
+        ch_versions = ch_versions.mix(RESCUE_NOISE.out.versions.first())
+        ch_final_clusters = RESCUE_NOISE.out.clusters
+    } else {
+        // Use original HDBSCAN clusters if rescue is disabled
+        ch_final_clusters = HDBSCAN.out.clusters
+    }
+
+    //
     // STEP 4: Split reads by cluster
     //
     SPLITCLUSTERS(
-        ch_reads.join(HDBSCAN.out.clusters, by: 0)
+        ch_reads.join(ch_final_clusters, by: 0)
     )
     ch_versions = ch_versions.mix(SPLITCLUSTERS.out.versions.first())
 
@@ -217,7 +244,8 @@ workflow NANOPULSE {
         VALIDATE_DATABASES.out.kraken2_db,
         VALIDATE_DATABASES.out.blast_db,
         VALIDATE_DATABASES.out.blast_tax_db,
-        VALIDATE_DATABASES.out.fastani_refs
+        VALIDATE_DATABASES.out.fastani_refs,
+        params.use_probabilistic_classification
     )
     ch_versions = ch_versions.mix(CLASSIFY_CLUSTERS.out.versions)
 
@@ -259,8 +287,20 @@ workflow NANOPULSE {
     //
     // STEP 7: Join all consensus sequences with annotations
     //
+    // Handle optional classification: create dummy channel if classification is disabled
+    // This ensures JOINCONSENSUS can run even without classification databases
+    def classification_enabled = params.enable_kraken2 || params.enable_blast || params.enable_fastani
+
+    ch_sample_classifications_final = classification_enabled ?
+        ch_sample_classifications :
+        ch_sample_consensus.map { meta, consensus_files ->
+            // Create dummy "NO_FILE" entries to match consensus structure
+            def dummy_files = consensus_files.collect { file('NO_FILE') }
+            [meta, dummy_files]
+        }
+
     ch_joinconsensus_input = ch_sample_consensus
-        .join(ch_sample_classifications, by: 0)
+        .join(ch_sample_classifications_final, by: 0)
 
     JOINCONSENSUS(
         ch_joinconsensus_input
@@ -268,10 +308,33 @@ workflow NANOPULSE {
     ch_versions = ch_versions.mix(JOINCONSENSUS.out.versions.first())
 
     //
+    // STEP 7b: Extract potentially novel sequences (optional)
+    //
+    // Only run if probabilistic classification is enabled and we have classification results
+    if (params.use_probabilistic_classification && classification_enabled) {
+        // First, aggregate individual classification JSON files into single array
+        AGGREGATE_CLASSIFICATIONS(
+            ch_sample_classifications
+        )
+        ch_versions = ch_versions.mix(AGGREGATE_CLASSIFICATIONS.out.versions.first())
+
+        // Combine consensus FASTA with aggregated classification JSON
+        ch_extract_novel_input = JOINCONSENSUS.out.fasta
+            .join(AGGREGATE_CLASSIFICATIONS.out.aggregated, by: 0)
+
+        // Extract sequences with low confidence or marked as novel
+        EXTRACT_NOVEL_SEQUENCES(
+            ch_extract_novel_input,
+            params.novelty_threshold
+        )
+        ch_versions = ch_versions.mix(EXTRACT_NOVEL_SEQUENCES.out.versions.first())
+    }
+
+    //
     // STEP 8: Calculate abundances and diversity metrics
     //
     ch_getabundances_input = SPLITCLUSTERS.out.stats
-        .join(ch_sample_classifications, by: 0)
+        .join(ch_sample_classifications_final, by: 0)
 
     GETABUNDANCES(
         ch_getabundances_input
@@ -290,6 +353,38 @@ workflow NANOPULSE {
         ch_plotresults_input
     )
     ch_versions = ch_versions.mix(PLOTRESULTS.out.versions.first())
+
+    //
+    // STEP 10: Build phylogenetic tree (optional)
+    //
+    // Phylogenetic tree construction for evolutionary analysis
+    // Uses MAFFT for multiple sequence alignment + FastTree for tree building
+    //
+    if (params.build_phylotree) {
+        BUILD_PHYLOTREE(
+            JOINCONSENSUS.out.fasta,
+            params.phylotree_alignment_method
+        )
+        ch_versions = ch_versions.mix(BUILD_PHYLOTREE.out.versions.first())
+
+        //
+        // STEP 11: Create phyloseq object (optional, requires phylotree)
+        //
+        // Combines phylogenetic tree, abundance table, and taxonomy into phyloseq object
+        // Enables advanced diversity analysis in R (Faith's PD, UniFrac, etc.)
+        //
+        if (params.create_phyloseq) {
+            ch_phyloseq_input = BUILD_PHYLOTREE.out.tree
+                .join(GETABUNDANCES.out.abundances, by: 0)
+                .join(JOINCONSENSUS.out.annotations, by: 0)
+
+            CREATE_PHYLOSEQ(
+                ch_phyloseq_input,
+                params.calculate_phylo_diversity
+            )
+            ch_versions = ch_versions.mix(CREATE_PHYLOSEQ.out.versions.first())
+        }
+    }
 
     //
     // Collate and save software versions

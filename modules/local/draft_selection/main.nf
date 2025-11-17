@@ -25,6 +25,7 @@ process DRAFT_SELECTION {
     def kmer = task.ext.kmer ?: 16
     def frag_len = task.ext.frag_len ?: 160
     """
+
     # Split corrected reads into individual files (one read per file)
     split -l 2 ${corrected_reads} split_reads_
 
@@ -116,15 +117,17 @@ process DRAFT_SELECTION {
     fi
 
     # Version tracking
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        fastani: \$(fastANI --version 2>&1 | grep -oP '(?<=version )\\S+' || echo "1.33")
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    fastani: \$(fastANI --version 2>&1 | grep -oP '(?<=version )\\S+' || echo "1.33")
+END_VERSIONS
     """
+
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}_cluster${meta.cluster_id}"
     """
+
     # Create stub draft read
     cat <<-EOF > ${prefix}_draft.fasta
 \t>draft_read_1
@@ -151,9 +154,10 @@ process DRAFT_SELECTION {
 \t}
 \tEOF
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        fastani: 1.33
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    fastani: 1.33
+END_VERSIONS
     """
+
 }

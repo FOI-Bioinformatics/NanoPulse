@@ -9,6 +9,7 @@ process CLASSIFY_CONSENSUS {
 
     input:
     tuple val(meta), val(sources), path(classification_files)
+    val use_probabilistic_classification
 
     output:
     tuple val(meta), path("*_classification.csv"), emit: classification
@@ -28,8 +29,12 @@ process CLASSIFY_CONSENSUS {
     def kraken2_arg = sources.contains('kraken2') ? "--kraken2 ${classification_files[sources.indexOf('kraken2')]}" : ""
     def blast_arg = sources.contains('blast') ? "--blast ${classification_files[sources.indexOf('blast')]}" : ""
     def fastani_arg = sources.contains('fastani') ? "--fastani ${classification_files[sources.indexOf('fastani')]}" : ""
+
+    // Choose classification script based on mode
+    def classification_script = use_probabilistic_classification ? "classify_consensus_probabilistic.py" : "classify_consensus.py"
     """
-    classify_consensus.py \\
+
+    ${classification_script} \\
         --sample-id ${meta.id} \\
         --cluster-id ${meta.cluster_id} \\
         --output-prefix ${prefix} \\
@@ -39,19 +44,25 @@ process CLASSIFY_CONSENSUS {
         ${blast_arg} \\
         ${fastani_arg}
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        python: \$(python --version 2>&1 | sed 's/Python //g')
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    python: \$(python --version 2>&1 | sed 's/Python //g')
+    classification_mode: ${use_probabilistic_classification ? 'probabilistic_EM' : 'simple_voting'}
+END_VERSIONS
     """
+
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}_cluster${meta.cluster_id}"
+    def stub_confidence = use_probabilistic_classification ? "0.95" : "high"
+    def stub_confidence_level = use_probabilistic_classification ? "high" : "high"
+    def stub_is_novel = use_probabilistic_classification ? "false" : ""
     """
+
     # Create stub CSV
     cat <<-EOF > ${prefix}_classification.csv
-\tSample,Cluster,Method,Classification,Confidence,TaxID,Details
-\t${meta.id},${meta.cluster_id},BLAST,Escherichia coli,high,562,"{}"
+\tSample,Cluster,Method,Classification,Confidence,${use_probabilistic_classification ? 'Confidence_Level,Is_Novel,' : ''}TaxID,${use_probabilistic_classification ? 'Sources' : 'Details'}
+\t${meta.id},${meta.cluster_id},${use_probabilistic_classification ? 'EM_probabilistic' : 'BLAST'},Escherichia coli,${stub_confidence},${use_probabilistic_classification ? stub_confidence_level + ',false,' : ''}562,${use_probabilistic_classification ? 'blast' : '{}'}
 \tEOF
 
     # Create stub JSON
@@ -61,31 +72,38 @@ process CLASSIFY_CONSENSUS {
 \t    "id": "${meta.id}",
 \t    "cluster_id": "${meta.cluster_id}"
 \t  },
-\t  "consensus": {
-\t    "method": "BLAST",
+\t  ${use_probabilistic_classification ? '"classification":' : '"consensus":'} {
+\t    "method": "${use_probabilistic_classification ? 'EM_probabilistic' : 'BLAST'}",
 \t    "name": "Escherichia coli",
-\t    "taxid": "562"
+\t    "taxid": "562",
+\t    ${use_probabilistic_classification ? '"confidence": 0.95, "confidence_level": "high", "is_novel": false,' : ''}
+\t    ${use_probabilistic_classification ? '"source": "blast"' : ''}
 \t  },
-\t  "confidence": "high"
+\t  ${use_probabilistic_classification ? '' : '"confidence": "high",'}
+\t  ${use_probabilistic_classification ? '"em_stats": {"iterations": 5, "converged": true, "num_candidates": 3}' : ''}
 \t}
 \tEOF
 
     # Create stub combined
     cat <<-EOF > ${prefix}_combined.txt
-\tClassification Results for ${meta.id} Cluster ${meta.cluster_id}
+\t${use_probabilistic_classification ? 'Probabilistic Classification Results - EM Algorithm' : 'Classification Results for ${meta.id} Cluster ${meta.cluster_id}'}
+\t${use_probabilistic_classification ? 'Sample: ${meta.id}, Cluster: ${meta.cluster_id}' : ''}
 \t======================================================================
 \t
-\tCONSENSUS:
-\t  method: BLAST
-\t  name: Escherichia coli
-\t  taxid: 562
+\t${use_probabilistic_classification ? 'BEST CLASSIFICATION:' : 'CONSENSUS:'}
+\t  ${use_probabilistic_classification ? 'Taxon: Escherichia coli' : 'method: BLAST'}
+\t  ${use_probabilistic_classification ? 'Confidence: 0.95 (high)' : 'name: Escherichia coli'}
+\t  ${use_probabilistic_classification ? 'Potentially Novel: false' : 'taxid: 562'}
+\t  ${use_probabilistic_classification ? 'Sources: blast' : ''}
 \t
-\tOverall Confidence: high
+\t${use_probabilistic_classification ? 'Overall Confidence: high' : 'Overall Confidence: high'}
 \tEOF
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        python: 3.11.0
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    python: 3.11.0
+    classification_mode: ${use_probabilistic_classification ? 'probabilistic_EM' : 'simple_voting'}
+END_VERSIONS
     """
+
 }

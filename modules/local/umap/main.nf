@@ -35,6 +35,7 @@ process UMAP {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def random_state = task.ext.random_state ?: 42  // Reproducibility
     """
+
     # Memory validation: estimate requirements and check available memory
     # This prevents OOM crashes and provides helpful error messages
     echo "Checking memory requirements..." >&2
@@ -69,9 +70,11 @@ process UMAP {
     END_VERSIONS
     """
 
+
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+
     # Create stub UMAP coordinates file
     echo -e "read\\tlength\\tUMAP1\\tUMAP2\\tUMAP3" > ${prefix}.umap_coords.tsv
     echo -e "read_001\\t1500\\t0.5\\t1.2\\t-0.3" >> ${prefix}.umap_coords.tsv
@@ -90,4 +93,5 @@ process UMAP {
         scikit-learn: 1.2.2
     END_VERSIONS
     """
+
 }

@@ -1,0 +1,12 @@
+name: create_phyloseq
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-base>=4.3.0
+  - bioconductor-phyloseq>=1.44.0
+  - r-ape>=5.7
+  - r-picante>=1.8.2
+  - r-vegan>=2.6
+  - r-optparse>=1.7.3

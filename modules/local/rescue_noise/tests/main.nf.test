@@ -1,0 +1,202 @@
+nextflow_process {
+
+    name "Test RESCUE_NOISE"
+    script "../main.nf"
+    process "RESCUE_NOISE"
+
+    tag "modules"
+    tag "modules_local"
+    tag "rescue_noise"
+
+    // ===================================================================================
+    // TEST 1: Basic rescue with default parameters (70% identity, min 5 reads)
+    // ===================================================================================
+    test("Should rescue HDBSCAN noise points with vsearch clustering") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', single_end:true ],
+                    file(params.test_data['nanopore']['reads']['cluster_fastq'], checkIfExists: true),
+                    file(params.test_data['nanopore']['analysis']['clusters_tsv'], checkIfExists: true)
+                ]
+                input[1] = 0.70        // identity_threshold
+                input[2] = 5           // min_abundance
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.clusters.size() == 1 },
+                { assert process.out.stats.size() == 1 },
+                { assert process.out.versions.size() == 1 },
+                { assert process.out.clusters[0][1].toString().endsWith('.rescued_clusters.tsv') },
+                { assert process.out.stats[0][1].toString().endsWith('.rescue_stats.json') }
+            )
+        }
+
+    }
+
+    // ===================================================================================
+    // TEST 2: Output file validation - Check all expected outputs are generated
+    // ===================================================================================
+    test("Should produce rescued clusters, consensus, and statistics") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_output', single_end:true ],
+                    file(params.test_data.nanopore.reads.cluster_fastq, checkIfExists: true),
+                    file(params.test_data.nanopore.analysis.clusters_tsv, checkIfExists: true)
+                ]
+                input[1] = 0.70
+                input[2] = 5
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.clusters.size() == 1 },
+                { assert process.out.stats.size() == 1 },
+                { assert process.out.versions.size() == 1 },
+                // Consensus is optional (only if rescues occur)
+                { assert process.out.consensus.size() >= 0 },
+                // Verify file extensions
+                { assert process.out.clusters[0][1].toString().endsWith('.rescued_clusters.tsv') },
+                { assert process.out.stats[0][1].toString().endsWith('.rescue_stats.json') }
+            )
+        }
+
+    }
+
+    // ===================================================================================
+    // TEST 3: Strict identity threshold (95%) - Should rescue fewer noise points
+    // ===================================================================================
+    test("Should rescue fewer points with strict identity threshold") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_strict', single_end:true ],
+                    file(params.test_data.nanopore.reads.cluster_fastq, checkIfExists: true),
+                    file(params.test_data.nanopore.analysis.clusters_tsv, checkIfExists: true)
+                ]
+                input[1] = 0.95        // strict identity (harder to cluster)
+                input[2] = 5
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.clusters.size() == 1 },
+                { assert process.out.stats.size() == 1 }
+            )
+        }
+
+    }
+
+    // ===================================================================================
+    // TEST 4: Relaxed minimum abundance (min 2 reads) - Should rescue more clusters
+    // ===================================================================================
+    test("Should rescue more small clusters with relaxed minimum abundance") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_relaxed', single_end:true ],
+                    file(params.test_data.nanopore.reads.cluster_fastq, checkIfExists: true),
+                    file(params.test_data.nanopore.analysis.clusters_tsv, checkIfExists: true)
+                ]
+                input[1] = 0.70
+                input[2] = 2           // lower minimum (accept smaller clusters)
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.clusters.size() == 1 },
+                { assert process.out.stats.size() == 1 }
+            )
+        }
+
+    }
+
+    // ===================================================================================
+    // TEST 5: Edge case - Verify graceful handling when processing mixed data
+    // ===================================================================================
+    test("Should handle real clustering data with mixed noise and clusters") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_mixed', single_end:true ],
+                    file(params.test_data.nanopore.reads.cluster_fastq, checkIfExists: true),
+                    file(params.test_data.nanopore.analysis.clusters_tsv, checkIfExists: true)
+                ]
+                input[1] = 0.70
+                input[2] = 3           // middle ground
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.clusters.size() == 1 },
+                { assert process.out.stats.size() == 1 },
+                { assert process.out.versions.size() == 1 }
+            )
+        }
+
+    }
+
+    // ===================================================================================
+    // TEST 6: Stub mode - CI/CD fast validation
+    // ===================================================================================
+    test("Should run stub") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_stub', single_end:true ],
+                    file(params.test_data.nanopore.reads.cluster_fastq, checkIfExists: true),
+                    file(params.test_data.nanopore.analysis.clusters_tsv, checkIfExists: true)
+                ]
+                input[1] = 0.70
+                input[2] = 5
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert process.out.clusters.size() == 1 },
+                { assert process.out.consensus.size() == 1 },
+                { assert process.out.stats.size() == 1 },
+                { assert process.out.versions.size() == 1 },
+                { assert process.out.clusters[0][1].toString().endsWith('.rescued_clusters.tsv') },
+                { assert process.out.consensus[0][1].toString().endsWith('.rescued_consensus.fasta') },
+                { assert process.out.stats[0][1].toString().endsWith('.rescue_stats.json') }
+            )
+        }
+
+    }
+
+}

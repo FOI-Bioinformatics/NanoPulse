@@ -5,7 +5,7 @@ process GETABUNDANCES {
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/pandas:1.5.2' :
-        'biocontainers/pandas:1.5.2' }"
+        'quay.io/biocontainers/pandas:1.5.2' }"
 
     input:
     tuple val(meta), path(cluster_stats), path(classification_files)
@@ -23,6 +23,7 @@ process GETABUNDANCES {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+
     calculate_abundances.py \\
         --cluster_stats ${cluster_stats} \\
         --classifications ${classification_files.join(' ')} \\
@@ -38,9 +39,11 @@ process GETABUNDANCES {
     END_VERSIONS
     """
 
+
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+
     echo "cluster_id,read_count,relative_abundance,taxon" > ${prefix}_abundances.csv
     echo "Shannon diversity: 0.0" > ${prefix}_diversity_metrics.txt
     echo '{"total_reads": 0}' > ${prefix}_abundance_summary.json
@@ -51,4 +54,5 @@ process GETABUNDANCES {
         pandas: 1.5.2
     END_VERSIONS
     """
+
 }

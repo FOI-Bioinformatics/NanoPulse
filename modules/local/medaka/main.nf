@@ -24,6 +24,7 @@ process MEDAKA {
     def prefix = task.ext.prefix ?: "${meta.id}_cluster${meta.cluster_id}"
     def medaka_model = model ?: 'r941_min_high_g303'
     """
+
     #!/bin/bash
     set +e
 
@@ -102,15 +103,17 @@ process MEDAKA {
     fi
 
     # Version tracking
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        medaka: \$(medaka --version 2>&1 | sed 's/medaka //g')
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    medaka: \$(medaka --version 2>&1 | sed 's/medaka //g')
+END_VERSIONS
     """
+
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}_cluster${meta.cluster_id}"
     """
+
     # Create stub consensus
     cat <<-EOF > ${prefix}_consensus.fasta
 \t>consensus_cluster_${meta.cluster_id}
@@ -133,9 +136,10 @@ process MEDAKA {
 \t}
 \tEOF
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        medaka: 1.7.2
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    medaka: 1.7.2
+END_VERSIONS
     """
+
 }

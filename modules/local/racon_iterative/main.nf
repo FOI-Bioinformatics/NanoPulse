@@ -25,6 +25,7 @@ process RACON_ITERATIVE {
     def quality_threshold = task.ext.quality_threshold ?: 9
     def window_length = task.ext.window_length ?: 250
     """
+
     #!/bin/bash
     set -e
 
@@ -139,17 +140,19 @@ process RACON_ITERATIVE {
 \tEOF
 
     # Version tracking
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        racon: \$(racon --version 2>&1 | grep -oP '(?<=v)\\S+' || echo "1.5.0")
-        minimap2: \$(minimap2 --version 2>&1 || echo "2.24")
-        samtools: \$(samtools --version 2>&1 | grep samtools | sed 's/samtools //g')
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    racon: \$(racon --version 2>&1 | grep -oP '(?<=v)\\S+' || echo "1.5.0")
+    minimap2: \$(minimap2 --version 2>&1 || echo "2.24")
+    samtools: \$(samtools --version 2>&1 | grep samtools | sed 's/samtools //g')
+END_VERSIONS
     """
+
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}_cluster${meta.cluster_id}"
     """
+
     # Create stub polished consensus
     cat <<-EOF > ${prefix}_polished.fasta
 \t>polished_consensus_cluster_${meta.cluster_id}
@@ -175,11 +178,12 @@ process RACON_ITERATIVE {
 \t}
 \tEOF
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        racon: 1.5.0
-        minimap2: 2.24
-        samtools: 1.17
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    racon: 1.5.0
+    minimap2: 2.24
+    samtools: 1.17
+END_VERSIONS
     """
+
 }

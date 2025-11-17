@@ -24,6 +24,7 @@ process KMERFREQ {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+
     # Use optimized streaming version for 4-6x speedup
     # Single-pass file reading, no redundant I/O operations
     kmer_freq_streaming.py \\
@@ -41,17 +42,24 @@ process KMERFREQ {
     END_VERSIONS
     """
 
+
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    # Create stub k-mer frequency file
-    echo -e "read_id\\tlength\\tkmer1\\tkmer2\\tkmer3" | pigz -c > ${prefix}.kmer_freqs.txt.gz
+
+    # Create stub NPZ k-mer frequency files (for PCA compatibility)
+    touch kmer_freqs.npz
+    touch kmer_freqs_metadata.npz
+
+    # Also create stub TSV file (for backward compatibility)
+    echo -e "read_id\\tlength\\tkmer1\\tkmer2\\tkmer3" | gzip > ${prefix}.kmer_freqs.txt.gz
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        python: \$(python --version 2>&1 | sed 's/Python //g' || echo "3.10.0")
+        python: 3.10.0
         biopython: 1.78
         pandas: 1.5.0
     END_VERSIONS
     """
+
 }

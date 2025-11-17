@@ -5,7 +5,7 @@ process RAVEN_CORRECT {
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/raven-assembler:1.8.3--h8b12597_0' :
-        'biocontainers/raven-assembler:1.8.3--h8b12597_0' }"
+        'quay.io/biocontainers/raven-assembler:1.8.3--h8b12597_0' }"
 
     input:
     tuple val(meta), path(reads)
@@ -25,6 +25,7 @@ process RAVEN_CORRECT {
     def prefix = task.ext.prefix ?: "${meta.id}_cluster${meta.cluster_id}"
     def polishing_rounds = task.ext.polishing_rounds ?: 2
     """
+
     # Subset reads for assembly (using seqtk for efficiency)
     seqtk sample -s 42 ${reads} ${polishing_reads} > subset.fastq 2>/dev/null || \
         head -n\$(( ${polishing_reads} * 4 )) ${reads} > subset.fastq
@@ -107,16 +108,18 @@ process RAVEN_CORRECT {
     fi
 
     # Version tracking
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        raven: \$(raven --version 2>&1 | grep -oP 'v\\K[0-9.]+' || echo "1.8.3")
-        seqtk: \$(seqtk 2>&1 | grep -oP 'Version: \\K[0-9.]+' || echo "1.3")
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    raven: \$(raven --version 2>&1 | grep -oP 'v\\K[0-9.]+' || echo "1.8.3")
+    seqtk: \$(seqtk 2>&1 | grep -oP 'Version: \\K[0-9.]+' || echo "1.3")
+END_VERSIONS
     """
+
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}_cluster${meta.cluster_id}"
     """
+
     # Create stub corrected reads (assembly format)
     cat <<-EOF > ${prefix}.correctedReads.fasta
 \t>contig_1 length=1500 coverage=50
@@ -139,10 +142,11 @@ process RAVEN_CORRECT {
 \t}
 \tEOF
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        raven: 1.8.3
-        seqtk: 1.3
-    END_VERSIONS
+    cat <<END_VERSIONS > versions.yml
+"${task.process}":
+    raven: 1.8.3
+    seqtk: 1.3
+END_VERSIONS
     """
+
 }

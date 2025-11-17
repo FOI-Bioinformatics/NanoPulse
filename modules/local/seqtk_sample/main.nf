@@ -4,8 +4,8 @@ process SEQTK_SAMPLE {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/seqtk:1.4--he4a0461_2' :
-        'biocontainers/seqtk:1.4--he4a0461_2' }"
+        'https://depot.galaxyproject.org/singularity/seqtk:1.4--he4a0461_1' :
+        'quay.io/biocontainers/seqtk:1.4--he4a0461_1' }"
 
     input:
     tuple val(meta), path(reads)
@@ -24,6 +24,7 @@ process SEQTK_SAMPLE {
     def seed = task.ext.seed ?: 42
 
     """
+
     # Count total reads in input
     total_reads=\$(seqtk comp $reads | wc -l)
 
@@ -51,9 +52,11 @@ process SEQTK_SAMPLE {
     END_VERSIONS
     """
 
+
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+
     # Create stub output
     touch ${prefix}.sampled.fastq
 
@@ -62,4 +65,5 @@ process SEQTK_SAMPLE {
         seqtk: 1.4
     END_VERSIONS
     """
+
 }

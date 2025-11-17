@@ -130,18 +130,22 @@ def plot_umap_clustering(
     umap_df: pd.DataFrame,
     clusters_df: pd.DataFrame,
     abundances_df: pd.DataFrame,
+    annotations_df: pd.DataFrame,
     output_file: Path,
-    title: str = "UMAP Clustering Visualization"
+    title: str = "UMAP Clustering Visualization",
+    novelty_threshold: float = 0.5
 ) -> None:
     """
-    Create UMAP clustering visualization.
+    Create UMAP clustering visualization with confidence coloring.
 
     Args:
         umap_df: UMAP coordinates
         clusters_df: Cluster assignments
         abundances_df: Cluster abundances
+        annotations_df: Annotations with confidence scores
         output_file: Output PNG file
         title: Plot title
+        novelty_threshold: Confidence threshold for novelty (default 0.5)
     """
     # Merge UMAP with clusters
     merged = umap_df.merge(clusters_df, on='read_id')
@@ -154,12 +158,22 @@ def plot_umap_clustering(
         how='left'
     )
 
+    # Merge with annotations to get confidence scores
+    # confidence column from annotations TSV (cluster-level)
+    if 'confidence' in annotations_df.columns:
+        confidence_map = annotations_df.set_index('cluster_id')['confidence'].to_dict()
+        merged['confidence'] = merged['cluster_id'].map(confidence_map)
+        merged['confidence'] = merged['confidence'].fillna(0.0)  # Noise points get 0
+    else:
+        # No confidence data available - use default
+        merged['confidence'] = 0.5
+
     # Fill NaN values for noise points
     merged['relative_abundance'] = merged['relative_abundance'].fillna(0.0)
     merged['taxon'] = merged['taxon'].fillna('Noise')
 
-    # Create figure
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
+    # Create figure with 3 panels
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(24, 6))
 
     # Plot 1: Colored by cluster
     unique_clusters = sorted(merged['cluster_id'].unique())
@@ -216,6 +230,33 @@ def plot_umap_clustering(
     # Add colorbar (use the scatter object directly)
     cbar = plt.colorbar(scatter, ax=ax2)
     cbar.set_label('Relative Abundance', fontsize=10)
+
+    # Plot 3: Colored by confidence (novelty detection)
+    # Use RdYlGn_r: Red (low confidence/novel) -> Yellow -> Green (high confidence/known)
+    scatter_conf = ax3.scatter(
+        merged['UMAP1'],
+        merged['UMAP2'],
+        s=30,
+        alpha=0.6,
+        c=merged['confidence'],
+        cmap='RdYlGn',  # Red = low confidence, Green = high confidence
+        vmin=0,
+        vmax=1.0
+    )
+
+    ax3.set_xlabel('UMAP 1', fontsize=12)
+    ax3.set_ylabel('UMAP 2', fontsize=12)
+    ax3.set_title('Colored by Classification Confidence', fontsize=14, fontweight='bold')
+    ax3.grid(True, alpha=0.3)
+
+    # Add colorbar with novelty threshold marker
+    cbar_conf = plt.colorbar(scatter_conf, ax=ax3)
+    cbar_conf.set_label('Confidence Score', fontsize=10)
+
+    # Add horizontal line at novelty threshold
+    cbar_conf.ax.axhline(y=novelty_threshold, color='black', linestyle='--', linewidth=2, label=f'Novelty threshold ({novelty_threshold})')
+    cbar_conf.ax.text(1.5, novelty_threshold, f'Novelty\nthreshold\n({novelty_threshold})',
+                      va='center', ha='left', fontsize=8, bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
 
     plt.suptitle(title, fontsize=16, fontweight='bold', y=1.02)
     plt.tight_layout()
@@ -548,7 +589,9 @@ def main():
         umap_df,
         clusters_df,
         abundances_df,
-        Path(f"{args.output_prefix}_umap_clustering.png")
+        annotations_df,
+        Path(f"{args.output_prefix}_umap_clustering.png"),
+        novelty_threshold=0.5  # Default threshold, could be made a parameter
     )
 
     print("Creating abundance distribution plot...")

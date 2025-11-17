@@ -1,0 +1,8 @@
+name: build_phylotree
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - mafft>=7.520
+  - fasttree>=2.1.11

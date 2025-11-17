@@ -25,6 +25,7 @@ process PCA {
     def random_state = task.ext.random_state ?: 42
     def min_variance = task.ext.min_variance ?: 0.99
     """
+
     # Run PCA preprocessing
     pca_preprocess.py \\
         --input $kmer_freqs \\
@@ -46,9 +47,11 @@ process PCA {
     END_VERSIONS
     """
 
+
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+
     # Create stub PCA features file
     echo -e "read\\tlength\\tPC1\\tPC2\\tPC3" > ${prefix}.pca_features.tsv
     echo -e "read_001\\t1500\\t0.5\\t1.2\\t-0.3" >> ${prefix}.pca_features.tsv
@@ -74,4 +77,5 @@ process PCA {
         scipy: 1.11.0
     END_VERSIONS
     """
+
 }

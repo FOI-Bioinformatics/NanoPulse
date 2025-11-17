@@ -5,7 +5,7 @@ process JOINCONSENSUS {
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/python:3.11' :
-        'biocontainers/python:3.11' }"
+        'quay.io/biocontainers/python:3.11' }"
 
     input:
     tuple val(meta), path(consensus_files), path(classification_files)
@@ -23,6 +23,7 @@ process JOINCONSENSUS {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+
     join_consensus.py \\
         --consensus ${consensus_files.join(' ')} \\
         --classifications ${classification_files.join(' ')} \\
@@ -37,9 +38,11 @@ process JOINCONSENSUS {
     END_VERSIONS
     """
 
+
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+
     touch ${prefix}_all_consensus.fasta
     touch ${prefix}_consensus_annotations.tsv
     echo '{"total_clusters": 0}' > ${prefix}_consensus_summary.json
@@ -49,4 +52,5 @@ process JOINCONSENSUS {
         python: \$(python --version | sed 's/Python //')
     END_VERSIONS
     """
+
 }

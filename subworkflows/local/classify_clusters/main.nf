@@ -52,6 +52,7 @@ workflow CLASSIFY_CLUSTERS {
     blast_db         // channel: path to blast database
     blast_tax_db     // channel: path to blast taxonomy database
     fastani_refs     // channel: path to FastANI reference genomes
+    use_probabilistic_classification  // val: enable probabilistic EM classification (default: false)
 
     main:
 
@@ -158,7 +159,10 @@ workflow CLASSIFY_CLUSTERS {
         .set { ch_valid_classifications }
 
     // Run classification if we have any valid classifications
-    CLASSIFY_CONSENSUS(ch_valid_classifications)
+    CLASSIFY_CONSENSUS(
+        ch_valid_classifications,
+        use_probabilistic_classification
+    )
 
     ch_versions = ch_versions.mix(CLASSIFY_CONSENSUS.out.versions.first().ifEmpty([]))
 

@@ -1,0 +1,57 @@
+name: extract_novel_sequences
+description: Extract potentially novel sequences based on classification confidence scores
+keywords:
+  - novel sequences
+  - low confidence
+  - biopython
+  - fasta extraction
+  - diversity discovery
+tools:
+  - biopython:
+      description: Tools for biological computation in Python
+      homepage: https://biopython.org/
+      documentation: https://biopython.org/wiki/Documentation
+      tool_dev_url: https://github.com/biopython/biopython
+      doi: "10.1093/bioinformatics/btp163"
+      licence: ["Biopython License Agreement"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:true ]
+  - consensus_fasta:
+      type: file
+      description: Consensus sequences in FASTA format
+      pattern: "*.fasta"
+  - classification_json:
+      type: file
+      description: Classification results with confidence scores (JSON format)
+      pattern: "*.json"
+  - novelty_threshold:
+      type: float
+      description: Confidence threshold for novelty detection (0-1, default 0.5)
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+  - novel_sequences:
+      type: file
+      description: FASTA file containing only novel/low-confidence sequences
+      pattern: "*.novel.fasta"
+  - summary:
+      type: file
+      description: Summary statistics and details of novel sequences
+      pattern: "*.novel_summary.tsv"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@foi-bioinformatics"
+maintainers:
+  - "@foi-bioinformatics"

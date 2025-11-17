@@ -1,0 +1,77 @@
+name: create_phyloseq
+description: Create phyloseq object from NanoPulse outputs for R-based diversity analysis
+keywords:
+  - phyloseq
+  - diversity
+  - R
+  - microbiome
+  - phylogenetics
+tools:
+  - phyloseq:
+      description: Handling and analysis of high-throughput microbiome census data
+      homepage: https://joey711.github.io/phyloseq/
+      documentation: https://joey711.github.io/phyloseq/
+      tool_dev_url: https://github.com/joey711/phyloseq
+      doi: "10.1371/journal.pone.0061217"
+      licence: ["AGPL-3.0"]
+  - ape:
+      description: Analysis of Phylogenetics and Evolution in R
+      homepage: https://cran.r-project.org/package=ape
+      documentation: https://emmanuelparadis.github.io/ape.html
+      doi: "10.1093/bioinformatics/btg412"
+      licence: ["GPL-2.0 | GPL-3.0"]
+  - picante:
+      description: Integrating phylogenies and ecology
+      homepage: https://cran.r-project.org/package=picante
+      doi: "10.1093/bioinformatics/btq166"
+      licence: ["GPL-2.0"]
+  - vegan:
+      description: Community ecology package
+      homepage: https://cran.r-project.org/package=vegan
+      doi: "10.32614/CRAN.package.vegan"
+      licence: ["GPL-2.0"]
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:true ]
+  - phylotree:
+      type: file
+      description: Phylogenetic tree in Newick format
+      pattern: "*.tree"
+  - abundances:
+      type: file
+      description: Abundance table in CSV format
+      pattern: "*.csv"
+  - taxonomy:
+      type: file
+      description: Taxonomy annotations in TSV format
+      pattern: "*.tsv"
+  - calculate_diversity:
+      type: boolean
+      description: Whether to calculate phylogenetic diversity metrics
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+  - phyloseq:
+      type: file
+      description: Phyloseq object in RDS format for R analysis
+      pattern: "*.rds"
+  - summary:
+      type: file
+      description: Summary statistics and metadata
+      pattern: "*_summary.txt"
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@foi-bioinformatics"
+maintainers:
+  - "@foi-bioinformatics"

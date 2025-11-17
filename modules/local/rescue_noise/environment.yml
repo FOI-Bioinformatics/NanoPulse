@@ -1,0 +1,11 @@
+name: rescue_noise
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python>=3.11
+  - vsearch>=2.28.1
+  - seqtk>=1.4
+  - pandas>=2.0
+  - numpy>=1.26
