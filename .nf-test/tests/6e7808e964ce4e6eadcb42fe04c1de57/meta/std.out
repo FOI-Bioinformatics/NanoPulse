@@ -1,3 +1,0 @@
-ERROR ~ No such file or directory: /Users/andreassjodin/Code/NanoPulse/.nf-test/tests/6e7808e964ce4e6eadcb42fe04c1de57/nullgenomics/sarscov2/illumina/fastq/test_1.fastq.gz
-
- -- Check script '/Users/andreassjodin/Code/NanoPulse/.nf-test-6e7808e964ce4e6eadcb42fe04c1de57.nf' at line: 34 or see '/Users/andreassjodin/Code/NanoPulse/.nf-test/tests/6e7808e964ce4e6eadcb42fe04c1de57/meta/nextflow.log' file for more details

@@ -1,2 +1,0 @@
-task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
-1	18/5a13cd	68981	PER_CLUSTER_ASSEMBLY:CANU_CORRECT (sample1)	COMPLETED	0	2025-11-12 13:50:07.135	67ms	26ms	-	-	-	-	-

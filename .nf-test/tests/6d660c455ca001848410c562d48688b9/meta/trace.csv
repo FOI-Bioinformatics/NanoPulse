@@ -1,2 +1,0 @@
-task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
-1	81/150803	54525	CANU_CORRECT (test)	COMPLETED	0	2025-11-12 13:44:17.887	66ms	28ms	-	-	-	-	-

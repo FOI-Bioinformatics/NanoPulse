@@ -1,3 +1,0 @@
-ERROR ~ No such file or directory: /Users/andreassjodin/Code/NanoPulse/.nf-test/tests/d59033e4eec814b5f50d047cb4dac9da/nullgenomics/sarscov2/illumina/bam/test.paired_end.sorted.bam
-
- -- Check script '/Users/andreassjodin/Code/NanoPulse/.nf-test-d59033e4eec814b5f50d047cb4dac9da.nf' at line: 34 or see '/Users/andreassjodin/Code/NanoPulse/.nf-test/tests/d59033e4eec814b5f50d047cb4dac9da/meta/nextflow.log' file for more details

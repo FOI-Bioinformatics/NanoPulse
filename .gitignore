@@ -10,7 +10,8 @@ work/
 .nf-test/
 .nf-test.log*
 testing/
-testing*
+testing_*/
+test_results*/
 
 # Output directories
 data/

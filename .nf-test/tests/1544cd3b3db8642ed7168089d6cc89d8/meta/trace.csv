@@ -1,2 +1,0 @@
-task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
-1	b6/393d49	64698	UMAP (test_stub)	COMPLETED	0	2025-11-12 13:48:28.084	52ms	11ms	-	-	-	-	-

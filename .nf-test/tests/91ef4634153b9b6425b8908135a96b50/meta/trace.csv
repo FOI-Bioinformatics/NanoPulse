@@ -1,2 +1,0 @@
-task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
-1	0a/63a16f	57493	HDBSCAN (test_output)	FAILED	1	2025-11-12 13:45:29.501	543ms	515ms	-	-	-	-	-

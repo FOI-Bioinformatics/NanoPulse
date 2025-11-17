@@ -1,2 +1,0 @@
-task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
-1	68/75339e	58294	JOINCONSENSUS (test_output)	COMPLETED	0	2025-11-12 13:45:48.388	73ms	41ms	-	-	-	-	-
