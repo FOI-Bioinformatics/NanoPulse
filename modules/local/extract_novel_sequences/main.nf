@@ -141,6 +141,21 @@ process EXTRACT_NOVEL_SEQUENCES {
             f.write(f"{cluster_id}\\t{conf:.4f}\\t{name}\\t{method}\\n")
 
     print(f"Summary: {len(novel_seqs)}/{total_seqs} sequences ({novel_pct:.2f}%) potentially novel", file=sys.stderr)
+
+    # Generate versions.yml
+    import platform
+    python_version = platform.python_version()
+
+    try:
+        import Bio
+        biopython_version = Bio.__version__
+    except:
+        biopython_version = "1.78"
+
+    with open('versions.yml', 'w') as f:
+        f.write(f'"${task.process}":\\n')
+        f.write(f'    python: {python_version}\\n')
+        f.write(f'    biopython: {biopython_version}\\n')
     """
 
     stub:

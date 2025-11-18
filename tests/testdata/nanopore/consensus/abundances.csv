@@ -1,4 +1,4 @@
-cluster_id,read_count,relative_abundance,taxon,confidence
-0,3,0.333,Escherichia coli,0.98
-1,3,0.333,Bacillus subtilis,0.95
-2,3,0.333,Staphylococcus aureus,0.92
+cluster_id,read_count,relative_abundance,taxon,rank,confidence
+0,3,0.333333,Escherichia coli,species,0.98
+1,3,0.333333,Bacillus subtilis,species,0.95
+2,3,0.333333,Staphylococcus aureus,species,0.92

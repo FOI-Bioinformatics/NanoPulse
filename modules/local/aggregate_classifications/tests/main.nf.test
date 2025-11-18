@@ -1,0 +1,139 @@
+nextflow_process {
+
+    name "Test AGGREGATE_CLASSIFICATIONS"
+    script "../main.nf"
+    process "AGGREGATE_CLASSIFICATIONS"
+
+    tag "modules"
+    tag "modules_local"
+    tag "aggregate_classifications"
+    tag "phase_11"
+
+    test("AGGREGATE_CLASSIFICATIONS - multiple classifications (3 files)") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    [
+                        file(params.test_data['phase11']['classification_cluster0'], checkIfExists: true),
+                        file(params.test_data['phase11']['classification_cluster1'], checkIfExists: true),
+                        file(params.test_data['phase11']['classification_cluster2'], checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("AGGREGATE_CLASSIFICATIONS - single classification") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    [ file(params.test_data['phase11']['classification_cluster0'], checkIfExists: true) ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("AGGREGATE_CLASSIFICATIONS - mixed valid and invalid JSON") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    [
+                        file(params.test_data['phase11']['classification_cluster0'], checkIfExists: true),
+                        file(params.test_data['phase11']['malformed_json'], checkIfExists: true),
+                        file(params.test_data['phase11']['classification_cluster1'], checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("AGGREGATE_CLASSIFICATIONS - different confidence levels preserved") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    [
+                        file(params.test_data['phase11']['classification_cluster0'], checkIfExists: true),
+                        file(params.test_data['phase11']['classification_cluster1'], checkIfExists: true),
+                        file(params.test_data['phase11']['classification_cluster2'], checkIfExists: true)
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("AGGREGATE_CLASSIFICATIONS - stub run") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    [
+                        file('classification1.json'),
+                        file('classification2.json')
+                    ]
+                ]
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+}

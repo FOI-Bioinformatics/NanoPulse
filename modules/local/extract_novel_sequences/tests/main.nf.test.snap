@@ -1,0 +1,247 @@
+{
+    "EXTRACT_NOVEL_SEQUENCES - all sequences novel (100% novel)": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel.fasta:md5,c9f71431279fcd93ba4bb2b12cdcfedd"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel_summary.tsv:md5,399b5705da72208f5965073e522aac75"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,dbff84bcffdd551dab0624deecf52551"
+                ],
+                "novel_sequences": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel.fasta:md5,c9f71431279fcd93ba4bb2b12cdcfedd"
+                    ]
+                ],
+                "summary": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel_summary.tsv:md5,399b5705da72208f5965073e522aac75"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,dbff84bcffdd551dab0624deecf52551"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-18T07:07:43.827314"
+    },
+    "EXTRACT_NOVEL_SEQUENCES - stub run": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel.fasta:md5,a0edbdd4ba008fbfc591c7cce0e18a27"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel_summary.tsv:md5,dcc0c439ee0ecc115c87e39e20153a09"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,ba38e2ee10fe91bee2ce8c71f378c55d"
+                ],
+                "novel_sequences": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel.fasta:md5,a0edbdd4ba008fbfc591c7cce0e18a27"
+                    ]
+                ],
+                "summary": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel_summary.tsv:md5,dcc0c439ee0ecc115c87e39e20153a09"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,ba38e2ee10fe91bee2ce8c71f378c55d"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-18T07:08:38.297298"
+    },
+    "EXTRACT_NOVEL_SEQUENCES - single cluster with novel sequence": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel.fasta:md5,5e00902055f2f1da9efaf9faedc2645e"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel_summary.tsv:md5,6028cc3b57bbdf1bd6f8d566c8d391cc"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,dbff84bcffdd551dab0624deecf52551"
+                ],
+                "novel_sequences": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel.fasta:md5,5e00902055f2f1da9efaf9faedc2645e"
+                    ]
+                ],
+                "summary": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel_summary.tsv:md5,6028cc3b57bbdf1bd6f8d566c8d391cc"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,dbff84bcffdd551dab0624deecf52551"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-17T19:56:25.960456"
+    },
+    "EXTRACT_NOVEL_SEQUENCES - no novel sequences (all high confidence)": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel.fasta:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel_summary.tsv:md5,35c3aaca470ca44f9eff1cd4aa2f8f92"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,dbff84bcffdd551dab0624deecf52551"
+                ],
+                "novel_sequences": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel.fasta:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "summary": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel_summary.tsv:md5,35c3aaca470ca44f9eff1cd4aa2f8f92"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,dbff84bcffdd551dab0624deecf52551"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-18T07:07:15.578235"
+    },
+    "EXTRACT_NOVEL_SEQUENCES - mixed novel and known sequences (probabilistic)": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel.fasta:md5,d54a32aabd96f531a6f00cc4d9793c1f"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel_summary.tsv:md5,0034eb2ef6fd5ded32ba10007a1dbcda"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,dbff84bcffdd551dab0624deecf52551"
+                ],
+                "novel_sequences": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel.fasta:md5,d54a32aabd96f531a6f00cc4d9793c1f"
+                    ]
+                ],
+                "summary": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.novel_summary.tsv:md5,0034eb2ef6fd5ded32ba10007a1dbcda"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,dbff84bcffdd551dab0624deecf52551"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-17T19:55:01.712347"
+    }
+}

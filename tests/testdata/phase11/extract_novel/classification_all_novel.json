@@ -1,0 +1,57 @@
+[
+  {
+    "meta": {"id": "test", "cluster_id": 0},
+    "classification": {
+      "name": "Unknown bacterium 1",
+      "taxid": null,
+      "rank": "unknown",
+      "method": "EM_probabilistic",
+      "confidence": 0.25,
+      "is_novel": true
+    }
+  },
+  {
+    "meta": {"id": "test", "cluster_id": 1},
+    "classification": {
+      "name": "Unknown bacterium 2",
+      "taxid": null,
+      "rank": "unknown",
+      "method": "EM_probabilistic",
+      "confidence": 0.30,
+      "is_novel": true
+    }
+  },
+  {
+    "meta": {"id": "test", "cluster_id": 2},
+    "classification": {
+      "name": "Unknown bacterium 3",
+      "taxid": null,
+      "rank": "unknown",
+      "method": "EM_probabilistic",
+      "confidence": 0.38,
+      "is_novel": true
+    }
+  },
+  {
+    "meta": {"id": "test", "cluster_id": 3},
+    "classification": {
+      "name": "Unknown bacterium 4",
+      "taxid": null,
+      "rank": "unknown",
+      "method": "EM_probabilistic",
+      "confidence": 0.42,
+      "is_novel": true
+    }
+  },
+  {
+    "meta": {"id": "test", "cluster_id": 4},
+    "classification": {
+      "name": "Unknown bacterium 5",
+      "taxid": null,
+      "rank": "unknown",
+      "method": "EM_probabilistic",
+      "confidence": 0.35,
+      "is_novel": true
+    }
+  }
+]

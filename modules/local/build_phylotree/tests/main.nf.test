@@ -1,0 +1,129 @@
+nextflow_process {
+
+    name "Test BUILD_PHYLOTREE"
+    script "../main.nf"
+    process "BUILD_PHYLOTREE"
+
+    tag "modules"
+    tag "modules_local"
+    tag "build_phylotree"
+    tag "phase_11"
+
+    test("BUILD_PHYLOTREE - sufficient sequences with auto alignment") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    file(params.test_data['phase11']['consensus_5clusters'], checkIfExists: true)
+                ]
+                input[1] = 'auto'  // alignment_method
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("BUILD_PHYLOTREE - accurate alignment method") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    file(params.test_data['phase11']['consensus_5clusters'], checkIfExists: true)
+                ]
+                input[1] = 'accurate'  // alignment_method (triggers --retree 2 --maxiterate 2)
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("BUILD_PHYLOTREE - insufficient sequences (creates placeholders)") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    file(params.test_data['phase11']['consensus_2seqs'], checkIfExists: true)
+                ]
+                input[1] = 'auto'
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("BUILD_PHYLOTREE - single cluster (edge case)") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    file(params.test_data['phase11']['consensus_1cluster'], checkIfExists: true)
+                ]
+                input[1] = 'auto'
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("BUILD_PHYLOTREE - stub run") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    file('consensus.fasta')
+                ]
+                input[1] = 'auto'
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+}

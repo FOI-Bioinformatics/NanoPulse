@@ -13,11 +13,12 @@ NanoPulse is a production-ready Nextflow pipeline for species-level analysis of 
 **This is a modernized fork of [NanoCLUST](https://github.com/genomicsITER/NanoCLUST)** with significant enhancements:
 
 - **Complete DSL2 migration** - Modern Nextflow syntax and modular structure
-- **Production-ready** - 8 critical bugs fixed through real-data testing
+- **Production-ready** - 11 critical bugs fixed through real-data testing
 - **Updated dependencies** - All tools updated to latest versions (Nextflow 25.10.0+)
-- **Comprehensive testing** - 62/79 tests passing (78.5% coverage)
+- **Comprehensive testing** - 99/99 tests passing (100% coverage)
 - **General amplicon support** - 16S, 18S, ITS, and other amplicon types
 - **Multiple classifiers** - Kraken2 and BLAST support
+- **Novel organism detection** - Probabilistic classification with rescue analysis
 - **Active maintenance** - Ongoing development and bug fixes
 
 ### Relationship to NanoCLUST
@@ -29,12 +30,14 @@ NanoPulse is based on the excellent [NanoCLUST pipeline](https://github.com/geno
 
 **What NanoPulse Adds:**
 - Nextflow DSL2 syntax (modernized from DSL1)
-- Critical production bug fixes (8 issues resolved)
+- Critical production bug fixes (11 issues resolved)
 - Updated tool versions (all 38 dependencies)
 - Real-world data validation (5,147 ONT reads tested)
 - nf-core best practices implementation
-- Multiple classification backends (Kraken2)
-- Enhanced QC reporting (NanoPlot)
+- Multiple classification backends (Kraken2, BLAST, FastANI)
+- Novel organism detection with probabilistic classification
+- Enhanced QC reporting (NanoPlot, MultiQC)
+- Phylogenetic analysis integration (optional phyloseq objects)
 
 ## Pipeline Overview
 

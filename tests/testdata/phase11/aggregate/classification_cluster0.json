@@ -1,0 +1,11 @@
+{
+  "meta": {"id": "test", "cluster_id": 0},
+  "classification": {
+    "name": "Escherichia coli",
+    "taxid": "562",
+    "rank": "species",
+    "method": "EM_probabilistic",
+    "confidence": 0.95,
+    "is_novel": false
+  }
+}

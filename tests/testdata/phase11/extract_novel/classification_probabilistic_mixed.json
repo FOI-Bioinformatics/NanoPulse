@@ -1,0 +1,57 @@
+[
+  {
+    "meta": {"id": "test", "cluster_id": 0},
+    "classification": {
+      "name": "Escherichia coli",
+      "taxid": "562",
+      "rank": "species",
+      "method": "EM_probabilistic",
+      "confidence": 0.95,
+      "is_novel": false
+    }
+  },
+  {
+    "meta": {"id": "test", "cluster_id": 1},
+    "classification": {
+      "name": "Unknown bacterium",
+      "taxid": null,
+      "rank": "unknown",
+      "method": "EM_probabilistic",
+      "confidence": 0.35,
+      "is_novel": true
+    }
+  },
+  {
+    "meta": {"id": "test", "cluster_id": 2},
+    "classification": {
+      "name": "Staphylococcus aureus",
+      "taxid": "1280",
+      "rank": "species",
+      "method": "EM_probabilistic",
+      "confidence": 0.88,
+      "is_novel": false
+    }
+  },
+  {
+    "meta": {"id": "test", "cluster_id": 3},
+    "classification": {
+      "name": "Novel Firmicutes",
+      "taxid": null,
+      "rank": "phylum",
+      "method": "EM_probabilistic",
+      "confidence": 0.42,
+      "is_novel": true
+    }
+  },
+  {
+    "meta": {"id": "test", "cluster_id": 4},
+    "classification": {
+      "name": "Bacillus subtilis",
+      "taxid": "1423",
+      "rank": "species",
+      "method": "EM_probabilistic",
+      "confidence": 0.78,
+      "is_novel": false
+    }
+  }
+]

@@ -29,9 +29,8 @@ process CREATE_PHYLOSEQ {
         --abundance ${abundances} \\
         --taxonomy ${taxonomy} \\
         --output ${prefix}_phyloseq.rds \\
-        ${diversity_flag} \\
-        ${args} \\
-        --verbose
+        --verbose \\
+        ${diversity_flag} ${args}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

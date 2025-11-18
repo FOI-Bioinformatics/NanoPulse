@@ -1,0 +1,7 @@
+{
+  "meta": {"id": "test", "cluster_id": 99},
+  "classification": {
+    "name": "Malformed entry"
+    missing comma here
+  }
+}

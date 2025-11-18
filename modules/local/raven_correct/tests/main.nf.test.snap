@@ -1,0 +1,114 @@
+{
+    "RAVEN_CORRECT - nanopore reads - successful assembly": {
+        "content": [
+            {
+                "0": [
+                    
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,ab84cc4c7ac2080e5f201715708db843"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,fe1f5d613476572d1b71dad4cbe7fa33"
+                ],
+                "corrected": [
+                    
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,ab84cc4c7ac2080e5f201715708db843"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,fe1f5d613476572d1b71dad4cbe7fa33"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-17T13:09:46.211861"
+    },
+    "RAVEN_CORRECT - stub run": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.correctedReads.fasta:md5,2efd9bfe65a494421b8830d4dc877bd3"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,20a4146b414f820e4c2c44a94950e693"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,fe1f5d613476572d1b71dad4cbe7fa33"
+                ],
+                "corrected": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.correctedReads.fasta:md5,2efd9bfe65a494421b8830d4dc877bd3"
+                    ]
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test",
+                            "cluster_id": "0",
+                            "single_end": true
+                        },
+                        "test_cluster0.stats.json:md5,20a4146b414f820e4c2c44a94950e693"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,fe1f5d613476572d1b71dad4cbe7fa33"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-17T13:10:03.422545"
+    },
+    "RAVEN_CORRECT - parameter variations": {
+        "content": [
+            [
+                "versions.yml:md5,fe1f5d613476572d1b71dad4cbe7fa33"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-17T13:10:20.741806"
+    }
+}

@@ -1,0 +1,134 @@
+nextflow_process {
+
+    name "Test EXTRACT_NOVEL_SEQUENCES"
+    script "../main.nf"
+    process "EXTRACT_NOVEL_SEQUENCES"
+
+    tag "modules"
+    tag "modules_local"
+    tag "extract_novel_sequences"
+    tag "phase_11"
+
+    test("EXTRACT_NOVEL_SEQUENCES - mixed novel and known sequences (probabilistic)") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    file(params.test_data['phase11']['consensus_5clusters'], checkIfExists: true),
+                    file(params.test_data['phase11']['classification_probabilistic_mixed'], checkIfExists: true)
+                ]
+                input[1] = 0.5  // novelty_threshold
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("EXTRACT_NOVEL_SEQUENCES - no novel sequences (all high confidence)") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    file(params.test_data['phase11']['consensus_5clusters'], checkIfExists: true),
+                    file(params.test_data['phase11']['classification_all_high_confidence'], checkIfExists: true)
+                ]
+                input[1] = 0.5  // novelty_threshold
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("EXTRACT_NOVEL_SEQUENCES - all sequences novel (100% novel)") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    file(params.test_data['phase11']['consensus_5clusters'], checkIfExists: true),
+                    file(params.test_data['phase11']['classification_all_novel'], checkIfExists: true)
+                ]
+                input[1] = 0.5  // novelty_threshold
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("EXTRACT_NOVEL_SEQUENCES - single cluster with novel sequence") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    file(params.test_data['phase11']['consensus_1cluster'], checkIfExists: true),
+                    file(params.test_data['phase11']['classification_single_cluster'], checkIfExists: true)
+                ]
+                input[1] = 0.5  // novelty_threshold
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+    test("EXTRACT_NOVEL_SEQUENCES - stub run") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test' ],
+                    file('consensus.fasta'),
+                    file('classification.json')
+                ]
+                input[1] = 0.5  // novelty_threshold
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+
+    }
+
+}

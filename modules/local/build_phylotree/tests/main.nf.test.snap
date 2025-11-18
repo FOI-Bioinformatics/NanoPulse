@@ -1,0 +1,327 @@
+{
+    "BUILD_PHYLOTREE - stub run": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aln.fasta:md5,2f6cf55623c69c53256ecd64fbc16b10"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree:md5,8c4741e1329d6507db607b96e2baae5c"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree_stats.txt:md5,704d80bb384580a111ec33114ee385e6"
+                    ]
+                ],
+                "3": [
+                    "versions.yml:md5,75b8df2c542d3e4c45f3e5e8f07b1d06"
+                ],
+                "alignment": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aln.fasta:md5,2f6cf55623c69c53256ecd64fbc16b10"
+                    ]
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree_stats.txt:md5,704d80bb384580a111ec33114ee385e6"
+                    ]
+                ],
+                "tree": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree:md5,8c4741e1329d6507db607b96e2baae5c"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,75b8df2c542d3e4c45f3e5e8f07b1d06"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-17T17:37:57.8576"
+    },
+    "BUILD_PHYLOTREE - sufficient sequences with auto alignment": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aln.fasta:md5,bbfdb636bfc24a2f77eadb08a17608c4"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree:md5,8afe8b6716c9b40436f63cae6b23a390"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree_stats.txt:md5,e8a3b7aabd905ec26dafde177ca5b59c"
+                    ]
+                ],
+                "3": [
+                    "versions.yml:md5,ebc53054245160807a5558ebce92279a"
+                ],
+                "alignment": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aln.fasta:md5,bbfdb636bfc24a2f77eadb08a17608c4"
+                    ]
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree_stats.txt:md5,e8a3b7aabd905ec26dafde177ca5b59c"
+                    ]
+                ],
+                "tree": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree:md5,8afe8b6716c9b40436f63cae6b23a390"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,ebc53054245160807a5558ebce92279a"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-18T07:00:28.41066"
+    },
+    "BUILD_PHYLOTREE - accurate alignment method": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aln.fasta:md5,423757419114e389f438d7ed62706fa8"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree:md5,725a1dc707aa63fac03581626b59c205"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree_stats.txt:md5,41cef847b37892a1a069261543059e44"
+                    ]
+                ],
+                "3": [
+                    "versions.yml:md5,ebc53054245160807a5558ebce92279a"
+                ],
+                "alignment": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aln.fasta:md5,423757419114e389f438d7ed62706fa8"
+                    ]
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree_stats.txt:md5,41cef847b37892a1a069261543059e44"
+                    ]
+                ],
+                "tree": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree:md5,725a1dc707aa63fac03581626b59c205"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,ebc53054245160807a5558ebce92279a"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-18T09:39:26.277136"
+    },
+    "BUILD_PHYLOTREE - single cluster (edge case)": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aln.fasta:md5,9be65e2ab5b12b50322ea7dc50c0842c"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree:md5,2a17cb9cbac2766ca9124f2f513e458a"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree_stats.txt:md5,880a304e9683a052a5b146ad3d2e18b4"
+                    ]
+                ],
+                "3": [
+                    "versions.yml:md5,ebc53054245160807a5558ebce92279a"
+                ],
+                "alignment": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aln.fasta:md5,9be65e2ab5b12b50322ea7dc50c0842c"
+                    ]
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree_stats.txt:md5,880a304e9683a052a5b146ad3d2e18b4"
+                    ]
+                ],
+                "tree": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree:md5,2a17cb9cbac2766ca9124f2f513e458a"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,ebc53054245160807a5558ebce92279a"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-17T17:37:38.313222"
+    },
+    "BUILD_PHYLOTREE - insufficient sequences (creates placeholders)": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aln.fasta:md5,e301774c7844a70831dd27b451ac746f"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree:md5,2a17cb9cbac2766ca9124f2f513e458a"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree_stats.txt:md5,ac1b5cef9ac2bf725dddd3a7e7e779bf"
+                    ]
+                ],
+                "3": [
+                    "versions.yml:md5,ebc53054245160807a5558ebce92279a"
+                ],
+                "alignment": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aln.fasta:md5,e301774c7844a70831dd27b451ac746f"
+                    ]
+                ],
+                "stats": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree_stats.txt:md5,ac1b5cef9ac2bf725dddd3a7e7e779bf"
+                    ]
+                ],
+                "tree": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.tree:md5,2a17cb9cbac2766ca9124f2f513e458a"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,ebc53054245160807a5558ebce92279a"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-17T17:37:18.673526"
+    }
+}

@@ -1,0 +1,11 @@
+{
+  "meta": {"id": "test", "cluster_id": 0},
+  "classification": {
+    "name": "Unknown bacterium",
+    "taxid": null,
+    "rank": "unknown",
+    "method": "EM_probabilistic",
+    "confidence": 0.35,
+    "is_novel": true
+  }
+}

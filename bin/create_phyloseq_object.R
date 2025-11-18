@@ -109,10 +109,10 @@ if (args$verbose) {
 }
 
 # Create OTU table (clusters × samples matrix)
-# NanoPulse outputs have: cluster_id, num_reads, abundance_pct
-# We'll use num_reads as the abundance value
+# NanoPulse outputs have: cluster_id, read_count, relative_abundance
+# We'll use read_count as the abundance value
 
-otu_matrix <- as.matrix(abundance_df$num_reads)
+otu_matrix <- as.matrix(abundance_df$read_count)
 rownames(otu_matrix) <- paste0("cluster_", abundance_df$cluster_id)
 colnames(otu_matrix) <- c("sample")  # Single sample per phyloseq object
 
@@ -244,7 +244,7 @@ if (args$verbose) {
 }
 
 # Calculate phylogenetic diversity metrics (optional)
-if (args$calculate_diversity) {
+if (isTRUE(args$calculate_diversity)) {
     if (args$verbose) {
         cat("\nCalculating phylogenetic diversity metrics...\n")
     }
@@ -338,7 +338,7 @@ cat("Phyloseq object contents:\n")
 print(phyloseq_obj)
 cat("\n")
 
-if (args$calculate_diversity) {
+if (isTRUE(args$calculate_diversity)) {
     cat("Diversity metrics:\n")
     cat("  Faith's Phylogenetic Diversity:", round(diversity_metrics$faiths_pd, 3), "\n")
     cat("  Shannon diversity:", round(diversity_metrics$shannon, 3), "\n")

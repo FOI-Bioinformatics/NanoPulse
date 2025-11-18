@@ -1,0 +1,167 @@
+{
+    "AGGREGATE_CLASSIFICATIONS - single classification": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aggregated_classifications.json:md5,60a33ff3923f1a142518b2d0b8c443a4"
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,05e6487031fbbd6f678089e097975fa6"
+                ],
+                "aggregated": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aggregated_classifications.json:md5,60a33ff3923f1a142518b2d0b8c443a4"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,05e6487031fbbd6f678089e097975fa6"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-17T17:35:07.399988"
+    },
+    "AGGREGATE_CLASSIFICATIONS - stub run": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aggregated_classifications.json:md5,2634ec000b6cb1429a9629dca95193ed"
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,0b946e0e70896beae4f3fe34892ba5c8"
+                ],
+                "aggregated": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aggregated_classifications.json:md5,2634ec000b6cb1429a9629dca95193ed"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,0b946e0e70896beae4f3fe34892ba5c8"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-17T17:36:15.724823"
+    },
+    "AGGREGATE_CLASSIFICATIONS - mixed valid and invalid JSON": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aggregated_classifications.json:md5,5ce6071859997ac29b10c9e8dceb0afe"
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,05e6487031fbbd6f678089e097975fa6"
+                ],
+                "aggregated": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aggregated_classifications.json:md5,5ce6071859997ac29b10c9e8dceb0afe"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,05e6487031fbbd6f678089e097975fa6"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-17T17:35:30.359"
+    },
+    "AGGREGATE_CLASSIFICATIONS - different confidence levels preserved": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aggregated_classifications.json:md5,1c81bbcc71c8300e569cf9b98b0eb06f"
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,05e6487031fbbd6f678089e097975fa6"
+                ],
+                "aggregated": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aggregated_classifications.json:md5,1c81bbcc71c8300e569cf9b98b0eb06f"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,05e6487031fbbd6f678089e097975fa6"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-17T17:35:53.121042"
+    },
+    "AGGREGATE_CLASSIFICATIONS - multiple classifications (3 files)": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aggregated_classifications.json:md5,1c81bbcc71c8300e569cf9b98b0eb06f"
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,05e6487031fbbd6f678089e097975fa6"
+                ],
+                "aggregated": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test.aggregated_classifications.json:md5,1c81bbcc71c8300e569cf9b98b0eb06f"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,05e6487031fbbd6f678089e097975fa6"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-17T17:34:44.059733"
+    }
+}

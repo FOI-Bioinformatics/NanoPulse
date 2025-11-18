@@ -1,0 +1,247 @@
+{
+    "CREATE_PHYLOSEQ - verify diversity calculation flag effect": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test_diversity"
+                        },
+                        "test_diversity_phyloseq.rds:md5,a589cef5d6cfa0d9d54dda72168d6da5"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test_diversity"
+                        },
+                        "test_diversity_phyloseq_summary.txt:md5,720db032d0978f007c32d4fdcdc5ae55"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,b9984433fb35663dd8151bb52fc5ccc9"
+                ],
+                "phyloseq": [
+                    [
+                        {
+                            "id": "test_diversity"
+                        },
+                        "test_diversity_phyloseq.rds:md5,a589cef5d6cfa0d9d54dda72168d6da5"
+                    ]
+                ],
+                "summary": [
+                    [
+                        {
+                            "id": "test_diversity"
+                        },
+                        "test_diversity_phyloseq_summary.txt:md5,720db032d0978f007c32d4fdcdc5ae55"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,b9984433fb35663dd8151bb52fc5ccc9"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-18T09:44:06.652571"
+    },
+    "CREATE_PHYLOSEQ - complete inputs without diversity calculation": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq.rds:md5,a589cef5d6cfa0d9d54dda72168d6da5"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq_summary.txt:md5,32468798b16f207a822489eee43bae5c"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,b9984433fb35663dd8151bb52fc5ccc9"
+                ],
+                "phyloseq": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq.rds:md5,a589cef5d6cfa0d9d54dda72168d6da5"
+                    ]
+                ],
+                "summary": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq_summary.txt:md5,32468798b16f207a822489eee43bae5c"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,b9984433fb35663dd8151bb52fc5ccc9"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-18T09:42:18.701732"
+    },
+    "CREATE_PHYLOSEQ - complete inputs with diversity calculation": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq.rds:md5,a589cef5d6cfa0d9d54dda72168d6da5"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq_summary.txt:md5,866249f2e4253255617be7747c5647c0"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,b9984433fb35663dd8151bb52fc5ccc9"
+                ],
+                "phyloseq": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq.rds:md5,a589cef5d6cfa0d9d54dda72168d6da5"
+                    ]
+                ],
+                "summary": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq_summary.txt:md5,866249f2e4253255617be7747c5647c0"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,b9984433fb35663dd8151bb52fc5ccc9"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-18T09:41:23.713741"
+    },
+    "CREATE_PHYLOSEQ - verify phyloseq object components": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq.rds:md5,a589cef5d6cfa0d9d54dda72168d6da5"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq_summary.txt:md5,4cee5b1af2361eae3324481f49531a18"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,b9984433fb35663dd8151bb52fc5ccc9"
+                ],
+                "phyloseq": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq.rds:md5,a589cef5d6cfa0d9d54dda72168d6da5"
+                    ]
+                ],
+                "summary": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq_summary.txt:md5,4cee5b1af2361eae3324481f49531a18"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,b9984433fb35663dd8151bb52fc5ccc9"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-18T09:43:11.747266"
+    },
+    "CREATE_PHYLOSEQ - stub run": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq.rds:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq_summary.txt:md5,e9dd8bea9858e5e2c946d0e2301384ca"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,3c1414287a7a5b662ec10e1f020cd2fd"
+                ],
+                "phyloseq": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq.rds:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "summary": [
+                    [
+                        {
+                            "id": "test"
+                        },
+                        "test_phyloseq_summary.txt:md5,e9dd8bea9858e5e2c946d0e2301384ca"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,3c1414287a7a5b662ec10e1f020cd2fd"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.3",
+            "nextflow": "25.10.0"
+        },
+        "timestamp": "2025-11-18T09:46:27.512098"
+    }
+}

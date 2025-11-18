@@ -1,0 +1,11 @@
+{
+  "meta": {"id": "test", "cluster_id": 2},
+  "classification": {
+    "name": "Staphylococcus aureus",
+    "taxid": "1280",
+    "rank": "species",
+    "method": "EM_probabilistic",
+    "confidence": 0.88,
+    "is_novel": false
+  }
+}
