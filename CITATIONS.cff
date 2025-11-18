@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use NanoPulse, please cite both this software and the original NanoCLUST paper."
 title: "NanoPulse: Amplicon sequence clustering for Oxford Nanopore sequencing"
-version: 1.0.0
+version: 1.1dev
 date-released: 2025-11-18
 url: "https://github.com/FOI-Bioinformatics/NanoPulse"
 repository-code: "https://github.com/FOI-Bioinformatics/NanoPulse"
